@@ -9,14 +9,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OnlineFragment extends Fragment implements OnlineContract.View {
+public class OnlineFragment extends Fragment implements OnlineContract.View, View.OnClickListener {
     private OnlineContract.Presenter mOnlinePresenter;
+
+    private EditText mEdittextSearchForRooms;
+    private Button mButtonCreateOnlineNormalRoom;
+    private Button mButtonCreateOnlineTeamRoom;
 
     public OnlineFragment() {
         // Required empty public constructor
@@ -33,7 +40,16 @@ public class OnlineFragment extends Fragment implements OnlineContract.View {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_online, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_online, container, false);
+
+        mEdittextSearchForRooms = rootView.findViewById(R.id.edittext_searchbox_online);
+        mButtonCreateOnlineNormalRoom = rootView.findViewById(R.id.button_online_normal_mode);
+
+        // TODO
+//        mEdittextSearchForRooms.();
+        mButtonCreateOnlineNormalRoom.setOnClickListener(this);
+
+        return rootView;
     }
 
     @Override
@@ -56,7 +72,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View {
 
     @Override
     public void showOnlineRoomCreationPageUi() {
-
+        ((MainActivity) getActivity()).getMainPresenter().transToOnlineRoomCreationPage();
     }
 
     @Override
@@ -68,5 +84,20 @@ public class OnlineFragment extends Fragment implements OnlineContract.View {
     @Override
     public void setPresenter(@NonNull OnlineContract.Presenter presenter) {
         mOnlinePresenter = presenter;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.button_online_normal_mode:
+                showOnlineRoomCreationPageUi();
+                break;
+
+            case R.id.button_online_team_mode:
+                break;
+
+            default:
+                break;
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import com.justinlee.drawmatic.cereate_room.CreateRoomFragment;
+import com.justinlee.drawmatic.cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.offline.OfflineFragment;
 import com.justinlee.drawmatic.offline.OfflinePresenter;
 import com.justinlee.drawmatic.online.OnlineFragment;
@@ -19,12 +21,13 @@ public class MainPresenter implements MainContract.Presenter {
     private OnlineFragment mOnlineFragment;
     private OfflineFragment mOfflineFragment;
     private SettingsFragment mSettingsFragment;
+    private CreateRoomFragment mCreateRoomFragment;
 
     // presenters
     private OnlinePresenter mOnlinePresenter;
     private OfflinePresenter mOfflinePresenter;
     private SettingsPresenter mSettingsPresenter;
-
+    private CreateRoomPresenter mCreateRoomPresenter;
 
     public MainPresenter(MainContract.View mainView, FragmentManager fragmentManager) {
         mMainView = mainView;
@@ -36,8 +39,15 @@ public class MainPresenter implements MainContract.Presenter {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOfflineFragment == null) mOfflineFragment = OfflineFragment.newInstance();
+
         if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+
+        if (mCreateRoomFragment != null) {
+            transaction.remove(mCreateRoomFragment);
+            mCreateRoomFragment = null;
+            mCreateRoomPresenter = null;
+        }
         // TODO add all others
 
         if (!mOfflineFragment.isAdded()) {
@@ -48,6 +58,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         if (mOfflinePresenter == null) mOfflinePresenter = new OfflinePresenter(mOfflineFragment);
         transaction.commit();
+
+        mMainView.showOfflinePageUi();
     }
 
     @Override
@@ -60,8 +72,15 @@ public class MainPresenter implements MainContract.Presenter {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOnlineFragment == null) mOnlineFragment = OnlineFragment.newInstance();
+
         if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+
+        if (mCreateRoomFragment != null) {
+            transaction.remove(mCreateRoomFragment);
+            mCreateRoomFragment = null;
+            mCreateRoomPresenter = null;
+        }
         // TODO add all others
 
         if (!mOnlineFragment.isAdded()) {
@@ -72,6 +91,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         if (mOnlinePresenter == null) mOnlinePresenter = new OnlinePresenter(mOnlineFragment);
         transaction.commit();
+
+        mMainView.showOnlinePageUi();
     }
 
     @Override
@@ -81,7 +102,25 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void transToOnlineRoomCreationPage() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        if (mCreateRoomFragment == null) mCreateRoomFragment = CreateRoomFragment.newInstance();
+
+        if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
+        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+        // TODO add all others
+
+        if (!mCreateRoomFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mCreateRoomFragment, "CREATE_ROOM");
+        } else {
+            transaction.show(mCreateRoomFragment);
+        }
+
+        if (mCreateRoomPresenter == null) mCreateRoomPresenter = new CreateRoomPresenter(mCreateRoomFragment);
+        transaction.commit();
+
+        mMainView.showOnlineRoomCreationPageUi();
     }
 
     @Override
@@ -104,8 +143,15 @@ public class MainPresenter implements MainContract.Presenter {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mSettingsFragment == null) mSettingsFragment = SettingsFragment.newInstance();
+
         if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
         if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+
+        if (mCreateRoomFragment != null) {
+            transaction.remove(mCreateRoomFragment);
+            mCreateRoomFragment = null;
+            mCreateRoomPresenter = null;
+        }
         // TODO add all others
 
         if (!mSettingsFragment.isAdded()) {
@@ -116,6 +162,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         if (mSettingsPresenter == null) mSettingsPresenter = new SettingsPresenter(mSettingsFragment);
         transaction.commit();
+
+        mMainView.showSettingsPageUi();
     }
 
     @Override

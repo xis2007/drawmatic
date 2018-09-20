@@ -11,6 +11,7 @@ import com.justinlee.drawmatic.bases.BaseActivity;
 public class MainActivity extends BaseActivity implements MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private MainContract.Presenter mMainPresenter;
+    private BottomNavigationViewEx mPrimaryNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +19,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
         setBottomNavigation();
         initPresenter();
-    }
-
-    private void initPresenter() {
-        mMainPresenter = new MainPresenter(this, getFragmentManager());
-        mMainPresenter.start();
+        setListeners();
     }
 
     @Override
     public void showOfflinePageUi() {
-
+//        mPrimaryNavigation.setCurrentItem(0);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void showOnlinePageUi() {
-
+//        mPrimaryNavigation.setCurrentItem(1);
     }
 
     @Override
@@ -67,7 +64,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void showSettingsPageUi() {
-
+//        mPrimaryNavigation.setCurrentItem(2);
     }
 
     @Override
@@ -82,9 +79,31 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
      * ***********************************************************************************
      */
     private void setBottomNavigation() {
-        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_nav);
-        bottomNavigationView.enableAnimation(false);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        mPrimaryNavigation = findViewById(R.id.bottom_nav);
+        mPrimaryNavigation.enableAnimation(false);
+        mPrimaryNavigation.setSelectedItemId(R.id.navigation_online);
+        mPrimaryNavigation.setCurrentItem(1);
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * MainPresenter
+     * ***********************************************************************************
+     */
+    private void initPresenter() {
+        mMainPresenter = new MainPresenter(this, getFragmentManager());
+        mMainPresenter.start();
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Listeners Setup
+     * ***********************************************************************************
+     */
+    private void setListeners() {
+        mPrimaryNavigation.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -101,5 +120,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
                 return true;
         }
         return false;
+    }
+
+    /**
+     * ***********************************************************************************
+     * Getters and Setters
+     * ***********************************************************************************
+     */
+    public MainContract.Presenter getMainPresenter() {
+        return mMainPresenter;
     }
 }

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".cereate_room.CreateRoomFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout_text_create_room">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_room_name_create_room"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/text_room_name_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/text_room_name"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+
+                    <EditText
+                        android:id="@+id/edittext_room_name_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/searchbox_online"
+                        android:ems="10"
+                        android:gravity="start|center_vertical"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_room_name_create_room"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/text_max_players_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/text_maximum_players"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/seekbar_payer_number_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        app:bsb_bubble_color="@color/colorWhite"
+                        app:bsb_bubble_text_color="@color/colorPrimary"
+                        app:bsb_max="12"
+                        app:bsb_min="4"
+                        app:bsb_progress="1"
+                        app:bsb_second_track_color="@color/colorWhite"
+                        app:bsb_section_count="8"
+                        app:bsb_section_text_position="bottom_sides"
+                        app:bsb_seek_by_section="true"
+                        app:bsb_show_progress_in_float="true"
+                        app:bsb_show_section_mark="true"
+                        app:bsb_show_section_text="true"
+                        app:bsb_show_thumb_text="true"
+                        app:bsb_track_color="@color/colorWhite"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edittext_room_name_create_room"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/text_time_attempt_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/text_time_for_each_attempt"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/seekbar_attempt_time_create_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        app:bsb_bubble_color="@color/colorWhite"
+                        app:bsb_bubble_text_color="@color/colorPrimary"
+                        app:bsb_max="1"
+                        app:bsb_min="2.5"
+                        app:bsb_progress="1"
+                        app:bsb_second_track_color="@color/colorWhite"
+                        app:bsb_section_count="3"
+                        app:bsb_section_text_position="bottom_sides"
+                        app:bsb_seek_by_section="true"
+                        app:bsb_show_progress_in_float="true"
+                        app:bsb_show_section_mark="true"
+                        app:bsb_show_section_text="true"
+                        app:bsb_show_thumb_text="true"
+                        app:bsb_track_color="@color/colorWhite"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="50dp"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:background="@drawable/box_start_button"
+                    android:text="@string/text_button_start"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/frameLayout_text_create_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_hint_create_room"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/text_hint_create_room"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"/>
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

@@ -7,10 +7,28 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--activity_main-->
+    <!--fragment_offline-->
+    <string name="text_offline_hint">Choose Offline Mode</string>
+    <string name="text_normal_mode_offline">Offline \n Normal Mode</string>
+    <string name="text_team_mode_offline">Offline \n Team Mode</string>
 
+    <!--fragment_online-->
+    <string name="text_hint_input_online">Search For Rooms</string>
+    <string name="text_normal_mode_online">Online \n Normal Mode \n\n Create New Room \n +</string>
+    <string name="text_team_mode_online">Online \n Team Mode \n\n Create New Room \n +</string>
+
+    <!--fragment_create_room-->
+    <string name="text_hint_create_room">Setup Your Room</string>
+    <string name="text_room_name">Room Name</string>
+    <string name="text_maximum_players">Maximum Players</string>
+    <string name="text_time_for_each_attempt">Time for Each Attempt</string>
+    <string name="text_button_start">Start</string>
+
+
+    <!--activity_main-->
 </resources>
 
 
     <!--credits-->
     <!--Created by Dooder - Freepik.com-->
+    <!--https://github.com/Ramotion/fluid-slider-android-->
