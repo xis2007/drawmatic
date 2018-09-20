@@ -10,6 +10,7 @@ public interface MainContract {
 
         void showOfflineGameSettingsPageUi();
 
+
         // online mode
         void showOnlinePageUi();
 
@@ -25,6 +26,7 @@ public interface MainContract {
 
         void showGuessingPageUi();
 
+
         // settings
         void showSettingsPageUi();
     }
@@ -35,6 +37,7 @@ public interface MainContract {
 
         void transToOfflineGameSettingsPage();
 
+
         // online mode
         void transToOnlinePage();
 
@@ -44,10 +47,12 @@ public interface MainContract {
 
         void transToOnlineGameSettingsPage();
 
+
         // in-game pages
         void transToDrawingPage();
 
         void transToGuessingPage();
+
 
         // settings
         void transToSettingsPage();

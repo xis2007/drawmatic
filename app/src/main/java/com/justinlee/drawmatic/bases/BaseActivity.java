@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.justinlee.drawmatic.R;
 
 public class BaseActivity extends AppCompatActivity {
-
+    private static final String TAG = "justin";
+    
     protected Context mContext;
 
     @Override
@@ -26,7 +26,6 @@ public class BaseActivity extends AppCompatActivity {
 
         setStatusBar();
         setToolBarHeight();
-        setBottomNavigation();
     }
 
     /**
@@ -67,9 +66,5 @@ public class BaseActivity extends AppCompatActivity {
         return result;
     }
 
-    private void setBottomNavigation() {
-        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_nav);
-        bottomNavigationView.enableAnimation(false);
-    }
 }
 

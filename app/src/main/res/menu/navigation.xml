@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_offline"
         android:icon="@drawable/ic_offline"
         android:title="@string/title_offline_mode"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_online"
         android:icon="@drawable/ic_online"
         android:title="@string/title_online_mode"/>
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/title_settings"/>
 
