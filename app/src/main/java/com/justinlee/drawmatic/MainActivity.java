@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showOnlineGameSettingsPageUi() {
+    public void showOnlineWaitingPageUi() {
 
     }
 

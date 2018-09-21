@@ -3,12 +3,14 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import com.justinlee.drawmatic.cereate_room.CreateRoomFragment;
-import com.justinlee.drawmatic.cereate_room.CreateRoomPresenter;
+import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
+import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.offline.OfflineFragment;
 import com.justinlee.drawmatic.offline.OfflinePresenter;
 import com.justinlee.drawmatic.online.OnlineFragment;
 import com.justinlee.drawmatic.online.OnlinePresenter;
+import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
+import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
 import com.justinlee.drawmatic.settings.SettingsFragment;
 import com.justinlee.drawmatic.settings.SettingsPresenter;
 
@@ -22,12 +24,14 @@ public class MainPresenter implements MainContract.Presenter {
     private OfflineFragment mOfflineFragment;
     private SettingsFragment mSettingsFragment;
     private CreateRoomFragment mCreateRoomFragment;
+    private OnlineWaitingFragment mOnlineWaitingFragment;
 
     // presenters
     private OnlinePresenter mOnlinePresenter;
     private OfflinePresenter mOfflinePresenter;
     private SettingsPresenter mSettingsPresenter;
     private CreateRoomPresenter mCreateRoomPresenter;
+    private OnlineWaitingPresenter mOnlineWaitingPresenter;
 
     public MainPresenter(MainContract.View mainView, FragmentManager fragmentManager) {
         mMainView = mainView;
@@ -47,6 +51,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mCreateRoomFragment);
             mCreateRoomFragment = null;
             mCreateRoomPresenter = null;
+        }
+        if (mOnlineWaitingFragment != null) {
+            transaction.remove(mOnlineWaitingFragment);
+            mOnlineWaitingFragment = null;
+            mOnlineWaitingPresenter = null;
         }
         // TODO add all others
 
@@ -81,6 +90,11 @@ public class MainPresenter implements MainContract.Presenter {
             mCreateRoomFragment = null;
             mCreateRoomPresenter = null;
         }
+        if (mOnlineWaitingFragment != null) {
+            transaction.remove(mOnlineWaitingFragment);
+            mOnlineWaitingFragment = null;
+            mOnlineWaitingPresenter = null;
+        }
         // TODO add all others
 
         if (!mOnlineFragment.isAdded()) {
@@ -109,6 +123,12 @@ public class MainPresenter implements MainContract.Presenter {
         if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
         if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+
+        if (mOnlineWaitingFragment != null) {
+            transaction.remove(mOnlineWaitingFragment);
+            mOnlineWaitingFragment = null;
+            mOnlineWaitingPresenter = null;
+        }
         // TODO add all others
 
         if (!mCreateRoomFragment.isAdded()) {
@@ -124,8 +144,32 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineGameSettingsPage() {
+    public void transToOnlineWaitingPage(String roomName, int numPlayers, float attemptTime) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
+
+        if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
+        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+
+        if (mCreateRoomFragment != null) {
+            transaction.remove(mCreateRoomFragment);
+            mCreateRoomFragment = null;
+            mCreateRoomPresenter = null;
+        }
+        // TODO add all others
+
+        if (!mOnlineWaitingFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mOnlineWaitingFragment, "CREATE_ROOM");
+        } else {
+            transaction.show(mOnlineWaitingFragment);
+        }
+
+        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, roomName, numPlayers, attemptTime);
+        transaction.commit();
+
+        mMainView.showOnlineWaitingPageUi();
     }
 
     @Override
@@ -151,6 +195,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mCreateRoomFragment);
             mCreateRoomFragment = null;
             mCreateRoomPresenter = null;
+        }
+        if (mOnlineWaitingFragment != null) {
+            transaction.remove(mOnlineWaitingFragment);
+            mOnlineWaitingFragment = null;
+            mOnlineWaitingPresenter = null;
         }
         // TODO add all others
 

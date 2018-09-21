@@ -7,25 +7,17 @@ public interface MainContract {
     interface View extends BaseView<Presenter> {
         // offline mode
         void showOfflinePageUi();
-
         void showOfflineGameSettingsPageUi();
-
 
         // online mode
         void showOnlinePageUi();
-
         void showOnlineSearchPageUi();
-
         void showOnlineRoomCreationPageUi();
-
-        void showOnlineGameSettingsPageUi();
-
+        void showOnlineWaitingPageUi();
 
         // in-game pages
         void showDrawingPageUi();
-
         void showGuessingPageUi();
-
 
         // settings
         void showSettingsPageUi();
@@ -34,25 +26,17 @@ public interface MainContract {
     interface Presenter extends BasePresenter {
         // offline mode
         void transToOfflinePage();
-
         void transToOfflineGameSettingsPage();
-
 
         // online mode
         void transToOnlinePage();
-
         void transToOnlineSearchPage();
-
         void transToOnlineRoomCreationPage();
-
-        void transToOnlineGameSettingsPage();
-
+        void transToOnlineWaitingPage(String roomName, int numPlayers, float attemptTime);
 
         // in-game pages
         void transToDrawingPage();
-
         void transToGuessingPage();
-
 
         // settings
         void transToSettingsPage();
