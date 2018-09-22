@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.justinlee.drawmatic.bases.BaseActivity;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class MainActivity extends BaseActivity implements MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private MainContract.Presenter mMainPresenter;
@@ -69,7 +71,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
-        mMainPresenter = presenter;
+        mMainPresenter = checkNotNull(presenter);
     }
 
 

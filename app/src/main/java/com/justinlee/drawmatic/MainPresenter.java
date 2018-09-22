@@ -3,6 +3,8 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import com.justinlee.drawmatic.objects.GameSettings;
+import com.justinlee.drawmatic.objects.OnlineRoom;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.offline.OfflineFragment;
@@ -115,7 +117,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineRoomCreationPage() {
+    public void transToOnlineRoomCreationPage(int roomType) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mCreateRoomFragment == null) mCreateRoomFragment = CreateRoomFragment.newInstance();
@@ -137,14 +139,14 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mCreateRoomFragment);
         }
 
-        if (mCreateRoomPresenter == null) mCreateRoomPresenter = new CreateRoomPresenter(mCreateRoomFragment);
+        if (mCreateRoomPresenter == null) mCreateRoomPresenter = new CreateRoomPresenter(mCreateRoomFragment, roomType);
         transaction.commit();
 
         mMainView.showOnlineRoomCreationPageUi();
     }
 
     @Override
-    public void transToOnlineWaitingPage(String roomName, int numPlayers, float attemptTime) {
+    public void transToOnlineWaitingPage(OnlineRoom onlineRoom) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
@@ -166,10 +168,15 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mOnlineWaitingFragment);
         }
 
-        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, roomName, numPlayers, attemptTime);
+        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoom);
         transaction.commit();
 
         mMainView.showOnlineWaitingPageUi();
+    }
+
+    @Override
+    public void transToSetTopicPage(int gameType, GameSettings gameSettings) {
+        // TODO go to set topic page
     }
 
     @Override

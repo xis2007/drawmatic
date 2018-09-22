@@ -8,9 +8,15 @@
     <color name="colorAccentLight">#feda9e</color>
     <color name="colorAccentDark">#b09568</color>
 
+    <color name="colorNormalOnline">#009ec5</color>
+    <color name="colorNormalOnlineLight">#00cdff</color>
+    <color name="colorNormalOnlineDark">#0085a5</color>
+
     <color name="colorWhite">#ffffff</color>
     <color name="colorGreyLight">#b9b9b9</color>
     <color name="colorGrey">#808080</color>
     <color name="colorGreyDark">#434343</color>
     <color name="colorBlack">#000000</color>
+
+    <color name="colorBlack50">#96000000</color>
 </resources>

@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.online_cereate_room;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +13,8 @@ import android.widget.EditText;
 import com.justinlee.drawmatic.R;
 import com.xw.repo.BubbleSeekBar;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class CreateRoomFragment extends Fragment implements CreateRoomContract.View {
     private static final String TAG = "justin";
 
@@ -33,6 +31,7 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         // Required empty public constructor
     }
 
+
     public static CreateRoomFragment newInstance() {
         return new CreateRoomFragment();
     }
@@ -46,10 +45,8 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         setupSeekbar(rootView);
         setupButtons(rootView);
 
-
         return rootView;
     }
-
 
 
     @Override
@@ -65,12 +62,13 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
 
     @Override
     public void setPresenter(@NonNull CreateRoomContract.Presenter presenter) {
-        mCreateRoomPresenter = presenter;
+        mCreateRoomPresenter = checkNotNull(presenter);
     }
 
     private void setupEditText(View rootView) {
         mEditTextRoomName = rootView.findViewById(R.id.edittext_room_name_create_room);
     }
+
 
     public void setupSeekbar(View rootView) {
         mSeekbarMaxPlayers = rootView.findViewById(R.id.seekbar_payer_number_create_room);
@@ -93,6 +91,7 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         });
     }
 
+
     public void setupButtons(View rootView) {
         Button cancelButton = rootView.findViewById(R.id.button_cancel_create_room);
         Button nextButton = rootView.findViewById(R.id.button_next_create_room);
@@ -101,6 +100,7 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         nextButton.setOnClickListener(buttonOnclickListener);
 
     }
+
 
     private View.OnClickListener buttonOnclickListener = new View.OnClickListener() {
         @Override

@@ -10,7 +10,7 @@ public interface OnlineContract {
 
         void showOnlineSearchPageUi();
 
-        void showOnlineRoomCreationPageUi();
+        void showOnlineRoomCreationPageUi(int roomType);
 
         void showOnlineGameSettingsPageUi();
     }

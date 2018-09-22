@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.justinlee.drawmatic.R;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -55,6 +57,6 @@ public class OfflineFragment extends Fragment implements OfflineContract.View {
 
     @Override
     public void setPresenter(@NonNull OfflineContract.Presenter presenter) {
-        mOfflinePresenter = presenter;
+        mOfflinePresenter = checkNotNull(presenter);
     }
 }

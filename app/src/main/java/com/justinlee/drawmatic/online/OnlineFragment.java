@@ -14,6 +14,9 @@ import android.widget.EditText;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,8 +74,8 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     }
 
     @Override
-    public void showOnlineRoomCreationPageUi() {
-        ((MainActivity) getActivity()).getMainPresenter().transToOnlineRoomCreationPage();
+    public void showOnlineRoomCreationPageUi(int roomType) {
+        ((MainActivity) getActivity()).getMainPresenter().transToOnlineRoomCreationPage(roomType);
     }
 
     @Override
@@ -82,15 +85,15 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     @SuppressLint("RestrictedApi")
     @Override
-    public void setPresenter(@NonNull OnlineContract.Presenter presenter) {
-        mOnlinePresenter = presenter;
+    public void setPresenter(OnlineContract.Presenter presenter) {
+        mOnlinePresenter = checkNotNull(presenter);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.button_online_normal_mode:
-                showOnlineRoomCreationPageUi();
+                showOnlineRoomCreationPageUi(Constants.OnlineGameMode.ONLINE_NORMAL);
                 break;
 
             case R.id.button_online_team_mode:

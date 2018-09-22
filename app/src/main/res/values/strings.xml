@@ -28,7 +28,11 @@
     <!--fragment_online_waiting-->
     <string name="text_hint_room_waiting">Setup Your Room</string>
     <string name="text_button_start_waiting">Start</string>
-    <string name="text_button_cancel_waiting">Cancel</string>
+    <string name="text_button_cancel_waiting">Leave Room</string>
+
+    <!--RoomWaitingAdapter-->
+    <string name="text_room_master">Room Master</string>
+    <string name="type_participant">Participant</string>
 
 
     <!--activity_main-->

@@ -5,11 +5,13 @@ import com.justinlee.drawmatic.bases.BaseView;
 
 public interface OnlineWaitingContract {
     interface View extends BaseView<Presenter> {
-        void showTopicPageUi();
+        void showRoomNameUi(String roomName);
     }
 
     interface Presenter extends BasePresenter {
-        void startPlayingOnline();
+        void leaveRoom(OnlineWaitingFragment fragment);
+
+        void startPlayingOnline(OnlineWaitingFragment fragment);
     }
 
 }

@@ -2,6 +2,8 @@ package com.justinlee.drawmatic;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
+import com.justinlee.drawmatic.objects.GameSettings;
+import com.justinlee.drawmatic.objects.OnlineRoom;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
@@ -31,10 +33,11 @@ public interface MainContract {
         // online mode
         void transToOnlinePage();
         void transToOnlineSearchPage();
-        void transToOnlineRoomCreationPage();
-        void transToOnlineWaitingPage(String roomName, int numPlayers, float attemptTime);
+        void transToOnlineRoomCreationPage(int roomType);
+        void transToOnlineWaitingPage(OnlineRoom onlineRoom);
 
         // in-game pages
+        void transToSetTopicPage(int gameType, GameSettings gameSettings);
         void transToDrawingPage();
         void transToGuessingPage();
 
