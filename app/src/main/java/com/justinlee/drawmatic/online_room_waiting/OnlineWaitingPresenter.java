@@ -1,19 +1,20 @@
 package com.justinlee.drawmatic.online_room_waiting;
 
 import com.justinlee.drawmatic.MainActivity;
-import com.justinlee.drawmatic.objects.OnlineRoom;
+import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.objects.OnlineSettings;
 
 public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     private OnlineWaitingContract.View mOnlineWaitingView;
 
-    private OnlineRoom mOnlineRoom;
+    private OnlineSettings mOnlineSettings;
 
-    public OnlineWaitingPresenter(OnlineWaitingContract.View onlineWaitingView, OnlineRoom onlineRoom) {
+    public OnlineWaitingPresenter(OnlineWaitingContract.View onlineWaitingView, OnlineSettings onlineRoom) {
         mOnlineWaitingView = onlineWaitingView;
         mOnlineWaitingView.setPresenter(this);
 
-        mOnlineRoom = onlineRoom;
+        mOnlineSettings = onlineRoom;
     }
 
     @Override
@@ -23,20 +24,20 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
-        ((MainActivity) fragment.getActivity()).getMainPresenter().transToSetTopicPage(mOnlineRoom.getGameMode(), mOnlineRoom);
+        ((MainActivity) fragment.getActivity()).getMainPresenter().transToSetTopicPage(mOnlineSettings.getGameMode(), new OnlineGame(mOnlineSettings));
     }
 
     @Override
     public void start() {
         // TODO search and check for the room created on server
-        mOnlineWaitingView.showRoomNameUi(mOnlineRoom.getRoomName());
+        mOnlineWaitingView.showRoomNameUi(mOnlineSettings.getRoomName());
     }
 
     public OnlineWaitingContract.View getOnlineWaitingView() {
         return mOnlineWaitingView;
     }
 
-    public OnlineRoom getOnlineRoom() {
-        return mOnlineRoom;
+    public OnlineSettings getOnlineSettings() {
+        return mOnlineSettings;
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.justinlee.drawmatic.bases.BaseActivity;
@@ -14,6 +15,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     private MainContract.Presenter mMainPresenter;
     private BottomNavigationViewEx mPrimaryNavigation;
+
+    private boolean mIsUserInGame = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void showOfflinePageUi() {
-//        mPrimaryNavigation.setCurrentItem(0);
+        mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -36,37 +39,42 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void showOnlinePageUi() {
-//        mPrimaryNavigation.setCurrentItem(1);
+        mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showOnlineSearchPageUi() {
-
+        mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showOnlineRoomCreationPageUi() {
-
+        mPrimaryNavigation.setVisibility(View.GONE);
     }
 
     @Override
     public void showOnlineWaitingPageUi() {
+        mPrimaryNavigation.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void showSetTopicPageUi() {
+        mPrimaryNavigation.setVisibility(View.GONE);
     }
 
     @Override
     public void showDrawingPageUi() {
-
+        mPrimaryNavigation.setVisibility(View.GONE);
     }
 
     @Override
     public void showGuessingPageUi() {
-
+        mPrimaryNavigation.setVisibility(View.GONE);
     }
 
     @Override
     public void showSettingsPageUi() {
-//        mPrimaryNavigation.setCurrentItem(2);
+        mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -81,8 +89,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
      * ***********************************************************************************
      */
     private void setBottomNavigation() {
-        mPrimaryNavigation = findViewById(R.id.bottom_nav);
+        mPrimaryNavigation = findViewById(R.id.bottom_nav_primary);
         mPrimaryNavigation.enableAnimation(false);
+        mPrimaryNavigation.enableShiftingMode(false);
         mPrimaryNavigation.setSelectedItemId(R.id.navigation_online);
         mPrimaryNavigation.setCurrentItem(1);
     }
@@ -123,6 +132,28 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         }
         return false;
     }
+
+    /**
+     * ***********************************************************************************
+     * BottomNavigation Operations
+     * ***********************************************************************************
+     */
+
+//    private void hideAllNav() {
+//        mPrimaryNavigation.setVisibility(View.GONE);
+//        mInGameNavigation.setVisibility(View.GONE);
+//    }
+//
+//    private void showPrimaryNav() {
+//        mPrimaryNavigation.setVisibility(View.VISIBLE);
+//        mInGameNavigation.setVisibility(View.GONE);
+//    }
+//
+//    private void showInGameDrawingNav() {
+//        mPrimaryNavigation.setVisibility(View.GONE);
+//        mInGameNavigation.setVisibility(View.VISIBLE);
+//    }
+
 
     /**
      * ***********************************************************************************

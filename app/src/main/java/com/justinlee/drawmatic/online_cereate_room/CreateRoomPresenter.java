@@ -2,7 +2,7 @@ package com.justinlee.drawmatic.online_cereate_room;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.objects.OnlineRoom;
+import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
         ArrayList<Player> initialPlayerInRoom = new ArrayList<>();
         initialPlayerInRoom.add(roomMaster);
 
-        OnlineRoom onlineRoom = new OnlineRoom(mRoomType, roomName, numPlayers, attemptTime, initialPlayerInRoom);
+        OnlineSettings onlineRoom = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, initialPlayerInRoom);
 
         ((MainActivity) createRoomFragment.getActivity()).getMainPresenter().transToOnlineWaitingPage(onlineRoom);
 

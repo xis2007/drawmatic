@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_clear"
+        android:icon="@drawable/ic_garbage"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_clear"/>
+
+    <item
+        android:id="@+id/navigation_undo"
+        android:icon="@drawable/ic_arrow_left"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_undo"/>
+
+    <item
+        android:id="@+id/navigation_redo"
+        android:icon="@drawable/ic_arrow_right"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_redo"/>
+
+</menu>

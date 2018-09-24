@@ -34,6 +34,11 @@
     <string name="text_room_master">Room Master</string>
     <string name="type_participant">Participant</string>
 
+    <!--navigation_in_game-->
+    <string name="title_clear">Clear</string>
+    <string name="title_undo">Undo</string>
+    <string name="title_redo">Redo</string>
+
 
     <!--activity_main-->
 </resources>
@@ -42,3 +47,10 @@
     <!--credits-->
     <!--Created by Dooder - Freepik.com-->
     <!--https://github.com/Ramotion/fluid-slider-android-->
+
+    <!--left and right arrow-->
+    <!--<div>Icons made by <a href="https://www.flaticon.com/authors/revicon" title="Revicon">Revicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
+    <!--https://www.flaticon.com/packs/system-icons-set-->
+
+
+

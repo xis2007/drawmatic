@@ -3,14 +3,21 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import com.justinlee.drawmatic.objects.GameSettings;
-import com.justinlee.drawmatic.objects.OnlineRoom;
-import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
-import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
+import com.justinlee.drawmatic.in_game_drawing.DrawingFragment;
+import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
+import com.justinlee.drawmatic.in_game_guessing.GuessingFragment;
+import com.justinlee.drawmatic.in_game_guessing.GuessingPresenter;
+import com.justinlee.drawmatic.in_game_set_topic.SetTopicFragment;
+import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
+import com.justinlee.drawmatic.objects.Game;
+import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.offline.OfflineFragment;
 import com.justinlee.drawmatic.offline.OfflinePresenter;
 import com.justinlee.drawmatic.online.OnlineFragment;
 import com.justinlee.drawmatic.online.OnlinePresenter;
+import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
+import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
 import com.justinlee.drawmatic.settings.SettingsFragment;
@@ -25,15 +32,23 @@ public class MainPresenter implements MainContract.Presenter {
     private OnlineFragment mOnlineFragment;
     private OfflineFragment mOfflineFragment;
     private SettingsFragment mSettingsFragment;
+
     private CreateRoomFragment mCreateRoomFragment;
     private OnlineWaitingFragment mOnlineWaitingFragment;
+    private SetTopicFragment mSetTopicFragment;
+    private DrawingFragment mDrawingFragment;
+    private GuessingFragment mGuessingFragment;
 
     // presenters
     private OnlinePresenter mOnlinePresenter;
     private OfflinePresenter mOfflinePresenter;
     private SettingsPresenter mSettingsPresenter;
+
     private CreateRoomPresenter mCreateRoomPresenter;
     private OnlineWaitingPresenter mOnlineWaitingPresenter;
+    private SetTopicPresenter mSetTopicPresenter;
+    private DrawingPresenter mDrawingPresenter;
+    private GuessingPresenter mGuessingPresenter;
 
     public MainPresenter(MainContract.View mainView, FragmentManager fragmentManager) {
         mMainView = mainView;
@@ -58,6 +73,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mOnlineWaitingFragment);
             mOnlineWaitingFragment = null;
             mOnlineWaitingPresenter = null;
+        }
+        if (mSetTopicFragment != null) {
+            transaction.remove(mSetTopicFragment);
+            mSetTopicFragment = null;
+            mSetTopicPresenter = null;
         }
         // TODO add all others
 
@@ -96,6 +116,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mOnlineWaitingFragment);
             mOnlineWaitingFragment = null;
             mOnlineWaitingPresenter = null;
+        }
+        if (mSetTopicFragment != null) {
+            transaction.remove(mSetTopicFragment);
+            mSetTopicFragment = null;
+            mSetTopicPresenter = null;
         }
         // TODO add all others
 
@@ -146,7 +171,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineWaitingPage(OnlineRoom onlineRoom) {
+    public void transToOnlineWaitingPage(OnlineSettings onlineRoom) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
@@ -175,18 +200,94 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToSetTopicPage(int gameType, GameSettings gameSettings) {
+    public void transToSetTopicPage(int gameType, OnlineGame onlineGame) {
         // TODO go to set topic page
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
+        if (mSetTopicFragment == null) mSetTopicFragment = SetTopicFragment.newInstance();
+
+//        if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
+//        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+//        if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
+
+//        if (mCreateRoomFragment != null) {
+//            transaction.remove(mCreateRoomFragment);
+//            mCreateRoomFragment = null;
+//            mCreateRoomPresenter = null;
+//        }
+
+        if (mOnlineWaitingFragment != null) {
+            transaction.remove(mOnlineWaitingFragment);
+            mOnlineWaitingFragment = null;
+            mOnlineWaitingPresenter = null;
+        }
+        // TODO add all others
+
+        if (!mSetTopicFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mSetTopicFragment, "SET_TOPIC");
+        } else {
+            transaction.show(mSetTopicFragment);
+        }
+        if (mSetTopicPresenter == null) mSetTopicPresenter = new SetTopicPresenter(mSetTopicFragment, onlineGame);
+
+        transaction.commit();
+
+        mMainView.showSetTopicPageUi();
     }
 
     @Override
-    public void transToDrawingPage() {
+    public void transToDrawingPage(Game game) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        if (mDrawingFragment == null) mDrawingFragment = DrawingFragment.newInstance();
+
+        if (mSetTopicFragment != null) {
+            transaction.remove(mSetTopicFragment);
+            mSetTopicFragment = null;
+            mSetTopicPresenter = null;
+        }
+        if (mGuessingFragment != null) {
+            transaction.remove(mGuessingFragment);
+            mGuessingFragment = null;
+            mGuessingPresenter = null;
+        }
+        // TODO add all others
+
+        if (!mDrawingFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mDrawingFragment, "DRAWING");
+        } else {
+            transaction.show(mDrawingFragment);
+        }
+
+        if (mDrawingPresenter == null) mDrawingPresenter = new DrawingPresenter(mDrawingFragment, game);
+        transaction.commit();
+
+        mMainView.showDrawingPageUi();
     }
 
     @Override
-    public void transToGuessingPage() {
+    public void transToGuessingPage(Game game) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        if (mGuessingFragment == null) mGuessingFragment = GuessingFragment.newInstance();
+
+        if (mDrawingFragment != null) {
+            transaction.remove(mDrawingFragment);
+            mDrawingFragment = null;
+            mDrawingPresenter = null;
+        }
+        // TODO add all others
+
+        if (!mGuessingFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mGuessingFragment, "GUESSING");
+        } else {
+            transaction.show(mGuessingFragment);
+        }
+
+        if (mGuessingPresenter == null) mGuessingPresenter = new GuessingPresenter(mGuessingFragment, game);
+        transaction.commit();
+
+        mMainView.showGuessingPageUi();
     }
 
     @Override
@@ -207,6 +308,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mOnlineWaitingFragment);
             mOnlineWaitingFragment = null;
             mOnlineWaitingPresenter = null;
+        }
+        if (mSetTopicFragment != null) {
+            transaction.remove(mSetTopicFragment);
+            mSetTopicFragment = null;
+            mSetTopicPresenter = null;
         }
         // TODO add all others
 

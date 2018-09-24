@@ -38,7 +38,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new RoomWaitingAdapter((OnlineWaitingPresenter) mOnlineWaitingPresenter, ((OnlineWaitingPresenter) mOnlineWaitingPresenter).getOnlineRoom().getPlayers());
+        mAdapter = new RoomWaitingAdapter((OnlineWaitingPresenter) mOnlineWaitingPresenter, ((OnlineWaitingPresenter) mOnlineWaitingPresenter).getOnlineSettings().getPlayers());
     }
 
     @Override
@@ -81,7 +81,6 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
         cancelButton.setOnClickListener(buttonOnclickListener);
         nextButton.setOnClickListener(buttonOnclickListener);
-
     }
 
 

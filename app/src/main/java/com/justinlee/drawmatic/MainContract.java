@@ -2,8 +2,9 @@ package com.justinlee.drawmatic;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
-import com.justinlee.drawmatic.objects.GameSettings;
-import com.justinlee.drawmatic.objects.OnlineRoom;
+import com.justinlee.drawmatic.objects.Game;
+import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.objects.OnlineSettings;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
@@ -18,6 +19,7 @@ public interface MainContract {
         void showOnlineWaitingPageUi();
 
         // in-game pages
+        void showSetTopicPageUi();
         void showDrawingPageUi();
         void showGuessingPageUi();
 
@@ -34,12 +36,12 @@ public interface MainContract {
         void transToOnlinePage();
         void transToOnlineSearchPage();
         void transToOnlineRoomCreationPage(int roomType);
-        void transToOnlineWaitingPage(OnlineRoom onlineRoom);
+        void transToOnlineWaitingPage(OnlineSettings onlineRoom);
 
         // in-game pages
-        void transToSetTopicPage(int gameType, GameSettings gameSettings);
-        void transToDrawingPage();
-        void transToGuessingPage();
+        void transToSetTopicPage(int gameType, OnlineGame onlineGame);
+        void transToDrawingPage(Game game);
+        void transToGuessingPage(Game game);
 
         // settings
         void transToSettingsPage();
