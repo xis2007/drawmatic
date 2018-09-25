@@ -1,17 +1,24 @@
 package com.justinlee.drawmatic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.activities.LoginActivity;
 import com.justinlee.drawmatic.bases.BaseActivity;
+import com.justinlee.drawmatic.constants.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainActivity extends BaseActivity implements MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "justinxx";
 
     private MainContract.Presenter mMainPresenter;
     private BottomNavigationViewEx mPrimaryNavigation;
@@ -22,9 +29,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setBottomNavigation();
-        initPresenter();
-        setListeners();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            init();
+        } else {
+            promptForLogin();
+        }
+
+        Log.d(TAG, "saveUserInfo: user name is: " + UserManager.getInstance().getUserName());
+        Log.d(TAG, "saveUserInfo: user id is: " + UserManager.getInstance().getUserId());
     }
 
     @Override
@@ -82,6 +94,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         mMainPresenter = checkNotNull(presenter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.Login.LOGIN_ACTIVITY && resultCode == Constants.Login.LOGIN_SUCCESS) {
+            init();
+        } else if (requestCode == Constants.Login.LOGIN_ACTIVITY && resultCode == Constants.Login.LOGIN_EXIT) {
+            finish();
+        }
+    }
 
     /**
      * ***********************************************************************************
@@ -133,26 +155,23 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         return false;
     }
 
+
     /**
      * ***********************************************************************************
-     * BottomNavigation Operations
+     * Initialization and Login
      * ***********************************************************************************
      */
 
-//    private void hideAllNav() {
-//        mPrimaryNavigation.setVisibility(View.GONE);
-//        mInGameNavigation.setVisibility(View.GONE);
-//    }
-//
-//    private void showPrimaryNav() {
-//        mPrimaryNavigation.setVisibility(View.VISIBLE);
-//        mInGameNavigation.setVisibility(View.GONE);
-//    }
-//
-//    private void showInGameDrawingNav() {
-//        mPrimaryNavigation.setVisibility(View.GONE);
-//        mInGameNavigation.setVisibility(View.VISIBLE);
-//    }
+    private void init() {
+        setBottomNavigation();
+        initPresenter();
+        setListeners();
+    }
+
+    private void promptForLogin() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivityForResult(intent, Constants.Login.LOGIN_ACTIVITY);
+    }
 
 
     /**

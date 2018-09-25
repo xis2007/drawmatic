@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "1054121177762",
+    "firebase_url": "https://drawmatic-jl888.firebaseio.com",
+    "project_id": "drawmatic-jl888",
+    "storage_bucket": "drawmatic-jl888.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054121177762:android:00e2f91ad1354a7c",
+        "android_client_info": {
+          "package_name": "com.justinlee.drawmatic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054121177762-linb0ilm7k150h8hsqg9qqfutu7i8t3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.justinlee.drawmatic",
+            "certificate_hash": "04d330632c06d877f08951a4fba3ca140f432c4b"
+          }
+        },
+        {
+          "client_id": "1054121177762-g4n35d7pndmrfnbi4iks0a4rvl14k5q3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjZda21jIS5lcze73rCBm7rZRXYOXq6Uc"
+        },
+        {
+          "current_key": "AIzaSyBjZda21jIS5lcze73rCBm7rZRXYOXq6Uc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054121177762-g4n35d7pndmrfnbi4iks0a4rvl14k5q3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
