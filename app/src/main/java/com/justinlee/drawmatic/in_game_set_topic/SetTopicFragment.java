@@ -53,13 +53,26 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_set_topic);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_set_topic);
 
-        currentStepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO cancel this function in production
-                mSetTopicPresenter.transToDrawingPageOnline(SetTopicFragment.this);
-            }
-        });
+        currentStepButton.setOnClickListener(setTopicOnClickListener);
+        quitGameButton.setOnClickListener(setTopicOnClickListener);
 
     }
+
+    private View.OnClickListener setTopicOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.button_steps_remaining_set_topic:
+                    mSetTopicPresenter.transToDrawingPageOnline(SetTopicFragment.this);
+                    break;
+
+                case R.id.button_quit_game_set_topic:
+                    mSetTopicPresenter.promptLeaveRoomWarning(SetTopicFragment.this);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
 }

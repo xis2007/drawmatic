@@ -46,13 +46,28 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_guessing);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_guessing);
 
-        currentStepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO cancel this function in production
-                mGuessingPresenter.transToDrawingPage(GuessingFragment.this);
-            }
-        });
+        currentStepButton.setOnClickListener(guessingOnClickListener);
+        quitGameButton.setOnClickListener(guessingOnClickListener);
 
     }
+
+    private View.OnClickListener guessingOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.button_steps_remaining_guessing:
+                    // TODO cancel this function in production
+                    mGuessingPresenter.transToDrawingPage(GuessingFragment.this);
+                    break;
+
+                case R.id.button_quit_game_guessing:
+                    mGuessingPresenter.promptLeaveRoomAlert(GuessingFragment.this);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+    };
 }

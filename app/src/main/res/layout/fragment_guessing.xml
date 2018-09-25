@@ -18,48 +18,68 @@
             android:weightSum="5"
             android:padding="8dp">
 
-            <Button
-                android:id="@+id/button_steps_remaining_guessing"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/box_info_in_game_normal"
-                android:text="Step 6 / 8"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
-                tools:layout_editor_absoluteX="27dp"
-                tools:layout_editor_absoluteY="17dp"/>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button_time_remaining_guessing"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="3"
-                android:background="@drawable/box_info_in_game_normal"
-                android:drawableLeft="@drawable/ic_clock"
-                android:drawableTint="@color/colorPrimary"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="01:56"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="27dp"
-                tools:layout_editor_absoluteY="17dp"/>
+                <Button
+                    android:id="@+id/button_steps_remaining_guessing"
+                    android:layout_width="88dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/box_info_in_game_normal"
+                    android:text="Step 6 / 8"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            <Button
-                android:id="@+id/button_quit_game_guessing"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/box_info_in_game_alert"
-                android:text="Quit"
-                android:textAllCaps="false"
-                android:textColor="@color/colorDanger"
-                tools:layout_editor_absoluteX="27dp"
-                tools:layout_editor_absoluteY="17dp"/>
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_timer"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/text_time_remaining_guessing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="01:56"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <Button
+                    android:id="@+id/button_quit_game_guessing"
+                    android:layout_width="88dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/box_info_in_game_alert"
+                    android:text="Quit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorAlertRed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
         </LinearLayout>
 
         <TextView

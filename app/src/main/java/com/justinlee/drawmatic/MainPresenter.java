@@ -122,6 +122,16 @@ public class MainPresenter implements MainContract.Presenter {
             mSetTopicFragment = null;
             mSetTopicPresenter = null;
         }
+        if (mGuessingFragment != null) {
+            transaction.remove(mGuessingFragment);
+            mGuessingFragment = null;
+            mGuessingPresenter = null;
+        }
+        if (mDrawingFragment != null) {
+            transaction.remove(mDrawingFragment);
+            mDrawingFragment = null;
+            mDrawingPresenter = null;
+        }
         // TODO add all others
 
         if (!mOnlineFragment.isAdded()) {

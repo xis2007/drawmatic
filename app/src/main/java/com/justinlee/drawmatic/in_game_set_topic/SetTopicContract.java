@@ -8,6 +8,8 @@ public interface SetTopicContract {
     }
 
     interface Presenter extends BasePresenter {
+        void promptLeaveRoomWarning(SetTopicFragment fragment);
+
         void leaveRoom(SetTopicFragment fragment);
 
         void transToDrawingPageOnline(SetTopicFragment fragment);

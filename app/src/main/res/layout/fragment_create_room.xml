@@ -175,7 +175,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/box_cancel_button"
                 android:text="@string/text_button_cancel_create_room"
-                android:textColor="@color/colorDanger"/>
+                android:textColor="@color/colorAlertRed"/>
 
             <Button
                 android:id="@+id/button_next_create_room"

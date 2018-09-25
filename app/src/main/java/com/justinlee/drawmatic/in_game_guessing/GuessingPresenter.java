@@ -1,10 +1,10 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 import com.justinlee.drawmatic.MainActivity;
-import com.justinlee.drawmatic.in_game_set_topic.SetTopicFragment;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
     private GuessingContract.View mGuessingView;
@@ -25,7 +25,12 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void leaveRoom(SetTopicFragment fragment) {
+    public void promptLeaveRoomAlert(GuessingFragment fragment) {
+        LeaveGameBottomSheetDialog.newInstance((MainActivity) fragment.getActivity()).show(((MainActivity) fragment.getActivity()).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
+    }
+
+    @Override
+    public void leaveRoom(GuessingFragment fragment) {
 
     }
 

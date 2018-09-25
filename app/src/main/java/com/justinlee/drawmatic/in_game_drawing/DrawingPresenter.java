@@ -5,6 +5,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
@@ -24,6 +25,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             mOnlineGame = null;
             mOfflineGame = (OfflineGame) game;
         }
+    }
+
+    @Override
+    public void promptLeaveRoomAlert(DrawingFragment fragment) {
+        LeaveGameBottomSheetDialog.newInstance((MainActivity) fragment.getActivity()).show(((MainActivity) fragment.getActivity()).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
     }
 
     @Override

@@ -9,6 +9,8 @@ public interface DrawingContract {
     }
 
     interface Presenter extends BasePresenter {
+        void promptLeaveRoomAlert(DrawingFragment fragment);
+
         void leaveRoom(DrawingFragment fragment);
 
         void transToGuessingPage(DrawingFragment fragment);

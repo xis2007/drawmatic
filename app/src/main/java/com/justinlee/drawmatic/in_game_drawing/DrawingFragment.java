@@ -1,8 +1,8 @@
 package com.justinlee.drawmatic.in_game_drawing;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -49,8 +49,6 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         return rootView;
     }
 
-
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -67,15 +65,30 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_drawing);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_drawing);
 
-        currentStepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO cancel this function in production
-                mDrawingPresenter.transToGuessingPage(DrawingFragment.this);
-            }
-        });
+        currentStepButton.setOnClickListener(drawingOnClickListener);
+        quitGameButton.setOnClickListener(drawingOnClickListener);
 
     }
+
+    private View.OnClickListener drawingOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.button_steps_remaining_drawing:
+                    // TODO cancel this function in production
+                    mDrawingPresenter.transToGuessingPage(DrawingFragment.this);
+                    break;
+
+                case R.id.button_quit_game_drawing:
+                    mDrawingPresenter.promptLeaveRoomAlert(DrawingFragment.this);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+    };
 
     private void initDrawingView(View rootView) {
         mDrawView = rootView.findViewById(R.id.drawView);
