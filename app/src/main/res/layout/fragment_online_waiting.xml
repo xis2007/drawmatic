@@ -90,7 +90,5 @@
                 android:textSize="12sp"
                 tools:text="Room Name"/>
         </FrameLayout>
-
     </android.support.constraint.ConstraintLayout>
-
 </FrameLayout>

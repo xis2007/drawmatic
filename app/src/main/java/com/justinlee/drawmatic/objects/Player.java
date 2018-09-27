@@ -31,4 +31,20 @@ public class Player {
     public int getPlayerOrder() {
         return mPlayerOrder;
     }
+
+    public void setPlayerName(String playerName) {
+        mPlayerName = playerName;
+    }
+
+    public void setPlayerId(String playerId) {
+        mPlayerId = playerId;
+    }
+
+    public void setPlayerType(int playerType) {
+        mPlayerType = playerType;
+    }
+
+    public void setPlayerOrder(int playerOrder) {
+        mPlayerOrder = playerOrder;
+    }
 }

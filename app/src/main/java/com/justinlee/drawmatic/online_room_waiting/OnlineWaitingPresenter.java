@@ -25,7 +25,6 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
             mOnlineSettings = null;
             mOfflineSettings = (OfflineSettings) onlineRoom;
         }
-
     }
 
     @Override
@@ -36,6 +35,16 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
         ((MainActivity) fragment.getActivity()).getMainPresenter().transToSetTopicPage(mOnlineSettings.getGameMode(), new OnlineGame(mOnlineSettings));
+    }
+
+    @Override
+    public void informToHideLoadingUi(OnlineWaitingFragment fragment) {
+        ((MainActivity) fragment.getActivity()).hideLoadingUi();
+    }
+
+    @Override
+    public void informToShowLoadingUi(OnlineWaitingFragment fragment) {
+        ((MainActivity) fragment.getActivity()).showLoadingUi();
     }
 
     @Override

@@ -25,6 +25,11 @@ public interface MainContract {
 
         // settings
         void showSettingsPageUi();
+
+        // loading Ui
+        void showLoadingUi();
+
+        void hideLoadingUi();
     }
 
     interface Presenter extends BasePresenter {

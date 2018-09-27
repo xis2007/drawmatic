@@ -51,4 +51,32 @@ public class OnlineSettings extends GameSettings {
     public ArrayList<Player> getPlayers() {
         return mPlayers;
     }
+
+    public void setRoomName(String roomName) {
+        mRoomName = roomName;
+    }
+
+    public void setGameMode(int gameMode) {
+        mGameMode = gameMode;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        mMaxPlayers = maxPlayers;
+    }
+
+    public void setCurrentNumPlayers(int currentNumPlayers) {
+        mCurrentNumPlayers = currentNumPlayers;
+    }
+
+    public void setAttemptTime(float attemptTime) {
+        mAttemptTime = attemptTime;
+    }
+
+    public void setCurrentStep(int currentStep) {
+        mCurrentStep = currentStep;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        mPlayers = players;
+    }
 }

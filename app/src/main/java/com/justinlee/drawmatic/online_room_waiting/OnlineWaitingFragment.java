@@ -47,7 +47,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
         mTextHintWaiting = rootView.findViewById(R.id.text_hint_waiting);
         initRecyclerView(rootView);
-        setupButtons(rootView);
+        setupButtonsAndViews(rootView);
 
         return rootView;
     }
@@ -69,13 +69,24 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         mTextHintWaiting.setText(roomName);
     }
 
+//    @Override
+//    public void showLoadingSign() {
+//        mLoadingLayout.setVisibility(View.VISIBLE);
+//    }
+//
+//
+//    @Override
+//    public void hideLoadingSign() {
+//        mLoadingLayout.setVisibility(View.GONE);
+//    }
+
     @Override
     public void setPresenter(@NonNull OnlineWaitingContract.Presenter presenter) {
         mOnlineWaitingPresenter = checkNotNull(presenter);
     }
 
 
-    public void setupButtons(View rootView) {
+    public void setupButtonsAndViews(View rootView) {
         Button cancelButton = rootView.findViewById(R.id.button_leave_room_waiting);
         Button nextButton = rootView.findViewById(R.id.button_start_game_waiting);
 
@@ -89,11 +100,13 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_leave_room_waiting:
+                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
                     mOnlineWaitingPresenter.leaveRoom(OnlineWaitingFragment.this);
                     break;
 
                 case R.id.button_start_game_waiting:
                     //TODO not complete yet
+                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
                     mOnlineWaitingPresenter.startPlayingOnline(OnlineWaitingFragment.this);
                     break;
 

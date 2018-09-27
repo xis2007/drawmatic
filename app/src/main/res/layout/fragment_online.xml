@@ -13,15 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frame_search_bar"/>
-
         <ScrollView
             android:id="@+id/boxes_scrollview_online"
             android:layout_width="0dp"
@@ -88,6 +79,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/searchbox_online"
                 android:ems="10"
+                android:imeOptions="actionDone"
                 android:hint="@string/text_hint_input_online"
                 android:inputType="textPersonName"
                 android:singleLine="true"
@@ -96,6 +88,17 @@
                 android:textColorHint="@drawable/selector_hint_online_search"
                 android:textSize="14sp"/>
         </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/room_list_recyclerview_online"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frame_search_bar"/>
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

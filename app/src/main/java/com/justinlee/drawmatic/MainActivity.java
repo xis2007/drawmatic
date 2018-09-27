@@ -3,11 +3,13 @@ package com.justinlee.drawmatic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.justinlee.drawmatic.User.UserManager;
@@ -22,6 +24,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     private MainContract.Presenter mMainPresenter;
     private BottomNavigationViewEx mPrimaryNavigation;
+
+    private ConstraintLayout mLoadingLayout;
+    private SpinKitView mLoadingView;
 
     private boolean mIsUserInGame = false;
 
@@ -90,6 +95,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
+    public void showLoadingUi() {
+        mLoadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingUi() {
+        mLoadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mMainPresenter = checkNotNull(presenter);
     }
@@ -107,7 +122,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     /**
      * ***********************************************************************************
-     * Bottom Nav Settings
+     * Bottom Nav and Views Setup
      * ***********************************************************************************
      */
     private void setBottomNavigation() {
@@ -116,6 +131,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         mPrimaryNavigation.enableShiftingMode(false);
         mPrimaryNavigation.setSelectedItemId(R.id.navigation_online);
         mPrimaryNavigation.setCurrentItem(1);
+    }
+
+    private void setLoadingViews() {
+        mLoadingLayout = findViewById(R.id.layout_loading);
+        mLoadingLayout.setVisibility(View.GONE);
     }
 
 
@@ -166,6 +186,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         setBottomNavigation();
         initPresenter();
         setListeners();
+        setLoadingViews();
     }
 
     private void promptForLogin() {

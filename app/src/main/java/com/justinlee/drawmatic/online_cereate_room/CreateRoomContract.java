@@ -7,10 +7,6 @@ import com.justinlee.drawmatic.objects.OnlineSettings;
 public interface CreateRoomContract {
     interface View extends BaseView<Presenter> {
         void showCreatedRoomUi();
-
-        void showLoadingSign();
-
-        void hideLoadingSign();
     }
 
     interface Presenter extends BasePresenter {
@@ -19,5 +15,9 @@ public interface CreateRoomContract {
         void cancelRoomCreation(CreateRoomFragment createRoomFragment);
 
         void transToRoomWaitingPage(CreateRoomFragment createRoomFragment, OnlineSettings onlineSettings);
+
+        void informToHideLoadingUi(CreateRoomFragment createRoomFragment);
+
+        void informToShowLoadingUi(CreateRoomFragment createRoomFragment);
     }
 }

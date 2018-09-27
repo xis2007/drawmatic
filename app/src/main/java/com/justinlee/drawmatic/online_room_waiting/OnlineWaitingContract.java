@@ -12,6 +12,10 @@ public interface OnlineWaitingContract {
         void leaveRoom(OnlineWaitingFragment fragment);
 
         void startPlayingOnline(OnlineWaitingFragment fragment);
+
+        void informToHideLoadingUi(OnlineWaitingFragment fragment);
+
+        void informToShowLoadingUi(OnlineWaitingFragment fragment);
     }
 
 }

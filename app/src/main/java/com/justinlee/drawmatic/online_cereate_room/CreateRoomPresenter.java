@@ -43,6 +43,16 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
+    public void informToHideLoadingUi(CreateRoomFragment createRoomFragment) {
+        ((MainActivity) createRoomFragment.getActivity()).hideLoadingUi();
+    }
+
+    @Override
+    public void informToShowLoadingUi(CreateRoomFragment createRoomFragment) {
+        ((MainActivity) createRoomFragment.getActivity()).showLoadingUi();
+    }
+
+    @Override
     public void start() {
 
     }
