@@ -30,7 +30,9 @@ dependencies {
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation 'com.xw.repo:bubbleseekbar:3.19-lite'
     implementation 'com.github.divyanshub024:AndroidDraw:v0.1'
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
 

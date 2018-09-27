@@ -40,10 +40,10 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
         Player currentPlayer = mPlayers.get(position);
 
         if (currentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
-            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+//            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
             ((PlayerViewHolder) holder).getPlayerType().setText(R.string.text_room_master);
         } else {
-            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+//            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
             ((PlayerViewHolder) holder).getPlayerType().setText(R.string.type_participant);
         }
 

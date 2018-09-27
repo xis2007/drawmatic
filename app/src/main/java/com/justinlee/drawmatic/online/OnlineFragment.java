@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.constants.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -75,7 +73,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     @Override
     public void showOnlineRoomCreationPageUi(int roomType) {
-        ((MainActivity) getActivity()).getMainPresenter().transToOnlineRoomCreationPage(roomType);
+
     }
 
     @Override
@@ -93,7 +91,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.button_online_normal_mode:
-                showOnlineRoomCreationPageUi(Constants.OnlineGameMode.ONLINE_NORMAL);
+                mOnlinePresenter.goToOnlineNormalMode(this);
                 break;
 
             case R.id.button_online_team_mode:

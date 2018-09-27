@@ -65,6 +65,6 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:srcCompat="@drawable/oval_player_profile_waiting"/>
+        app:srcCompat="@drawable/ic_room_master"/>
 
 </android.support.constraint.ConstraintLayout>

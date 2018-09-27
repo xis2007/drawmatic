@@ -1,13 +1,17 @@
 package com.justinlee.drawmatic.online_cereate_room;
 
 import com.justinlee.drawmatic.MainActivity;
+import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
 import java.util.ArrayList;
 
 public class CreateRoomPresenter implements CreateRoomContract.Presenter {
+    private static final String TAG = "justinx";
+
     private CreateRoomContract.View mCreateRoomView;
     private int mRoomType;
 
@@ -19,8 +23,13 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void sendRoomCreationRequest() {
+    public void createRoom(final CreateRoomFragment createRoomFragment, final String roomName, final int numPlayers, final float attemptTime) {
+        Player roomMaster = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.ROOM_MASTER, 1);
+        ArrayList<Player> playersList =  new ArrayList<>();
+        playersList.add(roomMaster);
+        final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
 
+        new FirestoreManager(createRoomFragment.getContext()).createOnlineRoom(this, onlineSettings, mCreateRoomView);
     }
 
     @Override
@@ -29,16 +38,8 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void transToRoomWaitingPage(CreateRoomFragment createRoomFragment, String roomName, int numPlayers, float attemptTime) {
-        // TODO from database
-        Player roomMaster = new Player(Constants.PlayerType.ROOM_MASTER, "Justin", 1);
-        ArrayList<Player> initialPlayerInRoom = new ArrayList<>();
-        initialPlayerInRoom.add(roomMaster);
-
-        OnlineSettings onlineRoom = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, initialPlayerInRoom);
-
-        ((MainActivity) createRoomFragment.getActivity()).getMainPresenter().transToOnlineWaitingPage(onlineRoom);
-
+    public void transToRoomWaitingPage(CreateRoomFragment createRoomFragment, OnlineSettings onlineSettings) {
+        ((MainActivity) createRoomFragment.getActivity()).getMainPresenter().transToOnlineWaitingPage(onlineSettings);
     }
 
     @Override

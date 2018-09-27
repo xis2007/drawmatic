@@ -16,6 +16,8 @@ public interface OnlineContract {
     }
 
     interface Presenter extends BasePresenter {
+        void goToOnlineNormalMode(OnlineFragment onlineFragment);
+
         void startPlayingOnline();
     }
 }

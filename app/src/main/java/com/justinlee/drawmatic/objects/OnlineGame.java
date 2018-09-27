@@ -7,7 +7,7 @@ public class OnlineGame extends Game {
     private float mDrawingAndGuessingTimeAllowed;
 
     private boolean mIsPlayersOddumbered;
-    private int mTotalStpes;
+    private int mTotalSteps;
     private int mCurrentStep;
 
     public OnlineGame(OnlineSettings onlineSettings) {
@@ -17,7 +17,7 @@ public class OnlineGame extends Game {
         mDrawingAndGuessingTimeAllowed = mOnlineSettings.getAttemptTime();
 
         mIsPlayersOddumbered = (mOnlineSettings.getPlayers().size() % 2) != 0;
-        mTotalStpes = mIsPlayersOddumbered ? mOnlineSettings.getPlayers().size() : mOnlineSettings.getPlayers().size() + 1;
+        mTotalSteps = mIsPlayersOddumbered ? mOnlineSettings.getPlayers().size() : mOnlineSettings.getPlayers().size() + 1;
         mCurrentStep = 1;
     }
 
@@ -37,8 +37,8 @@ public class OnlineGame extends Game {
         return mIsPlayersOddumbered;
     }
 
-    public int getTotalStpes() {
-        return mTotalStpes;
+    public int getTotalSteps() {
+        return mTotalSteps;
     }
 
     public int getCurrentStep() {

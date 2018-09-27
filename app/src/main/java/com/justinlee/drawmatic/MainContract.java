@@ -36,7 +36,7 @@ public interface MainContract {
         void transToOnlinePage();
         void transToOnlineSearchPage();
         void transToOnlineRoomCreationPage(int roomType);
-        void transToOnlineWaitingPage(OnlineSettings onlineRoom);
+        void transToOnlineWaitingPage(OnlineSettings onlineRoomSettings);
 
         // in-game pages
         void transToSetTopicPage(int gameType, OnlineGame onlineGame);

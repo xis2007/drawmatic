@@ -181,7 +181,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineWaitingPage(OnlineSettings onlineRoom) {
+    public void transToOnlineWaitingPage(OnlineSettings onlineRoomSettings) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
@@ -203,7 +203,7 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mOnlineWaitingFragment);
         }
 
-        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoom);
+        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoomSettings);
         transaction.commit();
 
         mMainView.showOnlineWaitingPageUi();
