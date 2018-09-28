@@ -1,7 +1,7 @@
 package com.justinlee.drawmatic.online_cereate_room;
 
 import com.justinlee.drawmatic.MainActivity;
-import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.OnlineSettings;
@@ -24,9 +24,11 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void createRoom(final CreateRoomFragment createRoomFragment, final String roomName, final int numPlayers, final float attemptTime) {
-        Player roomMaster = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.ROOM_MASTER, 1);
+        Player roomMaster = ((MainPresenter) ((MainActivity) createRoomFragment.getActivity()).getMainPresenter()).getCurrentPlayer();
+        roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
         ArrayList<Player> playersList =  new ArrayList<>();
         playersList.add(roomMaster);
+
         final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
 
         new FirestoreManager(createRoomFragment.getContext()).createOnlineRoom(this, onlineSettings, mCreateRoomView);

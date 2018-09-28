@@ -50,6 +50,13 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
         ((PlayerViewHolder) holder).getPlayerName().setText(currentPlayer.getPlayerName());
     }
 
+    public void swapList(ArrayList<Player> players) {
+        if (mPlayers != players) {
+            mPlayers = players;
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mPlayers.size();

@@ -9,6 +9,7 @@ public class OnlineSettings extends GameSettings {
     private int mCurrentNumPlayers;
     private float mAttemptTime;
     private int mCurrentStep;
+    private boolean mIsInGame;
     private ArrayList<Player> mPlayers;
 
     public OnlineSettings() {
@@ -21,7 +22,16 @@ public class OnlineSettings extends GameSettings {
         mCurrentNumPlayers = 1;
         mAttemptTime = attemptTime;
         mCurrentStep = 1;
+        mIsInGame = false;
         mPlayers = players;
+    }
+
+    public boolean isInGame() {
+        return mIsInGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        mIsInGame = inGame;
     }
 
     public int getGameMode() {

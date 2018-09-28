@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.RoomWaitingAdapter;
 
@@ -23,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class OnlineWaitingFragment extends Fragment implements OnlineWaitingContract.View {
     private OnlineWaitingContract.Presenter mOnlineWaitingPresenter;
     private RecyclerView mPlayersRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RoomWaitingAdapter mAdapter;
 
     TextView mTextHintWaiting;
 
@@ -55,6 +56,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((MainContract.View) getActivity()).showLoadingUi();
         mOnlineWaitingPresenter.start();
     }
 
@@ -106,7 +108,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
                 case R.id.button_start_game_waiting:
                     //TODO not complete yet
-                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
+//                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
                     mOnlineWaitingPresenter.startPlayingOnline(OnlineWaitingFragment.this);
                     break;
 
@@ -115,4 +117,17 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
             }
         }
     };
+
+    /**
+     * ***********************************************************************************
+     * Getters and Setters
+     * ***********************************************************************************
+     */
+    public RecyclerView getPlayersRecyclerView() {
+        return mPlayersRecyclerView;
+    }
+
+    public RoomWaitingAdapter getAdapter() {
+        return mAdapter;
+    }
 }

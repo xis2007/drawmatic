@@ -4,7 +4,7 @@ public class Player {
     private String mPlayerName;
     private String mPlayerId;
     private int mPlayerType;
-    private int mPlayerOrder;
+//    private int mPlayerOrder;
 
     public Player() {
     }
@@ -13,7 +13,7 @@ public class Player {
         mPlayerName = playerName;
         mPlayerId = playerId;
         mPlayerType = playerType;
-        mPlayerOrder = playerOrder;
+//        mPlayerOrder = playerOrder;
     }
 
     public String getPlayerName() {
@@ -28,9 +28,9 @@ public class Player {
         return mPlayerType;
     }
 
-    public int getPlayerOrder() {
-        return mPlayerOrder;
-    }
+//    public int getPlayerOrder() {
+//        return mPlayerOrder;
+//    }
 
     public void setPlayerName(String playerName) {
         mPlayerName = playerName;
@@ -44,7 +44,7 @@ public class Player {
         mPlayerType = playerType;
     }
 
-    public void setPlayerOrder(int playerOrder) {
-        mPlayerOrder = playerOrder;
-    }
+//    public void setPlayerOrder(int playerOrder) {
+//        mPlayerOrder = playerOrder;
+//    }
 }

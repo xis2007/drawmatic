@@ -30,5 +30,7 @@ public interface OnlineContract {
         void informToShowResultRooms(ArrayList<OnlineSettings> onlineRoomSettings);
 
         void joinSelectedRoom(OnlineSettings onlineSettings);
+
+        void informToTransToOnlineWaitingPage(OnlineSettings onlineSettings);
     }
 }

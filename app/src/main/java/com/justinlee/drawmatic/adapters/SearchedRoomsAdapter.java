@@ -54,7 +54,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mOnlineGameSettings.size();
+        return mOnlineGameSettings.get(0) == null ? 0 : mOnlineGameSettings.size();
     }
 
     public void swapList(ArrayList<OnlineSettings> gameSettings) {

@@ -1,11 +1,15 @@
 package com.justinlee.drawmatic.online_room_waiting;
 
 import com.justinlee.drawmatic.MainActivity;
+import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.GameSettings;
 import com.justinlee.drawmatic.objects.OfflineSettings;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
+import com.justinlee.drawmatic.objects.Player;
+
+import java.util.ArrayList;
 
 public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
@@ -29,6 +33,12 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
+        Player userAdPlayer = ((MainPresenter) ((MainActivity) fragment.getActivity()).getMainPresenter()).getCurrentPlayer();;
+        new FirestoreManager(fragment.getContext()).leaveRoom(fragment, mOnlineSettings, userAdPlayer);
+    }
+
+    @Override
+    public void deleteRoom(OnlineWaitingFragment fragment) {
         new FirestoreManager(fragment.getContext()).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
     }
 
@@ -48,11 +58,26 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     }
 
     @Override
+    public void syncOnlineNewRoomStatus(ArrayList<OnlineSettings> newOnlineSettings) {
+        mOnlineSettings = newOnlineSettings.get(0);
+        if (mOnlineSettings != null) {
+            ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineSettings.getPlayers());
+        }
+    }
+
+    @Override
     public void start() {
         // TODO search and check for the room created on server
         mOnlineWaitingView.showRoomNameUi(mOnlineSettings.getRoomName());
+        new FirestoreManager(((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
     }
 
+
+    /**
+     * ***********************************************************************************
+     * Getters and Setters
+     * ***********************************************************************************
+     */
     public OnlineWaitingContract.View getOnlineWaitingView() {
         return mOnlineWaitingView;
     }

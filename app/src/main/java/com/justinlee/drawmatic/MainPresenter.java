@@ -2,7 +2,10 @@ package com.justinlee.drawmatic;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.view.View;
 
+import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.in_game_drawing.DrawingFragment;
 import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
 import com.justinlee.drawmatic.in_game_guessing.GuessingFragment;
@@ -12,6 +15,7 @@ import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
+import com.justinlee.drawmatic.objects.Player;
 import com.justinlee.drawmatic.offline.OfflineFragment;
 import com.justinlee.drawmatic.offline.OfflinePresenter;
 import com.justinlee.drawmatic.online.OnlineFragment;
@@ -24,6 +28,8 @@ import com.justinlee.drawmatic.settings.SettingsFragment;
 import com.justinlee.drawmatic.settings.SettingsPresenter;
 
 public class MainPresenter implements MainContract.Presenter {
+    private Player mCurrentPlayer;
+
     private MainContract.View mMainView;
 
     private FragmentManager mFragmentManager;
@@ -142,6 +148,10 @@ public class MainPresenter implements MainContract.Presenter {
 
         if (mOnlinePresenter == null) mOnlinePresenter = new OnlinePresenter(mOnlineFragment);
         transaction.commit();
+
+        if (mOnlineFragment.getSearchResultRecyclerView() != null) {
+            mOnlineFragment.getSearchResultRecyclerView().setVisibility(View.GONE);
+        }
 
         mMainView.showOnlinePageUi();
     }
@@ -342,5 +352,21 @@ public class MainPresenter implements MainContract.Presenter {
     public void start() {
         // TODO change to transToOffline
         transToOnlinePage();
+        initializeCurrentPlayer();
+    }
+
+
+    private void initializeCurrentPlayer() {
+        mCurrentPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, -1);
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Getters and Setters
+     * ***********************************************************************************
+     */
+    public Player getCurrentPlayer() {
+        return mCurrentPlayer;
     }
 }

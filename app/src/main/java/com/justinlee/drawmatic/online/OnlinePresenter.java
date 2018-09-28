@@ -46,7 +46,12 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     @Override
     public void joinSelectedRoom(OnlineSettings onlineSettings) {
         Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, onlineSettings.getCurrentNumPlayers() + 1);
-        new FirestoreManager(((Fragment) mOnlineView).getActivity()).joinRoom((OnlineFragment) mOnlineView, onlineSettings, userAsPlayer);
+        new FirestoreManager(((Fragment) mOnlineView).getActivity()).joinRoom((OnlineFragment) mOnlineView, onlineSettings, this, userAsPlayer);
+    }
+
+    @Override
+    public void informToTransToOnlineWaitingPage(OnlineSettings onlineSettings) {
+        ((MainActivity) ((OnlineFragment) mOnlineView).getActivity()).getMainPresenter().transToOnlineWaitingPage(onlineSettings);
     }
 
     @Override

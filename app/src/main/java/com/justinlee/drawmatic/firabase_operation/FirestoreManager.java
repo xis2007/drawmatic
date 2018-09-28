@@ -12,6 +12,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
@@ -19,18 +21,23 @@ import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 import com.justinlee.drawmatic.online.OnlineContract;
 import com.justinlee.drawmatic.online.OnlineFragment;
+import com.justinlee.drawmatic.online.OnlinePresenter;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomContract;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingContract;
+import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.annotation.Nullable;
 
 public class FirestoreManager {
     private static final String TAG = "justinx";
@@ -92,6 +99,7 @@ public class FirestoreManager {
      */
     public void searchForRoom(final OnlineFragment onlineFragment, final OnlineContract.Presenter onlinePresenter, String inputString) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(inputString);
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -107,6 +115,17 @@ public class FirestoreManager {
                 }
             }
         });
+
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(documentSnapshot));
+            }
+        });
     }
 
     private ArrayList<OnlineSettings> transformDocumentSnapshotToRoomsList(DocumentSnapshot documentSnapshot) {
@@ -117,8 +136,7 @@ public class FirestoreManager {
         return onlineSettingsList;
     }
 
-
-    public void joinRoom(final OnlineFragment onlineFragment, final OnlineSettings onlineSettings, final Player joiningPlayer) {
+    public void joinRoom(final OnlineFragment onlineFragment, final OnlineSettings onlineSettings, final OnlinePresenter onlinePresenter, final Player joiningPlayer) {
         final DocumentReference roomToJoinRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
 
         Drawmatic.getmFirebaseDb().runTransaction(new Transaction.Function<Void>() {
@@ -134,37 +152,135 @@ public class FirestoreManager {
                     double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
                     transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
 
+                    HashMap<String, Object> player = new HashMap<>();
+                    player.put("playerName", joiningPlayer.getPlayerName());
+                    player.put("playerId", joiningPlayer.getPlayerId());
+//                    player.put("playerOrder", newCurrentNumPlayers);
+                    player.put("playerType", Constants.PlayerType.PARTICIPANT);
 
-                    HashMap<String, Object> players = new HashMap<>();
-                    players.put(String.valueOf(newCurrentNumPlayers), joiningPlayer);
-//                    transaction.set(roomToJoinRef, players);
-//                    transaction.update(roomToJoinRef, "players", FieldValue.arrayUnion(players));
-                    transaction.set(roomToJoinRef, players);
+                    transaction.update(roomToJoinRef, "players", FieldValue.arrayUnion(player));
                 }
-
-                // Success
                 return null;
             }
         })
-        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onlinePresenter.informToTransToOnlineWaitingPage(onlineSettings);
+//                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
+                        Log.d(TAG, "Transaction success!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
+                        Log.w(TAG, "Transaction failure.", e);
+                    }
+                });
+    }
+
+
+    public void leaveRoom(final OnlineWaitingFragment onlineWaitingFragment, final OnlineSettings onlineSettings, final Player leavingPlayer) {
+        if (leavingPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
+            deleteRoomWhenRoomMasterLeaves(onlineWaitingFragment, onlineSettings, leavingPlayer);
+
+        } else {
+            final DocumentReference roomToLeaveRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
+
+            Drawmatic.getmFirebaseDb().runTransaction(new Transaction.Function<Void>() {
+                @Override
+                public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                    DocumentSnapshot snapshot = transaction.get(roomToLeaveRef);
+                    OnlineSettings mostCurrentOnlineSettings = snapshot.toObject(OnlineSettings.class);
+
+                    // if room players maxed out, then player cannot join the game
+
+                    double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
+                    transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
+
+                    HashMap<String, Object> player = new HashMap<>();
+                    player.put("playerName", leavingPlayer.getPlayerName());
+                    player.put("playerId", leavingPlayer.getPlayerId());
+//                    player.put("playerOrder", newCurrentNumPlayers);
+                    player.put("playerType", leavingPlayer.getPlayerType());
+
+                    transaction.update(roomToLeaveRef, "players", FieldValue.arrayRemove(player));
+
+                    return null;
+                }
+            })
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
+                            ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                            Log.d(TAG, "Transaction success!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                            Log.w(TAG, "Transaction failure.", e);
+                        }
+                    });
+        }
+    }
+
+    public void deleteRoomWhenRoomMasterLeaves(final OnlineWaitingFragment onlineWaitingFragment, final OnlineSettings onlineSettings, final Player leavingPlayer) {
+        Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        ((MainActivity) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                    }
+                });
+    }
+
+
+    /**
+     * *********************************************************************************
+     * Room Status Syncing
+     * **********************************************************************************
+     */
+    public void syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineSettings onlineSettings) {
+        DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
-                Log.d(TAG, "Transaction success!");
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        onlineWaitingPresenter.syncOnlineNewRoomStatus(transformDocumentSnapshotToRoomsList(document));
+                        ((MainContract.View) ((OnlineWaitingFragment) onlineWaitingView).getActivity()).hideLoadingUi();
+                    } else {
+                        Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                        // TODO room was deleted by room master, player needs to leave the room
+                    }
+                } else {
+                    Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                }
             }
-        })
-        .addOnFailureListener(new OnFailureListener() {
+        });
+
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
-                Log.w(TAG, "Transaction failure.", e);
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                onlineWaitingPresenter.syncOnlineNewRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
             }
         });
     }
-
-    public void leaveRoom() {
-
-    }
-
-
 }
