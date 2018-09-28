@@ -9,16 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SetTopicFragment extends Fragment implements SetTopicContract.View {
     private SetTopicContract.Presenter mSetTopicPresenter;
+
+    Button mCurrentStepButton;
+    Button mQuitGameButton;
+
+    private TextView mTextTimeRemaining;
+    private EditText mEditTextTopicInput;
 
     public SetTopicFragment() {
         // Required empty public constructor
@@ -34,6 +39,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         View rootView = inflater.inflate(R.layout.fragment_set_topic, container, false);
 
         initButtons(rootView);
+        initViews(rootView);
 
         return rootView;
     }
@@ -50,12 +56,11 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     }
 
     public void initButtons(View rootView) {
-        Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_set_topic);
-        Button quitGameButton = rootView.findViewById(R.id.button_quit_game_set_topic);
+        mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_set_topic);
+        mQuitGameButton = rootView.findViewById(R.id.button_quit_game_set_topic);
 
-        currentStepButton.setOnClickListener(setTopicOnClickListener);
-        quitGameButton.setOnClickListener(setTopicOnClickListener);
-
+        mCurrentStepButton.setOnClickListener(setTopicOnClickListener);
+        mQuitGameButton.setOnClickListener(setTopicOnClickListener);
     }
 
     private View.OnClickListener setTopicOnClickListener = new View.OnClickListener() {
@@ -75,4 +80,29 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
             }
         }
     };
+
+    private void initViews(View rootView) {
+        mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_set_topic);
+        mEditTextTopicInput = rootView.findViewById(R.id.edittext_topic_input);
+    }
+
+    @Override
+    public void updateTimer(long currentCountDoenTime) {
+        mTextTimeRemaining.setText(String.valueOf(currentCountDoenTime));
+    }
+
+    @Override
+    public void showCurrentStep(int currentStep, int maxPlayers) {
+        mCurrentStepButton.setText(currentStep + " / " + maxPlayers);
+    }
+
+
+    /**
+     * *********************************************************************************
+     * Getters and Setters
+     * **********************************************************************************
+     */
+    public TextView getTextTimeRemaining() {
+        return mTextTimeRemaining;
+    }
 }

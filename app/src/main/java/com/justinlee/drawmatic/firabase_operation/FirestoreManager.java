@@ -21,8 +21,10 @@ import com.google.firebase.firestore.WriteBatch;
 import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
+import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 import com.justinlee.drawmatic.online.OnlineContract;
@@ -251,100 +253,30 @@ public class FirestoreManager {
      * *********************************************************************************
      * Start Game and Room Status Syncing
      * **********************************************************************************
-     * @param onlineSettings
      */
-
     public void startOnlineGame(final OnlineWaitingFragment onlineWaitingFragment, final OnlineSettings onlineSettings) {
+        Log.d(TAG, "startandsync: start");
         WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
 
         DocumentReference roomRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
         batch.update(roomRef, "inGame", true);
 
-
         HashMap<String, Object> playersMap = new HashMap<>();
-
         for(int i = 0; i < onlineSettings.getPlayers().size(); i++) {
-            playersMap.put("playerOrder", i+1);
+            playersMap.put("playerOrder", i + 1);
             DocumentReference drawingsRef = roomRef.collection("drawings").document(onlineSettings.getPlayers().get(i).getPlayerId());
             batch.set(drawingsRef, playersMap);
         }
 
-
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                OnlineGame onlineGame = new OnlineGame(onlineSettings);
+                ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToSetTopicPage(onlineSettings.getGameMode(), onlineGame);
+
                 ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//        final DocumentReference roomRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
-//
-//        Drawmatic.getmFirebaseDb().runTransaction(new Transaction.Function<Void>() {
-//            @Override
-//            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-//                DocumentSnapshot snapshot = transaction.get(roomRef);
-//                OnlineSettings mostCurrentOnlineSettings = snapshot.toObject(OnlineSettings.class);
-//
-//                // change inGame status to true
-//                transaction.update(roomRef, "inGame", true);
-//                HashMap<String, Object> playersMap = new HashMap<>();
-//
-//                for(int i = 0; i < mostCurrentOnlineSettings.getPlayers().size(); i++) {
-//                    playersMap.put("playerOrder", i+1);
-//                }
-//
-//                DocumentReference drawingsRef = roomRef.collection("drawings").document().set(playersMap);
-//
-//
-//
-//                return null;
-//            }
-//        })
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
-//                        ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
-//                        Log.d(TAG, "Transaction success!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
-//                        Log.w(TAG, "Transaction failure.", e);
-//                    }
-//                });
-//
-//
-//        ((MainActivity) fragment.getActivity()).getMainPresenter().transToSetTopicPage(mOnlineSettings.getGameMode(), new OnlineGame(mOnlineSettings));
     }
 
 
@@ -379,7 +311,10 @@ public class FirestoreManager {
                 ArrayList<OnlineSettings> onlineSettingsList = transformDocumentSnapshotToRoomsList(documentSnapshot);
                 OnlineSettings onlineSettings = onlineSettingsList.get(0);
 
-                if (onlineSettings.isInGame()) {
+                int currentPlayerType = ((MainPresenter) ((MainActivity) ((OnlineWaitingFragment) onlineWaitingView).getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType();
+
+                if ((currentPlayerType == Constants.PlayerType.PARTICIPANT) && onlineSettings.isInGame() && (onlineWaitingView != null)) {
+                    Log.d(TAG, "startandsyncccc: sync");
                     onlineWaitingPresenter.startPlayingOnline((OnlineWaitingFragment) onlineWaitingView);
                 } else {
                     onlineWaitingPresenter.syncOnlineNewRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
@@ -387,4 +322,10 @@ public class FirestoreManager {
             }
         });
     }
+
+    /**
+     * *********************************************************************************
+     * In game monitoring
+     * **********************************************************************************
+     */
 }

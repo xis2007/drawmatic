@@ -1,5 +1,7 @@
 package com.justinlee.drawmatic.in_game_set_topic;
 
+import android.os.CountDownTimer;
+
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
@@ -35,6 +37,27 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     }
 
     @Override
+    public void setAndStartTimer() {
+        new CountDownTimer(10 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long secUntilFinish = millisUntilFinished / 1000;
+                mSetTopicView.updateTimer(secUntilFinish);
+            }
+
+            @Override
+            public void onFinish() {
+                ((MainActivity) ((SetTopicFragment) mSetTopicView).getActivity()).getMainPresenter().transToDrawingPage(mOnlineGame);
+            }
+        }.start();
+    }
+
+    @Override
+    public void setCurrentStep() {
+        mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+    }
+
+    @Override
     public void transToDrawingPageOnline(SetTopicFragment fragment) {
         if (mOnlineGame != null) {
             ((MainActivity) fragment.getActivity()).getMainPresenter().transToDrawingPage(mOnlineGame);
@@ -46,6 +69,22 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void start() {
+        setAndStartTimer();
+        setCurrentStep();
+    }
 
+
+
+    /**
+     * *********************************************************************************
+     * Getters and Setters
+     * **********************************************************************************
+     */
+    public OnlineGame getOnlineGame() {
+        return mOnlineGame;
+    }
+
+    public OfflineGame getOfflineGame() {
+        return mOfflineGame;
     }
 }

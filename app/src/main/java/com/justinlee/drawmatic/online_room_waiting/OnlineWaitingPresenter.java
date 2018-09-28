@@ -44,7 +44,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
         informToShowLoadingUi();
-        new FirestoreManager(fragment.getContext()).startOnlineGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineSettings);
+        new FirestoreManager(fragment.getContext()).startOnlineGame(fragment, mOnlineSettings);
     }
 
     @Override
