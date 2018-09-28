@@ -66,7 +66,7 @@ public class OnlineSettings extends GameSettings {
         mRoomName = roomName;
     }
 
-    public void setGameMode(int gameMode) {
+    public void setGameModfe(int gameMode) {
         mGameMode = gameMode;
     }
 

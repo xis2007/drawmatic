@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
+import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.RoomWaitingAdapter;
+import com.justinlee.drawmatic.constants.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -90,10 +93,18 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
     public void setupButtonsAndViews(View rootView) {
         Button cancelButton = rootView.findViewById(R.id.button_leave_room_waiting);
-        Button nextButton = rootView.findViewById(R.id.button_start_game_waiting);
+        Button startGameButton = rootView.findViewById(R.id.button_start_game_waiting);
 
         cancelButton.setOnClickListener(buttonOnclickListener);
-        nextButton.setOnClickListener(buttonOnclickListener);
+        startGameButton.setOnClickListener(buttonOnclickListener);
+
+        if (((MainPresenter) ((MainActivity) getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType() == Constants.PlayerType.PARTICIPANT) {
+            startGameButton.setVisibility(View.INVISIBLE);
+            startGameButton.setClickable(false);
+        } else {
+            startGameButton.setVisibility(View.VISIBLE);
+            startGameButton.setClickable(true);
+        }
     }
 
 
@@ -102,7 +113,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_leave_room_waiting:
-                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
+                    mOnlineWaitingPresenter.informToShowLoadingUi();
                     mOnlineWaitingPresenter.leaveRoom(OnlineWaitingFragment.this);
                     break;
 

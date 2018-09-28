@@ -5,7 +5,6 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.GameSettings;
 import com.justinlee.drawmatic.objects.OfflineSettings;
-import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
@@ -44,17 +43,18 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
-        ((MainActivity) fragment.getActivity()).getMainPresenter().transToSetTopicPage(mOnlineSettings.getGameMode(), new OnlineGame(mOnlineSettings));
+        informToShowLoadingUi();
+        new FirestoreManager(fragment.getContext()).startOnlineGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineSettings);
     }
 
     @Override
-    public void informToHideLoadingUi(OnlineWaitingFragment fragment) {
-        ((MainActivity) fragment.getActivity()).hideLoadingUi();
+    public void informToHideLoadingUi() {
+        ((MainActivity) ((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).hideLoadingUi();
     }
 
     @Override
-    public void informToShowLoadingUi(OnlineWaitingFragment fragment) {
-        ((MainActivity) fragment.getActivity()).showLoadingUi();
+    public void informToShowLoadingUi() {
+        ((MainActivity) ((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).showLoadingUi();
     }
 
     @Override

@@ -18,9 +18,9 @@ public interface OnlineWaitingContract {
 
         void startPlayingOnline(OnlineWaitingFragment fragment);
 
-        void informToHideLoadingUi(OnlineWaitingFragment fragment);
+        void informToHideLoadingUi();
 
-        void informToShowLoadingUi(OnlineWaitingFragment fragment);
+        void informToShowLoadingUi();
 
         void syncOnlineNewRoomStatus(ArrayList<OnlineSettings> newOnlineSettings);
     }
