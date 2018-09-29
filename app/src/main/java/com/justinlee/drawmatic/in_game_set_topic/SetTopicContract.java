@@ -19,6 +19,6 @@ public interface SetTopicContract {
 
         void setCurrentStep();
 
-        void transToDrawingPageOnline(SetTopicFragment fragment);
+        void transToDrawingPageOnline();
     }
 }

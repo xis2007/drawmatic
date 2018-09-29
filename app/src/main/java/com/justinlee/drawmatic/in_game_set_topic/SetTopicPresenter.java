@@ -58,15 +58,20 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        if(mOnlineGame.isPlayersOddumbered()) {
+            mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        } else {
+            mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps() + 1);
+        }
+
     }
 
     @Override
-    public void transToDrawingPageOnline(SetTopicFragment fragment) {
+    public void transToDrawingPageOnline() {
         if (mOnlineGame != null) {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToDrawingPage(mOnlineGame);
+            ((MainActivity) ((SetTopicFragment) mSetTopicView).getActivity()).getMainPresenter().transToDrawingPage(mOnlineGame);
         } else {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToDrawingPage(mOfflineGame);
+            ((MainActivity) ((SetTopicFragment) mSetTopicView).getActivity()).getMainPresenter().transToDrawingPage(mOfflineGame);
         }
 
     }

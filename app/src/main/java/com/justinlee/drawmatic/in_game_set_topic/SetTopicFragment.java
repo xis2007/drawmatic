@@ -68,7 +68,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_steps_remaining_set_topic:
-                    mSetTopicPresenter.transToDrawingPageOnline(SetTopicFragment.this);
+                    mSetTopicPresenter.transToDrawingPageOnline();
                     break;
 
                 case R.id.button_quit_game_set_topic:

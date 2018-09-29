@@ -50,7 +50,7 @@
         tools:text="Room Master / Player"/>
 
     <ImageView
-        android:id="@+id/image_player_profile_background"
+        android:id="@+id/image_player_profile_pic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"

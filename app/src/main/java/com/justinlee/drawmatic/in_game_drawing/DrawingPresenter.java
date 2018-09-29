@@ -1,7 +1,11 @@
 package com.justinlee.drawmatic.in_game_drawing;
 
+import android.os.CountDownTimer;
+
 import com.divyanshu.draw.widget.DrawView;
 import com.justinlee.drawmatic.MainActivity;
+import com.justinlee.drawmatic.MainContract;
+import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -11,6 +15,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
 
     private DrawingContract.View mDrawingView;
+
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -62,7 +67,43 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void setTopic(String topicString) {
+        // TODO set topic after getting data from firestore
+    }
 
+    @Override
+    public void setAndStartTimer() {
+        new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long secUntilFinish = millisUntilFinished / 1000;
+                mDrawingView.updateTimer(secUntilFinish);
+            }
+
+            @Override
+            public void onFinish() {
+                ((MainContract.View) ((DrawingFragment) mDrawingView).getActivity()).showLoadingUi();
+//                new FirestoreManager(((SetTopicFragment) mDrawingView).getActivity()).updateCurrentStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+            }
+        }.start();
+    }
+
+    @Override
+    public void setCurrentStep() {
+        if(mOnlineGame.isPlayersOddumbered()) {
+            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        } else {
+            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps() + 1);
+        }
+    }
+
+    @Override
+    public void start() {
+        setAndStartTimer();
+        setCurrentStep();
+
+        ((MainContract.View) ((DrawingFragment) mDrawingView).getActivity()).hideLoadingUi();
+        new FirestoreManager(((DrawingFragment) mDrawingView).getActivity()).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+    // TODO get topic (odd even numbers) ; set all players currentStepProgress to 0 (only game master does this); monitors when all players change progress to 1
     }
 }

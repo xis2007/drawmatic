@@ -6,6 +6,11 @@ import com.justinlee.drawmatic.bases.BaseView;
 
 public interface DrawingContract {
     interface View extends BaseView<Presenter> {
+        void showTopic(String topic);
+
+        void updateTimer(long currentCountDoenTime);
+
+        void showCurrentStep(int currentStep, int maxPlayers);
     }
 
     interface Presenter extends BasePresenter {
@@ -20,5 +25,11 @@ public interface DrawingContract {
         void undoDrawing(DrawView drawView);
 
         void redoDrawing(DrawView drawView);
+
+        void setTopic(String topicString);
+
+        void setAndStartTimer();
+
+        void setCurrentStep();
     }
 }

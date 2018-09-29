@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.divyanshu.draw.widget.DrawView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -27,7 +28,12 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
 
     private DrawingContract.Presenter mDrawingPresenter;
     private BottomNavigationViewEx mInGameNavigation;
+
+
     private DrawView mDrawView;
+    private Button mCurrentStepButton;
+    private TextView mTextTimeRemaining;
+    private TextView mTextTopicDrawing;
 
     public DrawingFragment() {
         // Required empty public constructor
@@ -45,6 +51,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         initButtons(rootView);
         initDrawingView(rootView);
         initBottomNav(rootView);
+        initViews(rootView);
 
         return rootView;
     }
@@ -61,13 +68,17 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         Log.d(TAG, "setPresenter: presenter set " + presenter.toString());
     }
 
-    public void initButtons(View rootView) {
-        Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_drawing);
+    private void initButtons(View rootView) {
+        mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_drawing);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_drawing);
 
-        currentStepButton.setOnClickListener(drawingOnClickListener);
+        mCurrentStepButton.setOnClickListener(drawingOnClickListener);
         quitGameButton.setOnClickListener(drawingOnClickListener);
+    }
 
+    private void initViews(View rootView) {
+        mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_drawing);
+        mTextTopicDrawing = rootView.findViewById(R.id.textView_topic_drawing);
     }
 
     private View.OnClickListener drawingOnClickListener = new View.OnClickListener() {
@@ -121,4 +132,19 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
             return false;
         }
     };
+
+    @Override
+    public void showTopic(String topic) {
+        mTextTopicDrawing.setText(topic);
+    }
+
+    @Override
+    public void updateTimer(long currentCountDoenTime) {
+        mTextTimeRemaining.setText(String.valueOf(currentCountDoenTime));
+    }
+
+    @Override
+    public void showCurrentStep(int currentStep, int maxPlayers) {
+        mCurrentStepButton.setText(currentStep + " / " + maxPlayers);
+    }
 }

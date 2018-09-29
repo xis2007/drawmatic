@@ -26,6 +26,7 @@ public class BaseActivity extends AppCompatActivity {
 
         setStatusBar();
         setToolBarHeight();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     /**

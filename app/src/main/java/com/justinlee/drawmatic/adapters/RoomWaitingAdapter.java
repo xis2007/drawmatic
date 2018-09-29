@@ -40,10 +40,10 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
         Player currentPlayer = mPlayers.get(position);
 
         if (currentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
-//            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+            ((PlayerViewHolder) holder).getProfilePic().setImageResource(R.drawable.ic_room_master);
             ((PlayerViewHolder) holder).getPlayerType().setText(R.string.text_room_master);
         } else {
-//            ((PlayerViewHolder) holder).getProfileBackground().setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            ((PlayerViewHolder) holder).getProfilePic().setImageResource(R.drawable.ic_player);
             ((PlayerViewHolder) holder).getPlayerType().setText(R.string.type_participant);
         }
 
@@ -63,7 +63,7 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
     }
 
     public class PlayerViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mProfileBackground;
+        private ImageView mProfilePic;
         private TextView mPlayerName;
         private TextView mPlayerType;
         private int mPlayerOrder;
@@ -72,13 +72,13 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
         public PlayerViewHolder(View itemView) {
             super(itemView);
 
-            mProfileBackground = itemView.findViewById(R.id.image_player_profile_background);
+            mProfilePic = itemView.findViewById(R.id.image_player_profile_pic);
             mPlayerName = itemView.findViewById(R.id.text_player_name_waiting);
             mPlayerType = itemView.findViewById(R.id.text_player_type);
         }
 
-        public ImageView getProfileBackground() {
-            return mProfileBackground;
+        public ImageView getProfilePic() {
+            return mProfilePic;
         }
 
         public TextView getPlayerName() {
