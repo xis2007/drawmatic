@@ -47,4 +47,14 @@ public class Player {
 //    public void setPlayerOrder(int playerOrder) {
 //        mPlayerOrder = playerOrder;
 //    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Player)) return false;
+
+        Player anotherPlayer = (Player) obj;
+        return this.getPlayerId().equals(anotherPlayer.getPlayerId());
+
+    }
 }

@@ -50,7 +50,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             @Override
             public void onFinish() {
                 ((MainContract.View) ((SetTopicFragment) mSetTopicView).getActivity()).showLoadingUi();
-                new FirestoreManager(((SetTopicFragment) mSetTopicView).getActivity()).updateCurrentStepProgress(mOnlineGame);
+                new FirestoreManager(((SetTopicFragment) mSetTopicView).getActivity()).updateCurrentStepProgressAndUploadTopic(mOnlineGame);
             }
         }.start();
     }

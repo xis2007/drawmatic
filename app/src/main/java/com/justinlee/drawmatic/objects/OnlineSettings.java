@@ -1,6 +1,9 @@
 package com.justinlee.drawmatic.objects;
 
+import com.justinlee.drawmatic.util.PlayerIdComparator;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class OnlineSettings extends GameSettings {
     private String mRoomName;
@@ -88,5 +91,11 @@ public class OnlineSettings extends GameSettings {
 
     public void setGameModfe(int gameMode) {
         mGameMode = gameMode;
+    }
+
+    public ArrayList<Player> generateSortedPlayersListById() {
+        ArrayList<Player> sortedPlayersList = new ArrayList<>(mPlayers);
+        Collections.sort(sortedPlayersList, new PlayerIdComparator());
+        return sortedPlayersList;
     }
 }

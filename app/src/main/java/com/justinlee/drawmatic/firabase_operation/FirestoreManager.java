@@ -269,8 +269,13 @@ public class FirestoreManager {
 
         HashMap<String, Object> playersMap = new HashMap<>();
         for (int i = 0; i < onlineSettings.getPlayers().size(); i++) {
-            playersMap.put("playerOrder", i + 1);
+            // sets orders for each player by sorting their id
+            ArrayList<Player> sortedPlayers = onlineSettings.generateSortedPlayersListById();
+            Player currentPlayer = ((MainPresenter) ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter()).getCurrentPlayer();
+            int currentPlayerOrder = sortedPlayers.indexOf(currentPlayer) + 1;
+            playersMap.put("playerOrder", currentPlayerOrder);
             DocumentReference drawingsRef = roomRef.collection("drawings").document(onlineSettings.getPlayers().get(i).getPlayerId());
+
             batch.set(drawingsRef, playersMap);
         }
 
@@ -314,13 +319,13 @@ public class FirestoreManager {
                     Log.w(TAG, "Listen failed.", e);
                     return;
                 }
+
                 ArrayList<OnlineSettings> onlineSettingsList = transformDocumentSnapshotToRoomsList(documentSnapshot);
                 OnlineSettings onlineSettings = onlineSettingsList.get(0);
 
                 int currentPlayerType = ((MainPresenter) ((MainActivity) ((OnlineWaitingFragment) onlineWaitingView).getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType();
 
                 if ((currentPlayerType == Constants.PlayerType.PARTICIPANT) && onlineSettings.isInGame() && (onlineWaitingView != null)) {
-                    Log.d(TAG, "startandsyncccc: sync");
                     onlineWaitingPresenter.startPlayingOnline((OnlineWaitingFragment) onlineWaitingView);
                 } else {
                     onlineWaitingPresenter.syncOnlineNewRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
@@ -331,17 +336,13 @@ public class FirestoreManager {
 
     /**
      * *********************************************************************************
-     * In game monitoring and progress updates
+     * In game monitoring and progress updates (Set Topic Fragment)
      * **********************************************************************************
      */
     public void monitorSetTopicProgress(final SetTopicContract.View setTopicView, final SetTopicPresenter setTopicPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName());
 
-        // only room master needs to reset the progress of each step
-//        if (((MainPresenter) ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
-//            docRef.set(new ProgressOfPlayersOfEachStep(onlineGame.getOnlineSettings().getPlayers()).getProgressOfEachPlayer());
-//        }
-
+        // room master set all players current step progress to 0, meaning no one has finished this step
         if (((MainPresenter) ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
             HashMap<String, Object> progressMap = new HashMap<>();
@@ -352,7 +353,6 @@ public class FirestoreManager {
             }
             batch.commit();
         }
-
 
         docRef.collection("progressOfEachStep").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -371,45 +371,15 @@ public class FirestoreManager {
                 // if the totalProgressOfThisStep == numPlayers, then it means every one finishes, so move the next step
                 // room master should reset the value at the beginning of the next step
                 if (totalProgressOfThisStep == onlineGame.getOnlineSettings().getPlayers().size()) {
+                    onlineGame.increamentCurrentStep();
                     ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).getMainPresenter().transToDrawingPage(onlineGame);
                     ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).hideLoadingUi();
                 }
             }
         });
-                ////////
-
-
-
-//        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//                if (e != null) {
-//                    Log.w(TAG, "Listen failed.", e);
-//                    return;
-//                }
-//                Log.d(TAG, "onEvent: " + documentSnapshot.getData().toString());
-//                // count how many people finished this step, 1 means finished, 0 means not yet
-//                int totalProgressOfThisStep = 0;
-//                for (Player player : onlineGame.getOnlineSettings().getPlayers()) {
-//
-//                    DocumentReference playerProgressRef = documentSnapshot.getReference().collection("progressOfEachStep").document(player.getPlayerId());
-//                    int playerProgressOfThisStep = playerProgressRef.get().;
-//                    if (playerProgressOfThisStep == 1) {
-//                        totalProgressOfThisStep++;
-//                    }
-//                }
-//
-//                // if the totalProgressOfThisStep == numPlayers, then it means every one finishes, so move the next step
-//                // room master should reset the value at the beginning of the next step
-//                if (totalProgressOfThisStep == onlineGame.getOnlineSettings().getPlayers().size()) {
-//                    ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).getMainPresenter().transToDrawingPage(onlineGame);
-//                    ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).hideLoadingUi();
-//                }
-//            }
-//        });
     }
 
-    public void updateCurrentStepProgress(OnlineGame onlineGame) {
+    public void updateCurrentStepProgressAndUploadTopic(OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("progressOfEachStep").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
 
         HashMap<String, Integer> currentPlayerProgress = new HashMap<>();
@@ -417,4 +387,13 @@ public class FirestoreManager {
 
         docRef.update("finishedCurrentStep", 1);
     }
+
+
+    /**
+     * *********************************************************************************
+     * In game monitoring and progress updates (Set Topic Fragment)
+     * **********************************************************************************
+     */
+
+    
 }

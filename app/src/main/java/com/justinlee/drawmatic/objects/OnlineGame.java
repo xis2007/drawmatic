@@ -48,4 +48,8 @@ public class OnlineGame extends Game {
     public int getCurrentStep() {
         return mCurrentStep;
     }
+
+    public void increamentCurrentStep() {
+        mCurrentStep++;
+    }
 }
