@@ -373,19 +373,24 @@ public class FirestoreManager {
                 if (totalProgressOfThisStep == onlineGame.getOnlineSettings().getPlayers().size()) {
                     onlineGame.increamentCurrentStep();
                     ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).getMainPresenter().transToDrawingPage(onlineGame);
-                    ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).hideLoadingUi();
+//                    ((MainActivity) ((SetTopicFragment) setTopicView).getActivity()).hideLoadingUi();
                 }
             }
         });
     }
 
-    public void updateCurrentStepProgressAndUploadTopic(OnlineGame onlineGame) {
-        final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("progressOfEachStep").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
+    public void updateCurrentStepProgressAndUploadTopic(OnlineGame onlineGame, String inputTopic) {
+        WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
 
-        HashMap<String, Integer> currentPlayerProgress = new HashMap<>();
-        currentPlayerProgress.put(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId(), 1);
+        // updating that user has finished this step
+        DocumentReference currentUserProgressRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("progressOfEachStep").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
+        batch.update(currentUserProgressRef, "finishedCurrentStep", 1);
 
-        docRef.update("finishedCurrentStep", 1);
+        // updating the input topic
+        DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
+        batch.update(currentUserDrawingsRef, String.valueOf(onlineGame.getCurrentStep()), inputTopic);
+
+        batch.commit();
     }
 
 
@@ -395,5 +400,5 @@ public class FirestoreManager {
      * **********************************************************************************
      */
 
-    
+
 }

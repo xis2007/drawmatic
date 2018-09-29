@@ -105,4 +105,8 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     public TextView getTextTimeRemaining() {
         return mTextTimeRemaining;
     }
+
+    public EditText getEditTextTopicInput() {
+        return mEditTextTopicInput;
+    }
 }

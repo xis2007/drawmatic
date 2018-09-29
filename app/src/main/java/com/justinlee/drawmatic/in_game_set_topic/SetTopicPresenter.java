@@ -12,6 +12,7 @@ import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class SetTopicPresenter implements SetTopicContract.Presenter {
     private SetTopicContract.View mSetTopicView;
+
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -50,7 +51,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             @Override
             public void onFinish() {
                 ((MainContract.View) ((SetTopicFragment) mSetTopicView).getActivity()).showLoadingUi();
-                new FirestoreManager(((SetTopicFragment) mSetTopicView).getActivity()).updateCurrentStepProgressAndUploadTopic(mOnlineGame);
+                new FirestoreManager(((SetTopicFragment) mSetTopicView).getActivity()).updateCurrentStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
             }
         }.start();
     }
