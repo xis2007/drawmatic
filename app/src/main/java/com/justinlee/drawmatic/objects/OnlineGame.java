@@ -25,6 +25,10 @@ public class OnlineGame extends Game {
         return mOnlineSettings;
     }
 
+    public void setOnlineSettings(OnlineSettings onlineSettings) {
+        mOnlineSettings = onlineSettings;
+    }
+
     public float getSetTopicTimeAllowed() {
         return mSetTopicTimeAllowed;
     }

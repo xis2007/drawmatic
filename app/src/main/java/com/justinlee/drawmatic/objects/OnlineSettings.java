@@ -26,14 +26,6 @@ public class OnlineSettings extends GameSettings {
         mPlayers = players;
     }
 
-    public boolean isInGame() {
-        return mIsInGame;
-    }
-
-    public void setInGame(boolean inGame) {
-        mIsInGame = inGame;
-    }
-
     public int getGameMode() {
         return mGameMode;
     }
@@ -42,51 +34,59 @@ public class OnlineSettings extends GameSettings {
         return mRoomName;
     }
 
-    public int getMaxPlayers() {
-        return mMaxPlayers;
-    }
-
-    public int getCurrentNumPlayers() {
-        return mCurrentNumPlayers;
-    }
-
-    public float getAttemptTime() {
-        return mAttemptTime;
-    }
-
-    public int getCurrentStep() {
-        return mCurrentStep;
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return mPlayers;
-    }
-
     public void setRoomName(String roomName) {
         mRoomName = roomName;
     }
 
-    public void setGameModfe(int gameMode) {
-        mGameMode = gameMode;
+    public int getMaxPlayers() {
+        return mMaxPlayers;
     }
 
     public void setMaxPlayers(int maxPlayers) {
         mMaxPlayers = maxPlayers;
     }
 
+    public int getCurrentNumPlayers() {
+        return mCurrentNumPlayers;
+    }
+
     public void setCurrentNumPlayers(int currentNumPlayers) {
         mCurrentNumPlayers = currentNumPlayers;
+    }
+
+    public float getAttemptTime() {
+        return mAttemptTime;
     }
 
     public void setAttemptTime(float attemptTime) {
         mAttemptTime = attemptTime;
     }
 
+    public int getCurrentStep() {
+        return mCurrentStep;
+    }
+
     public void setCurrentStep(int currentStep) {
         mCurrentStep = currentStep;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return mPlayers;
+    }
+
+    public boolean isInGame() {
+        return mIsInGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        mIsInGame = inGame;
+    }
+
     public void setPlayers(ArrayList<Player> players) {
         mPlayers = players;
+    }
+
+    public void setGameModfe(int gameMode) {
+        mGameMode = gameMode;
     }
 }

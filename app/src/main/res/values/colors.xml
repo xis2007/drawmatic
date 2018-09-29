@@ -4,9 +4,13 @@
     <color name="colorPrimaryLight">#5ab4a5</color>
     <color name="colorPrimaryDark">#327d6e</color>
 
-    <color name="colorAccent">#d2b482</color>
+    <color name="colorAccent">#ffdca0</color>
     <color name="colorAccentLight">#feda9e</color>
     <color name="colorAccentDark">#b09568</color>
+
+    <color name="colorThird">#ffe6e1</color>
+    <color name="colorThirdLight">#feda9e</color>
+    <color name="colorThirdDark">#b09568</color>
 
     <color name="colorNormalOnline">#009ec5</color>
     <color name="colorNormalOnlineLight">#00cdff</color>
