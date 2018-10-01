@@ -184,7 +184,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mCreateRoomFragment);
         }
 
-        if (mCreateRoomPresenter == null) mCreateRoomPresenter = new CreateRoomPresenter(mCreateRoomFragment, roomType);
+        if (mCreateRoomPresenter == null) {
+            mCreateRoomPresenter = new CreateRoomPresenter(mCreateRoomFragment, roomType);
+            mCreateRoomPresenter.setMainView(mMainView);
+            mCreateRoomPresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         mMainView.showOnlineRoomCreationPageUi();
@@ -213,7 +217,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mOnlineWaitingFragment);
         }
 
-        if (mOnlineWaitingPresenter == null) mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoomSettings);
+        if (mOnlineWaitingPresenter == null) {
+            mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoomSettings);
+            mOnlineWaitingPresenter.setMainView(mMainView);
+            mOnlineWaitingPresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         mMainView.showOnlineWaitingPageUi();
@@ -225,16 +233,6 @@ public class MainPresenter implements MainContract.Presenter {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mSetTopicFragment == null) mSetTopicFragment = SetTopicFragment.newInstance();
-
-//        if (mOfflineFragment != null) transaction.hide(mOfflineFragment);
-//        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
-//        if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
-
-//        if (mCreateRoomFragment != null) {
-//            transaction.remove(mCreateRoomFragment);
-//            mCreateRoomFragment = null;
-//            mCreateRoomPresenter = null;
-//        }
 
         if (mOnlineWaitingFragment != null) {
             transaction.remove(mOnlineWaitingFragment);
@@ -248,7 +246,11 @@ public class MainPresenter implements MainContract.Presenter {
         } else {
             transaction.show(mSetTopicFragment);
         }
-        if (mSetTopicPresenter == null) mSetTopicPresenter = new SetTopicPresenter(mSetTopicFragment, onlineGame);
+        if (mSetTopicPresenter == null) {
+            mSetTopicPresenter = new SetTopicPresenter(mSetTopicFragment, onlineGame);
+            mSetTopicPresenter.setMainView(mMainView);
+            mSetTopicPresenter.setMainPresenter(this);
+        }
 
         transaction.commit();
 
@@ -279,7 +281,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mDrawingFragment);
         }
 
-        if (mDrawingPresenter == null) mDrawingPresenter = new DrawingPresenter(mDrawingFragment, game);
+        if (mDrawingPresenter == null) {
+            mDrawingPresenter = new DrawingPresenter(mDrawingFragment, game);
+            mDrawingPresenter.setMainView(mMainView);
+            mDrawingPresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         mMainView.showDrawingPageUi();
@@ -304,7 +310,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mGuessingFragment);
         }
 
-        if (mGuessingPresenter == null) mGuessingPresenter = new GuessingPresenter(mGuessingFragment, game);
+        if (mGuessingPresenter == null) {
+            mGuessingPresenter = new GuessingPresenter(mGuessingFragment, game);
+            mGuessingPresenter.setMainView(mMainView);
+            mGuessingPresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         mMainView.showGuessingPageUi();

@@ -108,14 +108,14 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_cancel_create_room:
-                    mCreateRoomPresenter.informToHideLoadingUi(CreateRoomFragment.this);
-                    mCreateRoomPresenter.cancelRoomCreation(CreateRoomFragment.this);
+                    mCreateRoomPresenter.informToHideLoadingUi();
+                    mCreateRoomPresenter.cancelRoomCreation();
                     break;
 
                 case R.id.button_next_create_room:
                     //TODO not complete yet
-                    mCreateRoomPresenter.informToShowLoadingUi(CreateRoomFragment.this);
-                    mCreateRoomPresenter.createRoom(CreateRoomFragment.this, mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
+                    mCreateRoomPresenter.informToShowLoadingUi();
+                    mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
                     break;
 
                 default:

@@ -5,6 +5,11 @@ import com.justinlee.drawmatic.bases.BaseView;
 
 public interface GuessingContract {
     interface View extends BaseView<Presenter> {
+        void showDrawing(String topic);
+
+        void updateTimer(long currentCountDoenTime);
+
+        void showCurrentStep(int currentStep, int numPlayers);
     }
 
     interface Presenter extends BasePresenter {
@@ -12,7 +17,17 @@ public interface GuessingContract {
 
         void leaveRoom(GuessingFragment fragment);
 
-        void transToDrawingPage(GuessingFragment fragment);
+        void transToDrawingPage();
+
+        void setDrawing(String imageUrl);
+
+        void setAndStartTimer();
+
+        void setCurrentStep();
+
+        void startMonitoringPlayerGuessingProgress();
+
+        void startGuessing();
 
         void finishGame();
     }

@@ -1,13 +1,22 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
+import android.os.CountDownTimer;
+
 import com.justinlee.drawmatic.MainActivity;
+import com.justinlee.drawmatic.MainContract;
+import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
+    private MainContract.View mMainView;
+    private MainContract.Presenter mMainPresenter;
+
     private GuessingContract.View mGuessingView;
+
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -26,7 +35,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void promptLeaveRoomAlert(GuessingFragment fragment) {
-        LeaveGameBottomSheetDialog.newInstance((MainActivity) fragment.getActivity()).show(((MainActivity) fragment.getActivity()).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
+        LeaveGameBottomSheetDialog.newInstance((MainActivity) mMainView).show(((MainActivity) mMainView).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
     }
 
     @Override
@@ -35,13 +44,51 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void transToDrawingPage(GuessingFragment fragment) {
+    public void transToDrawingPage() {
         if (mOnlineGame != null) {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToDrawingPage(mOnlineGame);
+            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
         } else {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToDrawingPage(mOfflineGame);
+            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         }
 
+    }
+
+    @Override
+    public void setDrawing(String imageUrl) {
+        mGuessingView.showDrawing(imageUrl);
+    }
+
+    @Override
+    public void setAndStartTimer() {
+        new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long secUntilFinish = millisUntilFinished / 1000;
+                mGuessingView.updateTimer(secUntilFinish);
+            }
+
+            @Override
+            public void onFinish() {
+                mMainView.showLoadingUi();
+//                new FirestoreManager(((SetTopicFragment) mDrawingView).getActivity()).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+            }
+        }.start();
+    }
+
+    @Override
+    public void setCurrentStep() {
+        mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps() + 1);
+    }
+
+    @Override
+    public void startMonitoringPlayerGuessingProgress() {
+        new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
+    }
+
+    @Override
+    public void startGuessing() {
+        mMainView.hideLoadingUi();
+        setAndStartTimer();
     }
 
     @Override
@@ -52,5 +99,20 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     @Override
     public void start() {
 
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Set MainView and MainPresenters to get reference to them
+     * ***********************************************************************************
+     */
+    public void setMainView(MainContract.View mainView) {
+        mMainView = mainView;
+    }
+
+
+    public void setMainPresenter(MainPresenter mainPresenter) {
+        mMainPresenter = mainPresenter;
     }
 }

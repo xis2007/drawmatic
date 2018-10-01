@@ -1,6 +1,7 @@
 package com.justinlee.drawmatic.online_room_waiting;
 
 import com.justinlee.drawmatic.MainActivity;
+import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.GameSettings;
@@ -11,6 +12,8 @@ import com.justinlee.drawmatic.objects.Player;
 import java.util.ArrayList;
 
 public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
+    private MainContract.View mMainView;
+    private MainContract.Presenter mMainPresenter;
 
     private OnlineWaitingContract.View mOnlineWaitingView;
 
@@ -32,29 +35,29 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
-        Player userAdPlayer = ((MainPresenter) ((MainActivity) fragment.getActivity()).getMainPresenter()).getCurrentPlayer();;
-        new FirestoreManager(fragment.getContext()).leaveRoom(fragment, mOnlineSettings, userAdPlayer);
+        Player userAdPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
+        new FirestoreManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineSettings, userAdPlayer);
     }
 
     @Override
-    public void deleteRoom(OnlineWaitingFragment fragment) {
-        new FirestoreManager(fragment.getContext()).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
+    public void deleteRoom() {
+        new FirestoreManager((MainActivity) mMainView).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
     }
 
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
         informToShowLoadingUi();
-        new FirestoreManager(fragment.getContext()).startOnlineGame(fragment, mOnlineSettings);
+        new FirestoreManager((MainActivity) mMainView).startOnlineGame(fragment, mOnlineSettings);
     }
 
     @Override
     public void informToHideLoadingUi() {
-        ((MainActivity) ((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).hideLoadingUi();
+        mMainView.hideLoadingUi();
     }
 
     @Override
     public void informToShowLoadingUi() {
-        ((MainActivity) ((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).showLoadingUi();
+        mMainView.showLoadingUi();
     }
 
     @Override
@@ -69,7 +72,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     public void start() {
         // TODO search and check for the room created on server
         mOnlineWaitingView.showRoomNameUi(mOnlineSettings.getRoomName());
-        new FirestoreManager(((OnlineWaitingFragment) mOnlineWaitingView).getActivity()).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
+        new FirestoreManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
     }
 
 
@@ -84,5 +87,20 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     public OnlineSettings getOnlineSettings() {
         return mOnlineSettings;
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Set MainView and MainPresenters to get reference to them
+     * ***********************************************************************************
+     */
+    public void setMainView(MainContract.View mainView) {
+        mMainView = mainView;
+    }
+
+
+    public void setMainPresenter(MainPresenter mainPresenter) {
+        mMainPresenter = mainPresenter;
     }
 }

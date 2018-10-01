@@ -1,12 +1,15 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
 
@@ -18,6 +21,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GuessingFragment extends Fragment implements GuessingContract.View {
     private GuessingContract.Presenter mGuessingPresenter;
 
+    private EditText mEditTextGuessingInput;
+    private Button mCurrentStepButton;
+    private TextView mTextTimeRemaining;
+    private ImageView mImageToGuess;
 
     public GuessingFragment() {
         // Required empty public constructor
@@ -33,6 +40,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         View rootView = inflater.inflate(R.layout.fragment_guessing, container, false);
 
         initButtons(rootView);
+        initViews(rootView);
 
         return rootView;
     }
@@ -43,12 +51,17 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     }
 
     public void initButtons(View rootView) {
-        Button currentStepButton = rootView.findViewById(R.id.button_steps_remaining_guessing);
+        mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_guessing);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_guessing);
 
-        currentStepButton.setOnClickListener(guessingOnClickListener);
+        mCurrentStepButton.setOnClickListener(guessingOnClickListener);
         quitGameButton.setOnClickListener(guessingOnClickListener);
+    }
 
+    private void initViews(View rootView) {
+        mEditTextGuessingInput = rootView.findViewById(R.id.edittext_topic_guessing);
+        mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_guessing);
+        mImageToGuess = rootView.findViewById(R.id.image_drawing_from_previous);
     }
 
     private View.OnClickListener guessingOnClickListener = new View.OnClickListener() {
@@ -57,7 +70,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
             switch (v.getId()) {
                 case R.id.button_steps_remaining_guessing:
                     // TODO cancel this function in production
-                    mGuessingPresenter.transToDrawingPage(GuessingFragment.this);
+                    mGuessingPresenter.transToDrawingPage();
                     break;
 
                 case R.id.button_quit_game_guessing:
@@ -70,4 +83,19 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
         }
     };
+
+    @Override
+    public void showDrawing(String topic) {
+//        mImageToGuess.setImageBitmap();
+    }
+
+    @Override
+    public void updateTimer(long currentCountDoenTime) {
+        mTextTimeRemaining.setText(String.valueOf(currentCountDoenTime));
+    }
+
+    @Override
+    public void showCurrentStep(int currentStep, int numPlayers) {
+        mCurrentStepButton.setText(currentStep + " / " + numPlayers);
+    }
 }

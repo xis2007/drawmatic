@@ -10,14 +10,14 @@ public interface CreateRoomContract {
     }
 
     interface Presenter extends BasePresenter {
-        void createRoom(CreateRoomFragment createRoomFragment, String roomName, int numPlayers, float attemptTime);
+        void createRoom(String roomName, int numPlayers, float attemptTime);
 
-        void cancelRoomCreation(CreateRoomFragment createRoomFragment);
+        void cancelRoomCreation();
 
-        void transToRoomWaitingPage(CreateRoomFragment createRoomFragment, OnlineSettings onlineSettings);
+        void transToRoomWaitingPage(OnlineSettings onlineSettings);
 
-        void informToHideLoadingUi(CreateRoomFragment createRoomFragment);
+        void informToHideLoadingUi();
 
-        void informToShowLoadingUi(CreateRoomFragment createRoomFragment);
+        void informToShowLoadingUi();
     }
 }

@@ -10,7 +10,7 @@ public interface DrawingContract {
 
         void updateTimer(long currentCountDoenTime);
 
-        void showCurrentStep(int currentStep, int maxPlayers);
+        void showCurrentStep(int currentStep, int numPlayers);
     }
 
     interface Presenter extends BasePresenter {
@@ -18,7 +18,7 @@ public interface DrawingContract {
 
         void leaveRoom(DrawingFragment fragment);
 
-        void transToGuessingPage(DrawingFragment fragment);
+        void transToGuessingPage();
 
         void clearDrawing(DrawView drawView);
 
@@ -28,8 +28,12 @@ public interface DrawingContract {
 
         void setTopic(String topicString);
 
-        void setAndStartTimer();
+        void setAndStartTimer(DrawingFragment drawingFragment);
 
         void setCurrentStep();
+
+        void startMonitoringPlayerProgress();
+
+        void startDrawing();
     }
 }

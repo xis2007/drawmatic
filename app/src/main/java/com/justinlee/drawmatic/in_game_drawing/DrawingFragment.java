@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,7 +64,6 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     @Override
     public void setPresenter(DrawingContract.Presenter presenter) {
         mDrawingPresenter = checkNotNull(presenter);
-        Log.d(TAG, "setPresenter: presenter set " + presenter.toString());
     }
 
     private void initButtons(View rootView) {
@@ -87,7 +85,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
             switch (v.getId()) {
                 case R.id.button_steps_remaining_drawing:
                     // TODO cancel this function in production
-                    mDrawingPresenter.transToGuessingPage(DrawingFragment.this);
+                    mDrawingPresenter.transToGuessingPage();
                     break;
 
                 case R.id.button_quit_game_drawing:
@@ -144,7 +142,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     }
 
     @Override
-    public void showCurrentStep(int currentStep, int maxPlayers) {
-        mCurrentStepButton.setText(currentStep + " / " + maxPlayers);
+    public void showCurrentStep(int currentStep, int numPlayers) {
+        mCurrentStepButton.setText(currentStep + " / " + numPlayers);
     }
 }

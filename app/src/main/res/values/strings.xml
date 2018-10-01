@@ -13,7 +13,7 @@
     <string name="text_team_mode_offline">Offline \n Team Mode</string>
 
     <!--fragment_online-->
-    <string name="text_hint_input_online">Search For Rooms</string>
+    <string name="text_hint_input_online">Search Rooms Here or Create Room below </string>
     <string name="text_normal_mode_online">Online \n Normal Mode \n\n Create New Room \n +</string>
     <string name="text_team_mode_online">Online \n Team Mode \n\n Create New Room \n +</string>
 
@@ -54,5 +54,5 @@
 
     <!--<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
 
-
+    <!--Icon made by Business strategy from www.flaticon.com-->
 

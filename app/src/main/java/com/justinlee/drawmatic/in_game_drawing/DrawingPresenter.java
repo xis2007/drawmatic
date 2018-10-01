@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import com.divyanshu.draw.widget.DrawView;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
+import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
@@ -14,13 +15,16 @@ import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
 
+    private MainContract.View mMainView;
+    private MainContract.Presenter mMainPresenter;
+
     private DrawingContract.View mDrawingView;
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
-    public DrawingPresenter(DrawingContract.View setTopicView, Game game) {
-        mDrawingView = setTopicView;
+    public DrawingPresenter(DrawingContract.View drawingView, Game game) {
+        mDrawingView = drawingView;
         mDrawingView.setPresenter(this);
 
         if (game instanceof OnlineGame) {
@@ -34,7 +38,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void promptLeaveRoomAlert(DrawingFragment fragment) {
-        LeaveGameBottomSheetDialog.newInstance((MainActivity) fragment.getActivity()).show(((MainActivity) fragment.getActivity()).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
+        LeaveGameBottomSheetDialog.newInstance((MainActivity) mMainView).show(((MainActivity) mMainView).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
     }
 
     @Override
@@ -43,11 +47,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
-    public void transToGuessingPage(DrawingFragment fragment) {
+    public void transToGuessingPage() {
         if (mOnlineGame != null) {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToGuessingPage(mOnlineGame);
+            ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         } else {
-            ((MainActivity) fragment.getActivity()).getMainPresenter().transToGuessingPage(mOfflineGame);
+            ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);
         }
     }
 
@@ -68,12 +72,12 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setTopic(String topicString) {
-        // TODO set topic after getting data from firestore
+        mDrawingView.showTopic(topicString);
     }
 
     @Override
-    public void setAndStartTimer() {
-        new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
+    public void setAndStartTimer(final DrawingFragment drawingFragment) {
+        new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -82,28 +86,47 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
             @Override
             public void onFinish() {
-                ((MainContract.View) ((DrawingFragment) mDrawingView).getActivity()).showLoadingUi();
-//                new FirestoreManager(((SetTopicFragment) mDrawingView).getActivity()).updateCurrentStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+                mMainView.showLoadingUi();
+                // TODO change below parameters
+                new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImage(mOnlineGame, null);
             }
         }.start();
     }
 
     @Override
     public void setCurrentStep() {
-        if(mOnlineGame.isPlayersOddumbered()) {
-            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
-        } else {
-            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps() + 1);
-        }
+        mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+    }
+
+    @Override
+    public void startMonitoringPlayerProgress() {
+        new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+    }
+
+    @Override
+    public void startDrawing() {
+        mMainView.hideLoadingUi();
+        setAndStartTimer((DrawingFragment) mDrawingView);
     }
 
     @Override
     public void start() {
-        setAndStartTimer();
-        setCurrentStep();
+        // start by preparing this step, need to get topic and set all player progress to 0 first
+        new FirestoreManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
+    }
 
-        ((MainContract.View) ((DrawingFragment) mDrawingView).getActivity()).hideLoadingUi();
-        new FirestoreManager(((DrawingFragment) mDrawingView).getActivity()).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
-    // TODO get topic (odd even numbers) ; set all players currentStepProgress to 0 (only game master does this); monitors when all players change progress to 1
+
+    /**
+     * ***********************************************************************************
+     * Set MainView and MainPresenters to get reference to them
+     * ***********************************************************************************
+     */
+    public void setMainView(MainContract.View mainView) {
+        mMainView = mainView;
+    }
+
+
+    public void setMainPresenter(MainPresenter mainPresenter) {
+        mMainPresenter = mainPresenter;
     }
 }
