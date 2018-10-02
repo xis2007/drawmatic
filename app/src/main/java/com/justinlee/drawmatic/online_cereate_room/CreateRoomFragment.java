@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,16 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
 
     }
 
+    @Override
+    public void promptNameInputAlert() {
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room Name is Empty", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void promptRoomExistingAlert() {
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room Already Exists", Snackbar.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void setPresenter(@NonNull CreateRoomContract.Presenter presenter) {
@@ -108,14 +119,11 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_cancel_create_room:
-                    mCreateRoomPresenter.informToHideLoadingUi();
                     mCreateRoomPresenter.cancelRoomCreation();
                     break;
 
                 case R.id.button_next_create_room:
-                    //TODO not complete yet
-                    mCreateRoomPresenter.informToShowLoadingUi();
-                    mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
+                    mCreateRoomPresenter.checkForRoomExistance(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
                     break;
 
                 default:

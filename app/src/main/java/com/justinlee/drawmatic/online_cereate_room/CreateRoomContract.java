@@ -7,10 +7,16 @@ import com.justinlee.drawmatic.objects.OnlineSettings;
 public interface CreateRoomContract {
     interface View extends BaseView<Presenter> {
         void showCreatedRoomUi();
+
+        void promptNameInputAlert();
+
+        void promptRoomExistingAlert();
     }
 
     interface Presenter extends BasePresenter {
-        void createRoom(String roomName, int numPlayers, float attemptTime);
+        void checkForRoomExistance(String roomName, int numPlayers, float attemptTime);
+
+        void createRoom(OnlineSettings onlineSettings);
 
         void cancelRoomCreation();
 
@@ -19,5 +25,7 @@ public interface CreateRoomContract {
         void informToHideLoadingUi();
 
         void informToShowLoadingUi();
+
+        void informRoomExists(OnlineSettings onlineSettings);
     }
 }

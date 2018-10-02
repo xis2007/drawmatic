@@ -359,6 +359,16 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void isLoading() {
+        mMainView.showLoadingUi();
+    }
+
+    @Override
+    public void isNotLoading() {
+        mMainView.hideLoadingUi();
+    }
+
+    @Override
     public void start() {
         // TODO change to transToOffline
         transToOnlinePage();

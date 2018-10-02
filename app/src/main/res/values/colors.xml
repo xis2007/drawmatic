@@ -5,12 +5,14 @@
     <color name="colorPrimaryDark">#327d6e</color>
 
     <color name="colorAccent">#ffdca0</color>
+    <color name="colorAccent2">#F9E9C5</color>
     <color name="colorAccentLight">#ffe1ae</color>
     <color name="colorAccentDark">#b09568</color>
 
-    <color name="colorThird">#ffe6e1</color>
-    <color name="colorThirdLight">#feda9e</color>
-    <color name="colorThirdDark">#b09568</color>
+
+    <color name="colorThird">#ffd8d0</color>
+    <color name="colorThirdLight">#ffebe7</color>
+    <color name="colorThirdDark">#ffbdb0</color>
 
     <color name="colorNormalOnline">#009ec5</color>
     <color name="colorNormalOnlineLight">#00cdff</color>

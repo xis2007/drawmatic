@@ -14,8 +14,8 @@
 
     <!--fragment_online-->
     <string name="text_hint_input_online">Search Rooms Here or Create Room below </string>
-    <string name="text_normal_mode_online">Online \n Normal Mode \n\n Create New Room \n +</string>
-    <string name="text_team_mode_online">Online \n Team Mode \n\n Create New Room \n +</string>
+    <string name="text_normal_mode_online">Create\nNew\nRoom</string>
+    <string name="text_team_mode_online">Coming Soon</string>
 
     <!--fragment_create_room-->
     <string name="text_hint_create_room">Setup Your Room</string>

@@ -32,11 +32,11 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/box_game_selection"
+                    android:background="@drawable/bg_game_selection_2"
                     android:foreground="?selectableItemBackground"
                     android:shadowRadius="5"
                     android:text="@string/text_normal_mode_offline"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorGrey"
                     android:textSize="36sp"/>
 
                 <Button

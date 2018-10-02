@@ -28,7 +28,6 @@ public interface MainContract {
 
         // loading Ui
         void showLoadingUi();
-
         void hideLoadingUi();
     }
 
@@ -50,6 +49,10 @@ public interface MainContract {
 
         // settings
         void transToSettingsPage();
+
+        // loading UI
+        void isLoading();
+        void isNotLoading();
     }
 
 

@@ -28,19 +28,31 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void createRoom(final String roomName, final int numPlayers, final float attemptTime) {
-        Player roomMaster = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();
-        roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
-        ArrayList<Player> playersList =  new ArrayList<>();
-        playersList.add(roomMaster);
+    public void checkForRoomExistance(String roomName, int numPlayers, float attemptTime) {
+        if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
+            mCreateRoomView.promptNameInputAlert();
 
-        final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
+        } else {
+            mMainPresenter.isLoading();
+            Player roomMaster = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();
+            roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
+            ArrayList<Player> playersList =  new ArrayList<>();
+            playersList.add(roomMaster);
 
+            final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
+
+            new FirestoreManager((MainActivity) mMainView).checkForRoomExistance(this, onlineSettings, mCreateRoomView);
+        }
+    }
+
+    @Override
+    public void createRoom(OnlineSettings onlineSettings) {
         new FirestoreManager((MainActivity) mMainView).createOnlineRoom(this, onlineSettings, mCreateRoomView);
     }
 
     @Override
     public void cancelRoomCreation() {
+        mMainPresenter.isLoading();
         ((MainActivity) mMainView).getMainPresenter().transToOnlinePage();
     }
 
@@ -57,6 +69,13 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     @Override
     public void informToShowLoadingUi() {
         mMainView.showLoadingUi();
+    }
+
+    @Override
+    public void informRoomExists(OnlineSettings onlineSettings) {
+        mCreateRoomView.promptRoomExistingAlert();
+        mMainPresenter.isNotLoading();
+        mMainPresenter.transToOnlineRoomCreationPage(onlineSettings.getGameMode());
     }
 
     @Override
