@@ -3,6 +3,7 @@ package com.justinlee.drawmatic.in_game_guessing;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.justinlee.drawmatic.R;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -43,6 +45,12 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         initViews(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mGuessingPresenter.start();
     }
 
     @Override
@@ -85,8 +93,11 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     };
 
     @Override
-    public void showDrawing(String topic) {
-//        mImageToGuess.setImageBitmap();
+    public void showDrawing(String imageUrl) {
+        Glide.with(getActivity())
+                .load(imageUrl)
+                .thumbnail(0.2f)
+                .into(mImageToGuess);
     }
 
     @Override

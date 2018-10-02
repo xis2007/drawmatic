@@ -1,6 +1,7 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
@@ -12,6 +13,8 @@ import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
+    private static final String TAG = "justinxxxxx";
+
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
 
@@ -70,14 +73,15 @@ public class GuessingPresenter implements GuessingContract.Presenter {
             @Override
             public void onFinish() {
                 mMainView.showLoadingUi();
-//                new FirestoreManager(((SetTopicFragment) mDrawingView).getActivity()).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+                // TODO change below null parameter to string
+                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, null);
             }
         }.start();
     }
 
     @Override
     public void setCurrentStep() {
-        mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps() + 1);
+        mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
     }
 
     @Override
@@ -98,7 +102,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void start() {
-
+        Log.d(TAG, "start: start to retrieved drawing");
+        new FirestoreManager((MainActivity) mMainView).retrieveDrawing(mGuessingView, this, mOnlineGame);
     }
 
 

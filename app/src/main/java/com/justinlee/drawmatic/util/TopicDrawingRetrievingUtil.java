@@ -1,6 +1,7 @@
 package com.justinlee.drawmatic.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
@@ -20,11 +21,13 @@ public class TopicDrawingRetrievingUtil {
         if(mOnlineGame.isPlayersOddumbered()) {
             int positionOfPlayerInsortedList = getOddNumberedPlayerPosition();
             String playerId = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerId();
+            Log.d("sortedList", "calcPlayerIdToRetrieveTopicOrDrawing: " + mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(0).getPlayerName());
             return playerId;
 
         } else {
             int positionOfPlayerInsortedList = getEvenNumberedPlayerPosition();
             String playerId = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerId();
+            Log.d("sortedList", "calcPlayerIdToRetrieveTopicOrDrawing: " + mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(0).getPlayerName());
             return playerId;
         }
     }

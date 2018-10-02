@@ -1,6 +1,7 @@
 package com.justinlee.drawmatic.in_game_drawing;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import com.divyanshu.draw.widget.DrawView;
 import com.justinlee.drawmatic.MainActivity;
@@ -49,6 +50,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void transToGuessingPage() {
         if (mOnlineGame != null) {
+            Log.d(TAG, "transToGuessingPage: trasiting to guessing page");
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         } else {
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);
