@@ -81,15 +81,6 @@ public class FirestoreManager {
                         } else {
                             createRoomPresenter.informRoomExists(onlineSettings);
                         }
-
-//                        String roomName = (String) map.get("roomName");
-//                        Log.d(TAG, "onSuccess:document snapshot is: " + roomName);
-//
-//                        if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
-//
-//                        } else {
-//
-//                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
