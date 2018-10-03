@@ -54,6 +54,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     public void cancelRoomCreation() {
         mMainPresenter.isLoading();
         ((MainActivity) mMainView).getMainPresenter().transToOnlinePage();
+        mMainPresenter.isNotLoading();
     }
 
     @Override

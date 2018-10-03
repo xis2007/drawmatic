@@ -45,7 +45,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        new CountDownTimer(15 * 1000, 1000) {
+        new CountDownTimer(10 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;

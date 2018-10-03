@@ -34,6 +34,8 @@ public interface DrawingContract {
 
         void startMonitoringPlayerProgress();
 
+        void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl);
+
         void startDrawing();
     }
 }

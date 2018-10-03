@@ -28,7 +28,6 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     private DrawingContract.Presenter mDrawingPresenter;
     private BottomNavigationViewEx mInGameNavigation;
 
-
     private DrawView mDrawView;
     private Button mCurrentStepButton;
     private TextView mTextTimeRemaining;
@@ -101,7 +100,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
 
     private void initDrawingView(View rootView) {
         mDrawView = rootView.findViewById(R.id.drawView);
-        mDrawView.setStrokeWidth(7);
+        mDrawView.setStrokeWidth(10);
         mDrawView.setColor(R.color.colorAccent);
     }
 

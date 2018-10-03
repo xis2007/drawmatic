@@ -96,7 +96,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     public void showDrawing(String imageUrl) {
         Glide.with(getActivity())
                 .load(imageUrl)
-                .thumbnail(0.2f)
+                .thumbnail(0.5f)
                 .into(mImageToGuess);
     }
 

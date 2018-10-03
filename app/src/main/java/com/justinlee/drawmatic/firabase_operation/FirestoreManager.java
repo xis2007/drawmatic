@@ -2,11 +2,13 @@ package com.justinlee.drawmatic.firabase_operation;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.widget.ImageView;
+import android.view.View;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +23,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
@@ -45,6 +49,7 @@ import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingContract;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
+import com.justinlee.drawmatic.util.DrawViewToImageGenerator;
 import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 
 import java.util.ArrayList;
@@ -82,14 +87,7 @@ public class FirestoreManager {
                             createRoomPresenter.informRoomExists(onlineSettings);
                         }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
                 });
-
     }
 
     public void createOnlineRoom(final CreateRoomPresenter createRoomPresenter, final OnlineSettings onlineSettings, final CreateRoomContract.View createRoomView) {
@@ -516,11 +514,56 @@ public class FirestoreManager {
         });
     }
 
-    public void updateDrawingStepProgressAndUploadImage(final OnlineGame onlineGame, ImageView imageView) {
+    public void uploadImageAndGetImageUrl(final DrawingContract.Presenter drawingPresenter, final OnlineGame onlineGame, View drawView) {
+        // store the image into Storage first
+        final StorageReference playerInRoomRef = Drawmatic.getStorageReference().child(onlineGame.getOnlineSettings().getRoomName()).child(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId()).child(String.valueOf(onlineGame.getCurrentStep()) + ".jpg");
 
+        byte[] data = new DrawViewToImageGenerator().generateToData(drawView);
+
+        final UploadTask uploadTask = playerInRoomRef.putBytes(data);
+
+//        uploadTask.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Log.d(TAG, "onSuccess: failed");
+//                // Handle unsuccessful uploads
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                // TODO potential problem here
+//                String downloadUrl = playerInRoomRef.getDownloadUrl().toString();
+//                drawingPresenter.updateDrawingStepProgressAndUploadImageUrl(downloadUrl);
+//
+////                Log.d(TAG, "onSuccess: download url is: " + downloadUrl);
+//            }
+//        });
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                Log.d(TAG, "then: continuinggggggggggggg");
+                return playerInRoomRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()) {
+                    Uri downloadUrl = task.getResult();
+                    drawingPresenter.updateDrawingStepProgressAndUploadImageUrl(downloadUrl.toString());
+                }
+                // TODO hand error
+            }
+        });
+    }
+
+    public void updateDrawingStepProgressAndUploadImageUrl(DrawingContract.Presenter drawingPresenter, final OnlineGame onlineGame, String downloadUrl) {
         DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
         Map map = new HashMap();
-        map.put(String.valueOf(onlineGame.getCurrentStep()), "http://www.fullhdwpp.com/wp-content/uploads/Railroad-Tracks-in-the-Autumn-2_www.FullHDWpp.com_.jpg?x69613");
+        map.put(String.valueOf(onlineGame.getCurrentStep()), downloadUrl);
         currentUserDrawingsRef.update(map).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
@@ -544,6 +587,7 @@ public class FirestoreManager {
         final String dataNumber = String.valueOf(topicDrawingRetrievingUtil.calcItemNumberToRetrieveTopicOrDrawing());
         Log.d(TAG, "retrieveDrawing: player id to get: " + playerIdToGetTopicOrDrawing);
         Log.d(TAG, "retrieveDrawing: data number: " + dataNumber);
+
         final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(playerIdToGetTopicOrDrawing);
 
         // TODO temporary use only, to be deleted *****************

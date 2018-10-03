@@ -7,6 +7,7 @@ import com.divyanshu.draw.widget.DrawView;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
@@ -90,7 +91,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             public void onFinish() {
                 mMainView.showLoadingUi();
                 // TODO change below parameters
-                new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImage(mOnlineGame, null);
+                new FirestoreManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
             }
         }.start();
     }
@@ -103,6 +104,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void startMonitoringPlayerProgress() {
         new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+    }
+
+    @Override
+    public void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl) {
+        new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
     }
 
     @Override
