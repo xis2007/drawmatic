@@ -18,6 +18,7 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.RoomWaitingAdapter;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.util.GridItemDecoration;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -67,6 +68,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         mPlayersRecyclerView = rootView.findViewById(R.id.recyclerview_room_waiting);
         mPlayersRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mPlayersRecyclerView.setAdapter(mAdapter);
+        mPlayersRecyclerView.addItemDecoration(new GridItemDecoration(8));
     }
 
     @Override
@@ -74,16 +76,6 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         mTextHintWaiting.setText(roomName);
     }
 
-//    @Override
-//    public void showLoadingSign() {
-//        mLoadingLayout.setVisibility(View.VISIBLE);
-//    }
-//
-//
-//    @Override
-//    public void hideLoadingSign() {
-//        mLoadingLayout.setVisibility(View.GONE);
-//    }
 
     @Override
     public void setPresenter(@NonNull OnlineWaitingContract.Presenter presenter) {
@@ -113,14 +105,13 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_leave_room_waiting:
-                    mOnlineWaitingPresenter.informToShowLoadingUi();
                     mOnlineWaitingPresenter.leaveRoom(OnlineWaitingFragment.this);
                     break;
 
                 case R.id.button_start_game_waiting:
                     //TODO not complete yet
 //                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
-                    mOnlineWaitingPresenter.startPlayingOnline(OnlineWaitingFragment.this);
+                    mOnlineWaitingPresenter.setGameStatusToInGame();
                     break;
 
                 default:

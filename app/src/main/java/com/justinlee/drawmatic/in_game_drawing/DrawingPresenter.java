@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.divyanshu.draw.widget.DrawView;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
@@ -24,6 +25,8 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
+
+    private ListenerRegistration mDrawingListenerRegistration;
 
     public DrawingPresenter(DrawingContract.View drawingView, Game game) {
         mDrawingView = drawingView;
@@ -103,12 +106,17 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void startMonitoringPlayerProgress() {
-        new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+        mDrawingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
     }
 
     @Override
     public void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl) {
         new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
+    }
+
+    @Override
+    public void unregisterListener() {
+        mDrawingListenerRegistration.remove();
     }
 
     @Override

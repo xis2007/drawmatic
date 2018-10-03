@@ -1,5 +1,7 @@
 package com.justinlee.drawmatic.objects;
 
+import android.util.Log;
+
 public class OnlineGame extends Game {
     private OnlineSettings mOnlineSettings;
 
@@ -46,10 +48,12 @@ public class OnlineGame extends Game {
     }
 
     public int getCurrentStep() {
+        Log.d("justinxxxxx", "onEvent: get current step called with value: " + mCurrentStep);
         return mCurrentStep;
     }
 
     public void increamentCurrentStep() {
+        Log.d("justinxxxxx", "onEvent: incrementing: " + mCurrentStep);
         mCurrentStep++;
     }
 }

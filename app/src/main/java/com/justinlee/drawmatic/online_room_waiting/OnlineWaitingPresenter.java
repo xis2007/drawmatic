@@ -6,6 +6,7 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.GameSettings;
 import com.justinlee.drawmatic.objects.OfflineSettings;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
@@ -35,6 +36,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
+        mMainPresenter.isLoading();
         Player userAdPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
         new FirestoreManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineSettings, userAdPlayer);
     }
@@ -46,26 +48,24 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void startPlayingOnline(OnlineWaitingFragment fragment) {
-        informToShowLoadingUi();
-        new FirestoreManager((MainActivity) mMainView).startOnlineGame(fragment, mOnlineSettings);
+        mMainPresenter.isLoading();
+        OnlineGame onlineGame = new OnlineGame(mOnlineSettings);
+        mMainPresenter.transToSetTopicPage(mOnlineSettings.getGameMode(), onlineGame);
+
+        mMainPresenter.isNotLoading();
     }
 
     @Override
-    public void informToHideLoadingUi() {
-        mMainView.hideLoadingUi();
-    }
-
-    @Override
-    public void informToShowLoadingUi() {
-        mMainView.showLoadingUi();
-    }
-
-    @Override
-    public void syncOnlineNewRoomStatus(ArrayList<OnlineSettings> newOnlineSettings) {
+    public void updateOnlineRoomStatus(ArrayList<OnlineSettings> newOnlineSettings) {
         mOnlineSettings = newOnlineSettings.get(0);
         if (mOnlineSettings != null) {
             ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineSettings.getPlayers());
         }
+    }
+
+    @Override
+    public void setGameStatusToInGame() {
+        new FirestoreManager((MainActivity) mMainView).setGameStatusToInGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineSettings);
     }
 
     @Override

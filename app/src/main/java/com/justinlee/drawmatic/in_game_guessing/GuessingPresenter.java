@@ -1,11 +1,14 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
@@ -22,6 +25,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
+
+    private ListenerRegistration mGuessingListenerRegistration;
 
     public GuessingPresenter(GuessingContract.View setTopicView, Game game) {
         mGuessingView = setTopicView;
@@ -43,7 +48,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void leaveRoom(GuessingFragment fragment) {
-
+        mGuessingListenerRegistration.remove();
     }
 
     @Override
@@ -86,7 +91,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void startMonitoringPlayerGuessingProgress() {
-        new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
+        mGuessingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
     }
 
     @Override
@@ -96,13 +101,20 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void finishGame() {
+    public void unregisterListener() {
+        mGuessingListenerRegistration.remove();
+    }
 
+    @Override
+    public void finishGame() {
+        mMainPresenter.transToOnlinePage();
+        mMainPresenter.isNotLoading();
+        Snackbar.make(((MainActivity) mMainView).findViewById(R.id.fragment_container_main), "game finished", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void start() {
-        Log.d(TAG, "start: start to retrieved drawing");
+        Log.d(TAG, "start: start to retrieve drawing");
         new FirestoreManager((MainActivity) mMainView).retrieveDrawing(mGuessingView, this, mOnlineGame);
     }
 

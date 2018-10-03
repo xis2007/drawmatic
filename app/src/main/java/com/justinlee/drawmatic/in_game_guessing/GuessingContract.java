@@ -29,6 +29,8 @@ public interface GuessingContract {
 
         void startGuessing();
 
+        void unregisterListener();
+
         void finishGame();
     }
 }
