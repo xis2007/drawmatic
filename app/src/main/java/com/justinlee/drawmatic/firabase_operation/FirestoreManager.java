@@ -581,12 +581,14 @@ public class FirestoreManager {
      * In game monitoring and progress updates (Guessing Fragment)
      * **********************************************************************************
      */
-    public void retrieveDrawing(final GuessingContract.View guessingView, final GuessingPresenter guessingPresenter, final OnlineGame onlineGame) {
+    public void retrieveDrawingAndWordCount(final GuessingContract.View guessingView, final GuessingPresenter guessingPresenter, final OnlineGame onlineGame) {
         TopicDrawingRetrievingUtil topicDrawingRetrievingUtil = new TopicDrawingRetrievingUtil(((GuessingFragment) guessingView).getActivity(), onlineGame, ((MainPresenter) ((MainActivity) ((GuessingFragment) guessingView).getActivity()).getMainPresenter()).getCurrentPlayer());
         String playerIdToGetTopicOrDrawing = topicDrawingRetrievingUtil.calcPlayerIdToRetrieveTopicOrDrawing();
-        final String dataNumber = String.valueOf(topicDrawingRetrievingUtil.calcItemNumberToRetrieveTopicOrDrawing());
-        Log.d(TAG, "retrieveDrawing: player id to get: " + playerIdToGetTopicOrDrawing);
-        Log.d(TAG, "retrieveDrawing: data number: " + dataNumber);
+
+        final String imageUrlDataNumber = String.valueOf(topicDrawingRetrievingUtil.calcItemNumberToRetrieveTopicOrDrawing());
+        final String topicDataNumber = String.valueOf(Integer.valueOf(imageUrlDataNumber) - 1);
+        Log.d(TAG, "retrieveDrawingAndWordCount: player id to get: " + playerIdToGetTopicOrDrawing);
+        Log.d(TAG, "retrieveDrawingAndWordCount: data number: " + imageUrlDataNumber);
 
         final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(playerIdToGetTopicOrDrawing);
 
@@ -599,7 +601,8 @@ public class FirestoreManager {
                     Log.d(TAG, "onComplete: document retrieved is: " + documentMap.toString());
 
                     if (document.exists()) {
-                        guessingPresenter.setDrawing((String) documentMap.get(dataNumber));
+                        guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)).replaceAll(" ", "").length());
+                        guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
                         guessingPresenter.setCurrentStep();
                         guessingPresenter.startMonitoringPlayerGuessingProgress();
                         Log.d(TAG, "onComplete: retrieved drawing");

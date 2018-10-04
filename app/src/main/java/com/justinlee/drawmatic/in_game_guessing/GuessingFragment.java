@@ -109,4 +109,10 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     public void showCurrentStep(int currentStep, int numPlayers) {
         mCurrentStepButton.setText(currentStep + " / " + numPlayers);
     }
+
+    @Override
+    public void showWordCountHint(int wordCount) {
+        mEditTextGuessingInput.setHint(wordCount + " words");
+        mEditTextGuessingInput.setHintTextColor(getActivity().getResources().getColor(R.color.colorGrey));
+    }
 }

@@ -10,6 +10,8 @@ public interface GuessingContract {
         void updateTimer(long currentCountDoenTime);
 
         void showCurrentStep(int currentStep, int numPlayers);
+
+        void showWordCountHint(int wordCount);
     }
 
     interface Presenter extends BasePresenter {
@@ -30,6 +32,8 @@ public interface GuessingContract {
         void startGuessing();
 
         void unregisterListener();
+
+        void setWordCountHint(int wordCount);
 
         void finishGame();
     }

@@ -106,6 +106,11 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
+    public void setWordCountHint(int wordCount) {
+        mGuessingView.showWordCountHint(wordCount);
+    }
+
+    @Override
     public void finishGame() {
         mMainPresenter.transToOnlinePage();
         mMainPresenter.isNotLoading();
@@ -115,7 +120,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     @Override
     public void start() {
         Log.d(TAG, "start: start to retrieve drawing");
-        new FirestoreManager((MainActivity) mMainView).retrieveDrawing(mGuessingView, this, mOnlineGame);
+        new FirestoreManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
     }
 
 
