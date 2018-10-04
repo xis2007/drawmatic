@@ -33,18 +33,22 @@ public class TopicDrawingRetrievingUtil {
     }
 
     private int getOddNumberedPlayerPosition() {
-        int totalSteps = mOnlineGame.getTotalSteps();
+        int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentStep = mOnlineGame.getCurrentStep();
         int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
 
-        int positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 1)) >= 0 ? (currentPlayerPositionInList - (currentStep - 1)) : totalSteps - ((currentStep - 1) - currentPlayerPositionInList);
+        // logic 1
+//        int positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 1)) >= 0 ? (currentPlayerPositionInList - (currentStep - 1)) : totalSteps - ((currentStep - 1) - currentPlayerPositionInList);
+
+        // logic 2
+        int positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 1)) >= 0 ? (currentPlayerPositionInList - (currentStep - 1)) : (currentPlayerPositionInList - (currentStep - 1)) + totalPlayers;
 
         return positionOfPlayerToGetData;
     }
 
 
     private int getEvenNumberedPlayerPosition() {
-        int totalSteps = mOnlineGame.getTotalSteps();
+        int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentStep = mOnlineGame.getCurrentStep();
         int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
 
@@ -52,7 +56,11 @@ public class TopicDrawingRetrievingUtil {
         if(currentStep <= 2) {
             positionOfPlayerToGetData = currentPlayerPositionInList;
         } else {
-            positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 2)) >= 0 ? (currentPlayerPositionInList - (currentStep - 2)) : (totalSteps - 1) - ((currentStep - 2) - currentPlayerPositionInList);
+            // logic 1
+//            positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 2)) >= 0 ? (currentPlayerPositionInList - (currentStep - 2)) : (totalPlayers - 1) - ((currentStep - 2) - currentPlayerPositionInList);
+            // logic 2
+            positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 2)) >= 0 ? (currentPlayerPositionInList - (currentStep - 2)) : (currentPlayerPositionInList - (currentStep - 2)) + totalPlayers;
+
         }
 
         return positionOfPlayerToGetData;

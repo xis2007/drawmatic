@@ -1,11 +1,15 @@
 package com.justinlee.drawmatic.objects;
 
+import android.util.Log;
+
 import com.justinlee.drawmatic.util.PlayerIdComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class OnlineSettings extends GameSettings {
+    private static final String TAG = "playerssssss";
+
     private String mRoomName;
     private int mGameMode;
     private int mMaxPlayers;
@@ -96,6 +100,12 @@ public class OnlineSettings extends GameSettings {
     public ArrayList<Player> generateSortedPlayersListById() {
         ArrayList<Player> sortedPlayersList = new ArrayList<>(mPlayers);
         Collections.sort(sortedPlayersList, new PlayerIdComparator());
+        if(sortedPlayersList != null) {
+            for(int i = 0; i < sortedPlayersList.size(); i++) {
+                Log.d(TAG, "generateSortedPlayersListById: player " + i + " = " + sortedPlayersList.get(i).getPlayerName());
+            }
+        }
+
         return sortedPlayersList;
     }
 }
