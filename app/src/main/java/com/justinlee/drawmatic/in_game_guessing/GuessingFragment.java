@@ -88,7 +88,6 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
                 default:
                     break;
             }
-
         }
     };
 
@@ -114,5 +113,10 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     public void showWordCountHint(int wordCount) {
         mEditTextGuessingInput.setHint(wordCount + " words");
         mEditTextGuessingInput.setHintTextColor(getActivity().getResources().getColor(R.color.colorGrey));
+    }
+
+    @Override
+    public String getGuessingInput() {
+        return mEditTextGuessingInput.getText().toString();
     }
 }

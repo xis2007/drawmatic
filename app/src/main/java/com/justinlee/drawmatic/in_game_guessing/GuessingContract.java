@@ -2,6 +2,7 @@ package com.justinlee.drawmatic.in_game_guessing;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
+import com.justinlee.drawmatic.objects.Game;
 
 public interface GuessingContract {
     interface View extends BaseView<Presenter> {
@@ -12,6 +13,8 @@ public interface GuessingContract {
         void showCurrentStep(int currentStep, int numPlayers);
 
         void showWordCountHint(int wordCount);
+
+        String getGuessingInput();
     }
 
     interface Presenter extends BasePresenter {
@@ -35,6 +38,6 @@ public interface GuessingContract {
 
         void setWordCountHint(int wordCount);
 
-        void finishGame();
+        void finishGame(Game game);
     }
 }

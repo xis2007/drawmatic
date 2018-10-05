@@ -10,6 +10,8 @@ import com.justinlee.drawmatic.in_game_drawing.DrawingFragment;
 import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
 import com.justinlee.drawmatic.in_game_guessing.GuessingFragment;
 import com.justinlee.drawmatic.in_game_guessing.GuessingPresenter;
+import com.justinlee.drawmatic.in_game_result.GameResultFragment;
+import com.justinlee.drawmatic.in_game_result.GameResultPresenter;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicFragment;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.Game;
@@ -44,6 +46,7 @@ public class MainPresenter implements MainContract.Presenter {
     private SetTopicFragment mSetTopicFragment;
     private DrawingFragment mDrawingFragment;
     private GuessingFragment mGuessingFragment;
+    private GameResultFragment mGameResultFragment;
 
     // presenters
     private OnlinePresenter mOnlinePresenter;
@@ -55,6 +58,7 @@ public class MainPresenter implements MainContract.Presenter {
     private SetTopicPresenter mSetTopicPresenter;
     private DrawingPresenter mDrawingPresenter;
     private GuessingPresenter mGuessingPresenter;
+    private GameResultPresenter mGameResultPresenter;
 
     public MainPresenter(MainContract.View mainView, FragmentManager fragmentManager) {
         mMainView = mainView;
@@ -318,6 +322,40 @@ public class MainPresenter implements MainContract.Presenter {
         transaction.commit();
 
         mMainView.showGuessingPageUi();
+    }
+
+    @Override
+    public void transToGameResultPage(Game game) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
+        if (mGameResultFragment == null) mGameResultFragment = GameResultFragment.newInstance();
+
+        if (mDrawingFragment != null) {
+            transaction.remove(mDrawingFragment);
+            mDrawingFragment = null;
+            mDrawingPresenter = null;
+        }
+
+        if (mGuessingFragment != null) {
+            transaction.remove(mGuessingFragment);
+            mGuessingFragment = null;
+            mGuessingPresenter = null;
+        }
+
+        if (!mGameResultFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mGameResultFragment, "GAME_RESULT");
+        } else {
+            transaction.show(mGameResultFragment);
+        }
+
+        if (mGameResultPresenter == null) {
+            mGameResultPresenter = new GameResultPresenter(mGameResultFragment, game);
+            mGameResultPresenter.setMainView(mMainView);
+            mGameResultPresenter.setMainPresenter(this);
+        }
+        transaction.commit();
+
+        mMainView.showGameResultPageUi();
     }
 
     @Override

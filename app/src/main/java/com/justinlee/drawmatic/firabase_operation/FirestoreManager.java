@@ -38,6 +38,9 @@ import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
 import com.justinlee.drawmatic.in_game_guessing.GuessingContract;
 import com.justinlee.drawmatic.in_game_guessing.GuessingFragment;
 import com.justinlee.drawmatic.in_game_guessing.GuessingPresenter;
+import com.justinlee.drawmatic.in_game_result.GameResultContract;
+import com.justinlee.drawmatic.in_game_result.GameResultFragment;
+import com.justinlee.drawmatic.in_game_result.GameResultPresenter;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
@@ -561,7 +564,7 @@ public class FirestoreManager {
     }
 
     public void updateDrawingStepProgressAndUploadImageUrl(DrawingContract.Presenter drawingPresenter, final OnlineGame onlineGame, String downloadUrl) {
-        DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
+        DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(new TopicDrawingRetrievingUtil(mContext, onlineGame, ((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer()).calcPlayerIdToRetrieveTopicOrDrawing());
         Map map = new HashMap();
         map.put(String.valueOf(onlineGame.getCurrentStep()), downloadUrl);
         currentUserDrawingsRef.update(map).addOnCompleteListener(new OnCompleteListener() {
@@ -598,7 +601,6 @@ public class FirestoreManager {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Map documentMap = document.getData();
-                    Log.d(TAG, "onComplete: document retrieved is: " + documentMap.toString());
 
                     if (document.exists()) {
                         guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)).replaceAll(" ", "").length());
@@ -667,7 +669,7 @@ public class FirestoreManager {
                 // if totalProgressOfThisStep == maxProgressOfWholeGame, it means the game should end
                 // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
                 if (totalProgressOfThisStep == maxProgressOfWholeGame) {
-                    guessingPresenter.finishGame();
+                    guessingPresenter.finishGame(onlineGame);
                     guessingPresenter.unregisterListener();
 
                 } else if (totalProgressOfThisStep == targetProgress) {
@@ -682,7 +684,7 @@ public class FirestoreManager {
     }
 
     public void updateGuessingStepProgressAndUploadGuessing(final GuessingContract.Presenter guessingPresenter, final OnlineGame onlineGame, String guessing) {
-        DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
+        DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(new TopicDrawingRetrievingUtil(mContext, onlineGame, ((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer()).calcPlayerIdToRetrieveTopicOrDrawing());
         Map map = new HashMap();
         map.put(String.valueOf(onlineGame.getCurrentStep()), guessing);
         currentUserDrawingsRef.update(map).addOnCompleteListener(new OnCompleteListener() {
@@ -691,8 +693,55 @@ public class FirestoreManager {
                 DocumentReference currentUserProgressRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("progressOfEachStep").document(((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId());
                 Map progressMap = new HashMap();
                 progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
+                Log.d(TAG, "onComplete: putting guessing up to server: " + onlineGame.getCurrentStep());
+
                 currentUserProgressRef.update(progressMap);
             }
         });
     }
+
+
+
+    /**
+     * *********************************************************************************
+     * Getting Game Results
+     * **********************************************************************************
+     */
+    public void retrieveGameResults(final GameResultContract.View gameResultView, final GameResultPresenter gameResultPresenter, final OnlineGame onlineGame) {
+        String currentPlayerId = ((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerId();
+
+        final DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getOnlineSettings().getRoomName()).collection("drawings").document(currentPlayerId);
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Map documentMap = document.getData();
+
+                    if (document.exists()) {
+                        // transform to bitmap first
+//                        ArrayList<String> resourceList = new ArrayList<>();
+//                        for(int i = 1; i <= documentMap.size(); i++) {
+//                            resourceList.add((String) documentMap.get(i));
+//                        }
+//                        gameResultPresenter.informToShowResults(new ResultAsBitmapsUtil(mContext, gameResultPresenter).generateFrom(resourceList));
+
+                        // passing strings
+                        ArrayList<String> resourceStringList = new ArrayList<>();
+                        for (int i = 1; i <= documentMap.size(); i++) {
+                            resourceStringList.add((String) documentMap.get(String.valueOf(i)));
+                        }
+
+                        gameResultPresenter.informToShowResults(resourceStringList);
+                    } else {
+                        Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 }

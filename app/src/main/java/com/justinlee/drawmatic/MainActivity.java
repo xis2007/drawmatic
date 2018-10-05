@@ -90,6 +90,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
+    public void showGameResultPageUi() {
+
+    }
+
+    @Override
     public void showSettingsPageUi() {
         mPrimaryNavigation.setVisibility(View.VISIBLE);
     }

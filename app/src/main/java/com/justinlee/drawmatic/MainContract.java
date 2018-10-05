@@ -22,6 +22,7 @@ public interface MainContract {
         void showSetTopicPageUi();
         void showDrawingPageUi();
         void showGuessingPageUi();
+        void showGameResultPageUi();
 
         // settings
         void showSettingsPageUi();
@@ -46,6 +47,7 @@ public interface MainContract {
         void transToSetTopicPage(int gameType, OnlineGame onlineGame);
         void transToDrawingPage(Game game);
         void transToGuessingPage(Game game);
+        void transToGameResultPage(Game game);
 
         // settings
         void transToSettingsPage();

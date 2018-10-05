@@ -1,14 +1,12 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
@@ -79,7 +77,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
             public void onFinish() {
                 mMainView.showLoadingUi();
                 // TODO change below null parameter to string
-                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, null);
+                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
             }
         }.start();
     }
@@ -111,10 +109,10 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void finishGame() {
-        mMainPresenter.transToOnlinePage();
-        mMainPresenter.isNotLoading();
-        Snackbar.make(((MainActivity) mMainView).findViewById(R.id.fragment_container_main), "game finished", Snackbar.LENGTH_SHORT).show();
+    public void finishGame(Game game) {
+        mMainPresenter.transToGameResultPage(game);
+//        mMainPresenter.isNotLoading();
+//        Snackbar.make(((MainActivity) mMainView).findViewById(R.id.fragment_container_main), "game finished", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
