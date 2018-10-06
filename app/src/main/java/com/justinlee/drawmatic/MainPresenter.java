@@ -16,7 +16,6 @@ import com.justinlee.drawmatic.in_game_set_topic.SetTopicFragment;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 import com.justinlee.drawmatic.offline.OfflineFragment;
 import com.justinlee.drawmatic.offline.OfflinePresenter;
@@ -156,7 +155,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mOnlineFragment);
         }
 
-        if (mOnlinePresenter == null) mOnlinePresenter = new OnlinePresenter(mOnlineFragment);
+        if (mOnlinePresenter == null) {
+            mOnlinePresenter = new OnlinePresenter(mOnlineFragment);
+            mOnlinePresenter.setMainView(mMainView);
+            mOnlinePresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         if (mOnlineFragment.getSearchResultRecyclerView() != null) {
@@ -205,7 +208,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineWaitingPage(OnlineSettings onlineRoomSettings) {
+    public void transToOnlineWaitingPage(OnlineGame onlineGame) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
@@ -228,7 +231,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
 
         if (mOnlineWaitingPresenter == null) {
-            mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineRoomSettings);
+            mOnlineWaitingPresenter = new OnlineWaitingPresenter(mOnlineWaitingFragment, onlineGame);
             mOnlineWaitingPresenter.setMainView(mMainView);
             mOnlineWaitingPresenter.setMainPresenter(this);
         }
@@ -238,7 +241,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToSetTopicPage(int gameType, OnlineGame onlineGame) {
+    public void transToSetTopicPage(OnlineGame onlineGame) {
         // TODO go to set topic page
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 

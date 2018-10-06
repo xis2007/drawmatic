@@ -3,11 +3,10 @@ package com.justinlee.drawmatic.online_room_waiting;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
-import com.justinlee.drawmatic.objects.GameSettings;
-import com.justinlee.drawmatic.objects.OfflineSettings;
+import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.objects.Game;
+import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
 import java.util.ArrayList;
@@ -18,61 +17,75 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     private OnlineWaitingContract.View mOnlineWaitingView;
 
-    private OnlineSettings mOnlineSettings;
-    private OfflineSettings mOfflineSettings;
+    private OnlineGame mOnlineGame;
+    private OfflineGame mOfflineGame;
 
-    public OnlineWaitingPresenter(OnlineWaitingContract.View onlineWaitingView, GameSettings onlineRoom) {
+    public OnlineWaitingPresenter(OnlineWaitingContract.View onlineWaitingView, Game game) {
         mOnlineWaitingView = onlineWaitingView;
         mOnlineWaitingView.setPresenter(this);
 
-        if (onlineRoom instanceof OnlineSettings) {
-            mOnlineSettings = (OnlineSettings) onlineRoom;
-            mOfflineSettings = null;
-        } else {
-            mOnlineSettings = null;
-            mOfflineSettings = (OfflineSettings) onlineRoom;
+        if (game instanceof OnlineGame) {
+            mOnlineGame = (OnlineGame) game;
+            mOfflineGame = null;
         }
+//        else {
+//            mOnlineSettings = null;
+//            mOfflineSettings = ((OfflineGame) game);
+//        }
     }
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
         mMainPresenter.isLoading();
-        Player userAdPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
-        new FirestoreManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineSettings, userAdPlayer);
+        Player userAsPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
+//        new FirestoreManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineSettings, userAsPlayer);
+        new OnlineRoomManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineGame, userAsPlayer);
+
+    }
+
+//    @Override
+//    public void deleteRoom() {
+////        new FirestoreManager((MainActivity) mMainView).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
+//
+//        new OnlineRoomManager((MainActivity) mMainView).deleteRoom(this, mRoomId, mOnlineSettings, mOnlineWaitingView);
+//    }
+
+    @Override
+    public void informToTransToOnlinePage() {
+        mMainPresenter.transToOnlinePage();
+        mMainPresenter.isNotLoading();
     }
 
     @Override
-    public void deleteRoom() {
-        new FirestoreManager((MainActivity) mMainView).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
-    }
-
-    @Override
-    public void startPlayingOnline(OnlineWaitingFragment fragment) {
+    public void startPlayingOnline() {
         mMainPresenter.isLoading();
-        OnlineGame onlineGame = new OnlineGame(mOnlineSettings);
-        mMainPresenter.transToSetTopicPage(mOnlineSettings.getGameMode(), onlineGame);
+        mMainPresenter.transToSetTopicPage(mOnlineGame);
 
         mMainPresenter.isNotLoading();
     }
 
     @Override
-    public void updateOnlineRoomStatus(ArrayList<OnlineSettings> newOnlineSettings) {
-        mOnlineSettings = newOnlineSettings.get(0);
-        if (mOnlineSettings != null) {
-            ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineSettings.getPlayers());
+    public void updateOnlineRoomStatus(ArrayList<OnlineGame> newOnlineGameList) {
+
+        mOnlineGame = newOnlineGameList.get(0);
+        if (mOnlineGame != null) {
+            ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineGame.getOnlineSettings().getPlayers());
         }
+        mMainPresenter.isNotLoading();
     }
 
     @Override
     public void setGameStatusToInGame() {
-        new FirestoreManager((MainActivity) mMainView).setGameStatusToInGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineSettings);
+//        new FirestoreManager((MainActivity) mMainView).setGameStatusToInGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineGame);
+        new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);
     }
 
     @Override
     public void start() {
         // TODO search and check for the room created on server
-        mOnlineWaitingView.showRoomNameUi(mOnlineSettings.getRoomName());
-        new FirestoreManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
+        mOnlineWaitingView.showRoomNameUi(mOnlineGame.getOnlineSettings().getRoomName());
+//        new FirestoreManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
+        new OnlineRoomManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineGame);
     }
 
 
@@ -85,10 +98,9 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
         return mOnlineWaitingView;
     }
 
-    public OnlineSettings getOnlineSettings() {
-        return mOnlineSettings;
+    public OnlineGame getOnlineGame() {
+        return mOnlineGame;
     }
-
 
     /**
      * ***********************************************************************************

@@ -7,7 +7,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -77,7 +77,9 @@ public class GuessingPresenter implements GuessingContract.Presenter {
             public void onFinish() {
                 mMainView.showLoadingUi();
                 // TODO change below null parameter to string
-                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
+//                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
+                new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
+
             }
         }.start();
     }
@@ -89,7 +91,9 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void startMonitoringPlayerGuessingProgress() {
-        mGuessingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
+//        mGuessingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
+        mGuessingListenerRegistration = new OnlineInGameManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
+
     }
 
     @Override
@@ -118,7 +122,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     @Override
     public void start() {
         Log.d(TAG, "start: start to retrieve drawing");
-        new FirestoreManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
+//        new FirestoreManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
+        new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
     }
 
 

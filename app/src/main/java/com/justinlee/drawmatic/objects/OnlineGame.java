@@ -3,6 +3,7 @@ package com.justinlee.drawmatic.objects;
 import android.util.Log;
 
 public class OnlineGame extends Game {
+    private String mRoomId;
     private OnlineSettings mOnlineSettings;
 
     private float mSetTopicTimeAllowed;
@@ -12,7 +13,8 @@ public class OnlineGame extends Game {
     private int mTotalSteps;
     private int mCurrentStep;
 
-    public OnlineGame(OnlineSettings onlineSettings) {
+    public OnlineGame(String roomId, OnlineSettings onlineSettings) {
+        mRoomId = roomId;
         mOnlineSettings = onlineSettings;
 
         mSetTopicTimeAllowed = 0.5f;
@@ -21,6 +23,14 @@ public class OnlineGame extends Game {
         mIsPlayersOddumbered = (mOnlineSettings.getPlayers().size() % 2) != 0;
         mTotalSteps = mIsPlayersOddumbered ? mOnlineSettings.getPlayers().size() : mOnlineSettings.getPlayers().size() + 1;
         mCurrentStep = 1;
+    }
+
+    public String getRoomId() {
+        return mRoomId;
+    }
+
+    public void setRoomId(String roomId) {
+        mRoomId = roomId;
     }
 
     public OnlineSettings getOnlineSettings() {

@@ -123,7 +123,8 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
                     break;
 
                 case R.id.button_next_create_room:
-                    mCreateRoomPresenter.checkForRoomExistance(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
+                    mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
+//                    mCreateRoomPresenter.checkForRoomExistance(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
                     break;
 
                 default:

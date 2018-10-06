@@ -2,15 +2,18 @@ package com.justinlee.drawmatic.objects;
 
 import android.util.Log;
 
+import com.google.firebase.firestore.ServerTimestamp;
 import com.justinlee.drawmatic.util.PlayerIdComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class OnlineSettings extends GameSettings {
     private static final String TAG = "playerssssss";
 
     private String mRoomName;
+    private String mCreator;
     private int mGameMode;
     private int mMaxPlayers;
     private int mCurrentNumPlayers;
@@ -19,12 +22,15 @@ public class OnlineSettings extends GameSettings {
     private boolean mIsInGame;
     private ArrayList<Player> mPlayers;
 
+    @ServerTimestamp private Date timeStamp;
+
     public OnlineSettings() {
     }
 
-    public OnlineSettings(int gameMode, String roomName, int maxPlayers, float attemptTime, ArrayList<Player> players) {
+    public OnlineSettings(int gameMode, String roomName, String creator, int maxPlayers, float attemptTime, ArrayList<Player> players) {
         mGameMode = gameMode;
         mRoomName = roomName;
+        mCreator = creator;
         mMaxPlayers = maxPlayers;
         mCurrentNumPlayers = 1;
         mAttemptTime = attemptTime;
@@ -39,6 +45,14 @@ public class OnlineSettings extends GameSettings {
 
     public String getRoomName() {
         return mRoomName;
+    }
+
+    public String getCreator() {
+        return mCreator;
+    }
+
+    public void setCreator(String creator) {
+        mCreator = creator;
     }
 
     public void setRoomName(String roomName) {
@@ -95,6 +109,14 @@ public class OnlineSettings extends GameSettings {
 
     public void setGameModfe(int gameMode) {
         mGameMode = gameMode;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public ArrayList<Player> generateSortedPlayersListById() {

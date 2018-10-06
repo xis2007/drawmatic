@@ -4,7 +4,6 @@ import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.objects.OnlineSettings;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
@@ -41,10 +40,10 @@ public interface MainContract {
         void transToOnlinePage();
         void transToOnlineSearchPage();
         void transToOnlineRoomCreationPage(int roomType);
-        void transToOnlineWaitingPage(OnlineSettings onlineRoomSettings);
+        void transToOnlineWaitingPage(OnlineGame onlineGame);
 
         // in-game pages
-        void transToSetTopicPage(int gameType, OnlineGame onlineGame);
+        void transToSetTopicPage(OnlineGame onlineGame);
         void transToDrawingPage(Game game);
         void transToGuessingPage(Game game);
         void transToGameResultPage(Game game);

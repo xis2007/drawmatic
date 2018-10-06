@@ -16,11 +16,11 @@ public interface CreateRoomContract {
     interface Presenter extends BasePresenter {
         void checkForRoomExistance(String roomName, int numPlayers, float attemptTime);
 
-        void createRoom(OnlineSettings onlineSettings);
+        void createRoom(String roomName, int numPlayers, float attemptTime);
 
         void cancelRoomCreation();
 
-        void transToRoomWaitingPage(OnlineSettings onlineSettings);
+        void transToRoomWaitingPage(String roomId, OnlineSettings onlineSettings);
 
         void informToHideLoadingUi();
 

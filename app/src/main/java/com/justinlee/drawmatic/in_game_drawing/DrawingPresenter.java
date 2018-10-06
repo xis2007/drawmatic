@@ -9,7 +9,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -94,7 +94,9 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             public void onFinish() {
                 mMainView.showLoadingUi();
                 // TODO change below parameters
-                new FirestoreManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
+//                new FirestoreManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
+                new OnlineInGameManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
+
             }
         }.start();
     }
@@ -106,12 +108,15 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void startMonitoringPlayerProgress() {
-        mDrawingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+//        mDrawingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
+        mDrawingListenerRegistration = new OnlineInGameManager((MainActivity) mMainView).monitorDrawingProgress(mDrawingView, this, mOnlineGame);
     }
 
     @Override
     public void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl) {
-        new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
+//        new FirestoreManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
+        new OnlineInGameManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
+
     }
 
     @Override
@@ -128,7 +133,8 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void start() {
         // start by preparing this step, need to get topic and set all player progress to 0 first
-        new FirestoreManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
+//        new FirestoreManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
+        new OnlineInGameManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
     }
 
 

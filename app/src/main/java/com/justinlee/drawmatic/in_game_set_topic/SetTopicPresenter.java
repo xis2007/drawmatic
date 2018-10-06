@@ -5,7 +5,7 @@ import android.os.CountDownTimer;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -55,7 +55,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             @Override
             public void onFinish() {
                 mMainView.showLoadingUi();
-                new FirestoreManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+//                new FirestoreManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+                new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
             }
         }.start();
     }
@@ -79,7 +80,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     public void start() {
         setAndStartTimer();
         setCurrentStep();
-        new FirestoreManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
+//        new FirestoreManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
+        new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
     }
 
 

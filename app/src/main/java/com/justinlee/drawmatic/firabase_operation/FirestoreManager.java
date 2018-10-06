@@ -86,7 +86,7 @@ public class FirestoreManager {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map map = documentSnapshot.getData();
                         if (map == null) {
-                            createRoomPresenter.createRoom(onlineSettings);
+//                            createRoomPresenter.createRoom(onlineSettings);
                         } else {
                             createRoomPresenter.informRoomExists(onlineSettings);
                         }
@@ -99,7 +99,8 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        createRoomPresenter.transToRoomWaitingPage(onlineSettings);
+                        //TODO
+//                        createRoomPresenter.transToRoomWaitingPage(onlineSettings);
                         ((MainContract.View) ((Fragment) createRoomView).getActivity()).hideLoadingUi();
                     }
                 })
@@ -144,7 +145,7 @@ public class FirestoreManager {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(document));
+//                        onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(document));
                     } else {
                         Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                     }
@@ -161,7 +162,7 @@ public class FirestoreManager {
                     Log.w(TAG, "Listen failed.", e);
                     return;
                 }
-                onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(documentSnapshot));
+//                onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(documentSnapshot));
             }
         });
     }
@@ -204,7 +205,7 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        onlinePresenter.informToTransToOnlineWaitingPage(onlineSettings);
+//                        onlinePresenter.informToTransToOnlineWaitingPage(onlineSettings);
 //                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
                         Log.d(TAG, "Transaction success!");
                     }
@@ -303,7 +304,7 @@ public class FirestoreManager {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(document));
+//                        onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(document));
                         ((MainContract.View) mContext).hideLoadingUi();
                     } else {
                         Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
@@ -329,9 +330,9 @@ public class FirestoreManager {
                 int currentPlayerType = ((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer().getPlayerType();
 
                 if (onlineSettings.isInGame()) {
-                    onlineWaitingPresenter.startPlayingOnline((OnlineWaitingFragment) onlineWaitingView);
+//                    onlineWaitingPresenter.startPlayingOnline((OnlineWaitingFragment) onlineWaitingView);
                 } else {
-                    onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
+//                    onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
                 }
             }
         });

@@ -2,7 +2,7 @@ package com.justinlee.drawmatic.online_room_waiting;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
-import com.justinlee.drawmatic.objects.OnlineSettings;
+import com.justinlee.drawmatic.objects.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,13 @@ public interface OnlineWaitingContract {
     interface Presenter extends BasePresenter {
         void leaveRoom(OnlineWaitingFragment fragment);
 
-        void deleteRoom();
+//        void deleteRoom();
 
-        void startPlayingOnline(OnlineWaitingFragment fragment);
+        void informToTransToOnlinePage();
 
-        void updateOnlineRoomStatus(ArrayList<OnlineSettings> newOnlineSettings);
+        void startPlayingOnline();
+
+        void updateOnlineRoomStatus(ArrayList<OnlineGame> newOnlineGame);
 
         void setGameStatusToInGame();
     }

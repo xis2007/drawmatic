@@ -2,7 +2,7 @@ package com.justinlee.drawmatic.online;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
-import com.justinlee.drawmatic.objects.OnlineSettings;
+import com.justinlee.drawmatic.objects.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -27,10 +27,10 @@ public interface OnlineContract {
 
         void searchForRooms(OnlineFragment onlineFragment, String inputString);
 
-        void informToShowResultRooms(ArrayList<OnlineSettings> onlineRoomSettings);
+        void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList);
 
-        void joinSelectedRoom(OnlineSettings onlineSettings);
+        void joinSelectedRoom(OnlineGame onlineGame);
 
-        void informToTransToOnlineWaitingPage(OnlineSettings onlineSettings);
+        void informToTransToOnlineWaitingPage(OnlineGame onlineGame);
     }
 }

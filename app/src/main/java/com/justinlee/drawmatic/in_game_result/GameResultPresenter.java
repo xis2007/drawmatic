@@ -3,7 +3,7 @@ package com.justinlee.drawmatic.in_game_result;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -55,7 +55,9 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void start() {
-        new FirestoreManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
+//        new FirestoreManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
+        new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
+
     }
 
 

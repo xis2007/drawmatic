@@ -4,7 +4,8 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.firabase_operation.FirestoreManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
 
@@ -29,6 +30,24 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void checkForRoomExistance(String roomName, int numPlayers, float attemptTime) {
+//        if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
+//            mCreateRoomView.promptNameInputAlert();
+//
+//        } else {
+//            mMainPresenter.isLoading();
+//            Player roomMaster = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();
+//            roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
+//            ArrayList<Player> playersList =  new ArrayList<>();
+//            playersList.add(roomMaster);
+//
+//            final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
+//
+//            new FirestoreManager((MainActivity) mMainView).checkForRoomExistance(this, onlineSettings, mCreateRoomView);
+//        }
+    }
+
+    @Override
+    public void createRoom(String roomName, int numPlayers, float attemptTime) {
         if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
             mCreateRoomView.promptNameInputAlert();
 
@@ -39,16 +58,19 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
             ArrayList<Player> playersList =  new ArrayList<>();
             playersList.add(roomMaster);
 
-            final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
+            final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, roomMaster.getPlayerName(), numPlayers, attemptTime, playersList);
 
-            new FirestoreManager((MainActivity) mMainView).checkForRoomExistance(this, onlineSettings, mCreateRoomView);
+            new OnlineRoomManager((MainActivity) mMainView).createOnlineRoom(this, onlineSettings, mCreateRoomView);
         }
     }
 
-    @Override
-    public void createRoom(OnlineSettings onlineSettings) {
-        new FirestoreManager((MainActivity) mMainView).createOnlineRoom(this, onlineSettings, mCreateRoomView);
-    }
+    /**
+     * this will become deprecated
+     */
+//    @Override
+//    public void createRoom(OnlineSettings onlineSettings) {
+//        new FirestoreManager((MainActivity) mMainView).createOnlineRoom(this, onlineSettings, mCreateRoomView);
+//    }
 
     @Override
     public void cancelRoomCreation() {
@@ -58,8 +80,10 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void transToRoomWaitingPage(OnlineSettings onlineSettings) {
-        ((MainActivity) mMainView).getMainPresenter().transToOnlineWaitingPage(onlineSettings);
+    public void transToRoomWaitingPage(String roomId, OnlineSettings onlineSettings) {
+        mMainPresenter.isLoading();
+        OnlineGame onlineGame = new OnlineGame(roomId, onlineSettings);
+        ((MainActivity) mMainView).getMainPresenter().transToOnlineWaitingPage(onlineGame);
     }
 
     @Override

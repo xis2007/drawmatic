@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.objects.OnlineSettings;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.online.OnlineFragment;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class SearchedRoomsAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private OnlineFragment mOnlineFragment;
-    private ArrayList<OnlineSettings> mOnlineGameSettings;
+    private ArrayList<OnlineGame> mOnlineGamesList;
 
-    public SearchedRoomsAdapter(OnlineFragment onlineFragment, ArrayList<OnlineSettings> onlineGameSettings) {
+    public SearchedRoomsAdapter(OnlineFragment onlineFragment, ArrayList<OnlineGame> onlineGamesList) {
         mContext = onlineFragment.getActivity();
         mOnlineFragment = onlineFragment;
-        mOnlineGameSettings = onlineGameSettings;
+        mOnlineGamesList = onlineGamesList;
     }
 
     @NonNull
@@ -36,17 +36,17 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final OnlineSettings currentOnlineGameSettings = mOnlineGameSettings.get(position);
+        final OnlineGame currentOnlineGame = mOnlineGamesList.get(position);
 
         // TODO ordering may cause problem to positions of each player in the Arraylist
-        ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGameSettings.getRoomName());
-        ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGameSettings.getPlayers().get(0).getPlayerName());
-        ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGameSettings.getCurrentNumPlayers() + " / " + currentOnlineGameSettings.getMaxPlayers());
+        ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
+        ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
+        ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
 
         ((RoomViewHolder) holder).getRoomItemLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGameSettings);
+                mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
                 ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi();
             }
         });
@@ -54,12 +54,12 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mOnlineGameSettings.get(0) == null ? 0 : mOnlineGameSettings.size();
+        return mOnlineGamesList == null ? 0 : mOnlineGamesList.size();
     }
 
-    public void swapList(ArrayList<OnlineSettings> gameSettings) {
-        if (mOnlineGameSettings != gameSettings) {
-            mOnlineGameSettings = gameSettings;
+    public void swapList(ArrayList<OnlineGame> onlineGamesList) {
+        if (mOnlineGamesList != onlineGamesList) {
+            mOnlineGamesList = onlineGamesList;
             notifyDataSetChanged();
         }
     }

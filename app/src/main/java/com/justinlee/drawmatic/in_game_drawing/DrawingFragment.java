@@ -101,7 +101,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     private void initDrawingView(View rootView) {
         mDrawView = rootView.findViewById(R.id.drawView);
         mDrawView.setStrokeWidth(10);
-        mDrawView.setColor(R.color.colorAccent);
+        mDrawView.setColor(R.color.colorGreyDark);
     }
 
     private void initBottomNav(View rootView) {
