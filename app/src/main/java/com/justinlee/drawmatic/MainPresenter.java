@@ -89,6 +89,7 @@ public class MainPresenter implements MainContract.Presenter {
             mSetTopicFragment = null;
             mSetTopicPresenter = null;
         }
+
         // TODO add all others
 
         if (!mOfflineFragment.isAdded()) {
@@ -141,6 +142,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.remove(mDrawingFragment);
             mDrawingFragment = null;
             mDrawingPresenter = null;
+        }
+        if (mGameResultFragment != null) {
+            transaction.remove(mGameResultFragment);
+            mGameResultFragment = null;
+            mGameResultPresenter = null;
         }
         // TODO add all others
 

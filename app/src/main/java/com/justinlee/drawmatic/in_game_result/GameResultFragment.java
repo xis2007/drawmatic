@@ -4,6 +4,7 @@ package com.justinlee.drawmatic.in_game_result;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.GameResultImagesAdapter;
+import com.justinlee.drawmatic.adapters.GameResultPagerAdapter;
+import com.merhold.extensiblepageindicator.ExtensiblePageIndicator;
 
 import java.util.ArrayList;
 
@@ -28,6 +32,10 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
 
     private RecyclerView mGameResultRecyclerView;
     private GameResultImagesAdapter mGameResultImagesAdapter;
+
+    private ViewPager mGameResultViewPager;
+    private GameResultPagerAdapter mPagerAdapter;
+    private Button mDoneButton;
 
     public GameResultFragment() {
         // Required empty public constructor
@@ -47,10 +55,13 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_result, container, false);
 
-        initRecyclerView(rootView);
+//        initRecyclerView(rootView);
+        initViewPager(rootView);
+        initViews(rootView);
 
         return rootView;
     }
+
 
     private void initRecyclerView(View rootView) {
         mGameResultRecyclerView = rootView.findViewById(R.id.gameResultRecyclerView);
@@ -58,6 +69,21 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
         mGameResultRecyclerView.setAdapter(mGameResultImagesAdapter);
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(mGameResultRecyclerView);
+    }
+
+    private void initViewPager(View rootView) {
+        mGameResultViewPager = rootView.findViewById(R.id.gameResultViewPager);
+    }
+
+
+    private void initViews(View rootView) {
+        mDoneButton = rootView.findViewById(R.id.button_quit_game_game_result);
+        mDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGameResultPresenter.doneViewingResult();
+            }
+        });
     }
 
 
@@ -71,7 +97,12 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     @Override
     public void showResults(ArrayList<String> resultStrings) {
         Log.d(TAG, "showResults: result strings is: " + resultStrings);
-        mGameResultImagesAdapter.swapList(resultStrings);
+//        mGameResultImagesAdapter.swapList(resultStrings);
+
+        mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultStrings);
+        mGameResultViewPager.setAdapter(mPagerAdapter);
+        ExtensiblePageIndicator extensiblePageIndicator = getActivity().findViewById(R.id.flexibleIndicator);
+        extensiblePageIndicator.initViewPager(mGameResultViewPager);
     }
 
     @Override

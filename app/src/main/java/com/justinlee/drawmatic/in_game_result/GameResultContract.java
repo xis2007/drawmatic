@@ -18,6 +18,6 @@ public interface GameResultContract {
 
         void deleteStorageImagesData();
 
-        void leaveGame();
+        void doneViewingResult();
     }
 }

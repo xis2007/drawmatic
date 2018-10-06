@@ -100,8 +100,8 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     }
 
     @Override
-    public void updateTimer(long currentCountDoenTime) {
-        mTextTimeRemaining.setText(String.valueOf(currentCountDoenTime));
+    public void updateTimer(long currentCountDownTime) {
+        mTextTimeRemaining.setText(String.valueOf(currentCountDownTime));
     }
 
     @Override

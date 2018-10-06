@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.justinlee.drawmatic.MainActivity;
@@ -91,8 +92,12 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
         startGameButton.setOnClickListener(buttonOnclickListener);
 
         if (((MainPresenter) ((MainActivity) getActivity()).getMainPresenter()).getCurrentPlayer().getPlayerType() == Constants.PlayerType.PARTICIPANT) {
-            startGameButton.setVisibility(View.INVISIBLE);
+            startGameButton.setVisibility(View.GONE);
             startGameButton.setClickable(false);
+
+            LinearLayout.LayoutParams layoutParams;
+            layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0);
+            cancelButton.setLayoutParams(layoutParams);
         } else {
             startGameButton.setVisibility(View.VISIBLE);
             startGameButton.setClickable(true);

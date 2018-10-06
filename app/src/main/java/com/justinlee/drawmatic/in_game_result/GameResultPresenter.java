@@ -49,8 +49,8 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     }
 
     @Override
-    public void leaveGame() {
-
+    public void doneViewingResult() {
+        mMainPresenter.transToOnlinePage();
     }
 
     @Override
