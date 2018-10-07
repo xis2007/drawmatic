@@ -39,7 +39,7 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     @Override
     public void searchForRooms(OnlineFragment onlineFragment, String inputString) {
         // TODO query
-//        new FirestoreManager(((Fragment) mOnlineView).getActivity()).searchForRoom(onlineFragment, this, inputString);
+        mMainPresenter.isLoading();
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(onlineFragment, this, inputString);
 
     }
@@ -48,20 +48,30 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
         ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
         mOnlineView.showOnlineSearchPageUi();
+        mMainPresenter.isNotLoading();
     }
 
     @Override
     public void joinSelectedRoom(OnlineGame onlineGame) {
         Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, onlineGame.getOnlineSettings().getCurrentNumPlayers() + 1);
-//        new FirestoreManager(((Fragment) mOnlineView).getActivity()).joinRoom((OnlineFragment) mOnlineView, onlineSettings, this, userAsPlayer);
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).joinRoom((OnlineFragment) mOnlineView, onlineGame, this, userAsPlayer);
 
     }
 
     @Override
     public void informToTransToOnlineWaitingPage(OnlineGame onlineGame) {
-//        ((MainActivity) ((OnlineFragment) mOnlineView).getActivity()).getMainPresenter().transToOnlineWaitingPage(onlineSettings);
         mMainPresenter.transToOnlineWaitingPage(onlineGame);
+    }
+
+    @Override
+    public void informToShowNoRoomsResultFoundMessage() {
+        mMainPresenter.isNotLoading();
+        mOnlineView.showNoRoomsResultFoundMessage();
+    }
+
+    @Override
+    public void informToShowRoomIsInGameMessage() {
+        mOnlineView.showRoomIsInGameMessage();
     }
 
     @Override

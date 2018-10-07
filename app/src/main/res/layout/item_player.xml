@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/box_player_waiting"/>
+        app:srcCompat="@drawable/box_rooms_searched"/>
 
     <TextView
         android:id="@+id/text_player_name_waiting"

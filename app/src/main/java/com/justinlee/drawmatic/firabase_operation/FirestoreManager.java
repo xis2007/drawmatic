@@ -62,6 +62,12 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+/**
+ * This class operates firestore data with room keys as room name, which is not so convenient
+ * It is replaced by OnlineGameManager and OnlineInGameManager, which creates rooms with auto generated keys
+ * This class, therefore, is deprecated
+ */
+
 public class FirestoreManager {
     private static final String TAG = "justinxxxxx";
 
@@ -604,7 +610,7 @@ public class FirestoreManager {
                     Map documentMap = document.getData();
 
                     if (document.exists()) {
-                        guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)).replaceAll(" ", "").length());
+                        guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
                         guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
                         guessingPresenter.setCurrentStep();
                         guessingPresenter.startMonitoringPlayerGuessingProgress();

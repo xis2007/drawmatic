@@ -1,7 +1,6 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
@@ -12,6 +11,7 @@ import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
+import com.justinlee.drawmatic.util.StringUtil;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
     private static final String TAG = "justinxxxxx";
@@ -76,10 +76,9 @@ public class GuessingPresenter implements GuessingContract.Presenter {
             @Override
             public void onFinish() {
                 mMainView.showLoadingUi();
-                // TODO change below null parameter to string
-//                new FirestoreManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
-                new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, mGuessingView.getGuessingInput());
-
+                String inputGuessing = mGuessingView.getGuessingInput();
+                if(inputGuessing == null) inputGuessing = "";
+                new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
             }
         }.start();
     }
@@ -91,9 +90,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void startMonitoringPlayerGuessingProgress() {
-//        mGuessingListenerRegistration = new FirestoreManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
         mGuessingListenerRegistration = new OnlineInGameManager((MainActivity) mMainView).monitorGuessingProgress(mGuessingView, this, mOnlineGame);
-
     }
 
     @Override
@@ -108,21 +105,22 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void setWordCountHint(int wordCount) {
-        mGuessingView.showWordCountHint(wordCount);
+    public void setWordCountHint(String theWord) {
+        if(StringUtil.isEmptyString(theWord)) {
+            mGuessingView.showWordCountHint(0);
+        } else {
+            mGuessingView.showWordCountHint(theWord.length());
+        }
+
     }
 
     @Override
     public void finishGame(Game game) {
         mMainPresenter.transToGameResultPage(game);
-//        mMainPresenter.isNotLoading();
-//        Snackbar.make(((MainActivity) mMainView).findViewById(R.id.fragment_container_main), "game finished", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void start() {
-        Log.d(TAG, "start: start to retrieve drawing");
-//        new FirestoreManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.Continuation;
@@ -49,7 +48,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 public class OnlineInGameManager {
-    private static final String TAG = "onlineRoomManagerrrrrr";
+//    private static final String TAG = "onlineRoomManagerrrrrr";
 
     private Context mContext;
     private FirebaseFirestore mFirebaseDb;
@@ -168,15 +167,16 @@ public class OnlineInGameManager {
                         DocumentSnapshot document = task.getResult();
                         Map documentMap = document.getData();
                         if (document.exists()) {
-                            Log.d(TAG, "onComplete: topic retrieved");
                             // setup the retrieved info to the page, and allow players to begin monitoring the progress of this step
                             // room master needs to reset all players' progress to 0
                             drawingPresenter.setTopic((String) documentMap.get(dataNumber));
                             drawingPresenter.setCurrentStep();
                             drawingPresenter.startMonitoringPlayerProgress();
+
                         } else {
                             Snackbar.make(((DrawingFragment) drawingView).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                         }
+
                     } else {
                         Snackbar.make(((DrawingFragment) drawingView).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
@@ -185,7 +185,6 @@ public class OnlineInGameManager {
     }
 
     public ListenerRegistration monitorDrawingProgress(final DrawingContract.View drawingView, final DrawingPresenter drawingPresenter, final OnlineGame onlineGame) {
-        Log.d(TAG, "monitorDrawingProgress: monitoring drawing progress");
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
                 .document(onlineGame.getRoomId());
@@ -203,15 +202,15 @@ public class OnlineInGameManager {
                             Map finishedCurrentStepMap = document.getData();
                             long retrievedValue = (long) finishedCurrentStepMap.get("finishedCurrentStep");
                             int finishedCurrentStep = (int) retrievedValue;
-                            Log.d(TAG, "onComplete: current step is " + onlineGame.getCurrentStep());
-                            Log.d(TAG, "onComplete: retrieved step is " + finishedCurrentStep);
 
                             if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
                                 drawingPresenter.startDrawing();
                             }
+
                         } else {
                             Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                         }
+
                     } else {
                         Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
@@ -236,9 +235,6 @@ public class OnlineInGameManager {
                                 totalProgressOfThisStep += onlineGame.getCurrentStep();
                             }
                         }
-        //
-        //                Log.d(TAG, "onEvent: total progress of this step " + totalProgressOfThisStep);
-        //                Log.d(TAG, "onEvent: target progress of this step " + targetProgress);
 
                         // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
                         // else, it means this step has just begun, so start drawing
@@ -312,7 +308,6 @@ public class OnlineInGameManager {
                         Map progressMap = new HashMap();
                         progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
                         currentUserProgressRef.update(progressMap);
-                        Log.d(TAG, "onComplete: updating drawing completed");
                     }
                 });
     }
@@ -328,8 +323,6 @@ public class OnlineInGameManager {
 
         final String imageUrlDataNumber = String.valueOf(topicDrawingRetrievingUtil.calcItemNumberToRetrieveTopicOrDrawing());
         final String topicDataNumber = String.valueOf(Integer.valueOf(imageUrlDataNumber) - 1);
-        Log.d(TAG, "retrieveDrawingAndWordCount: player id to get: " + playerIdToGetTopicOrDrawing);
-        Log.d(TAG, "retrieveDrawingAndWordCount: data number: " + imageUrlDataNumber);
 
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
@@ -347,11 +340,11 @@ public class OnlineInGameManager {
                         Map documentMap = document.getData();
 
                         if (document.exists()) {
-                            guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)).replaceAll(" ", "").length());
+                            guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
                             guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
                             guessingPresenter.setCurrentStep();
                             guessingPresenter.startMonitoringPlayerGuessingProgress();
-                            Log.d(TAG, "onComplete: retrieved drawing");
+
                         } else {
                             Snackbar.make(((GuessingFragment) guessingView).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                         }
@@ -382,12 +375,11 @@ public class OnlineInGameManager {
                             Map finishedCurrentStepMap = document.getData();
                             long finishedCurrentStep = (long) finishedCurrentStepMap.get("finishedCurrentStep");
                             finishedCurrentStep = (int) finishedCurrentStep;
-                            Log.d(TAG, "onComplete: got status of progress in this step");
 
                             if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
                                 guessingPresenter.startGuessing();
-                                Log.d(TAG, "onComplete: trans to guessing");
                             }
+
                         } else {
                             Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                         }
@@ -406,13 +398,12 @@ public class OnlineInGameManager {
                         int totalProgressOfThisStep = 0;
                         int targetProgress = onlineGame.getCurrentStep() * onlineGame.getOnlineSettings().getPlayers().size();
                         int maxProgressOfWholeGame = onlineGame.getTotalSteps() * onlineGame.getOnlineSettings().getPlayers().size();
-                        Log.d(TAG, "onEvent: \n\n");
+
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Map playerProgressMap = documentSnapshot.getData();
                             long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
                             playerProgressOfThisStep = (int) playerProgressOfThisStep;
-                            Log.d(TAG, "onEvent: player progress" + playerProgressOfThisStep);
-                            Log.d(TAG, "onEvent: current step" + onlineGame.getCurrentStep());
+
                             if (playerProgressOfThisStep == onlineGame.getCurrentStep()) {
                                 totalProgressOfThisStep += onlineGame.getCurrentStep();
                             }
@@ -455,10 +446,9 @@ public class OnlineInGameManager {
                                 .document(onlineGame.getRoomId())
                                 .collection("progressOfEachStep")
                                 .document(mCurrentPlayer.getPlayerId());
+
                         Map progressMap = new HashMap();
                         progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
-                        Log.d(TAG, "onComplete: putting guessing up to server: " + onlineGame.getCurrentStep());
-
                         currentUserProgressRef.update(progressMap);
                     }
                 });
@@ -487,20 +477,13 @@ public class OnlineInGameManager {
                         Map documentMap = document.getData();
 
                         if (document.exists()) {
-                            // transform to bitmap first
-    //                        ArrayList<String> resourceList = new ArrayList<>();
-    //                        for(int i = 1; i <= documentMap.size(); i++) {
-    //                            resourceList.add((String) documentMap.get(i));
-    //                        }
-    //                        gameResultPresenter.informToShowResults(new ResultAsBitmapsUtil(mContext, gameResultPresenter).generateFrom(resourceList));
-
                             // passing strings
                             ArrayList<String> resourceStringList = new ArrayList<>();
                             for (int i = 1; i <= documentMap.size(); i++) {
                                 resourceStringList.add((String) documentMap.get(String.valueOf(i)));
                             }
-
                             gameResultPresenter.informToShowResults(resourceStringList);
+
                         } else {
                             Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
                         }

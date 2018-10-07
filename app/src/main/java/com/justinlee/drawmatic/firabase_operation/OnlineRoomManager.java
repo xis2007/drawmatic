@@ -49,12 +49,13 @@ public class OnlineRoomManager {
 
     private Context mContext;
     private FirebaseFirestore mFirebaseDb;
+    private Player mCurrentPlayer;
 
     public OnlineRoomManager(Context context) {
         mContext = context;
         mFirebaseDb = Drawmatic.getmFirebaseDb();
+        mCurrentPlayer = ((MainPresenter) (((MainActivity) mContext).getMainPresenter())).getCurrentPlayer();
     }
-
 
     /**
      * *********************************************************************************
@@ -82,23 +83,6 @@ public class OnlineRoomManager {
                 });
     }
 
-
-//    public void deleteRoom(final OnlineWaitingPresenter onlineWaitingPresenter, String roomId, OnlineSettings onlineSettings, final OnlineWaitingContract.View onlineWaitingView) {
-//        Drawmatic.getmFirebaseDb().collection("rooms").document(roomId).delete()
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        onlineWaitingPresenter.informToTransToOnlinePage();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        ((MainContract.View) ((Fragment) onlineWaitingView).getActivity()).hideLoadingUi();
-//                    }
-//                });
-//    }
-
     /**
      * *********************************************************************************
      * Player opertaions
@@ -119,7 +103,7 @@ public class OnlineRoomManager {
                         if (!qurySnapshot.isEmpty()) {
                             onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(qurySnapshot));
                         } else {
-                            Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            onlinePresenter.informToShowNoRoomsResultFoundMessage();
                         }
                     } else {
                         Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
@@ -174,8 +158,6 @@ public class OnlineRoomManager {
                     @Override
                     public void onSuccess(Void aVoid) {
                         onlinePresenter.informToTransToOnlineWaitingPage(onlineGame);
-//                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
-                        Log.d(TAG, "Transaction success!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -202,8 +184,8 @@ public class OnlineRoomManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
-                        ((MainActivity) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                        ((MainActivity) mContext).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) mContext).hideLoadingUi();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -215,9 +197,10 @@ public class OnlineRoomManager {
     }
 
     private void playerLeavesGame(final OnlineWaitingFragment onlineWaitingFragment, String roomId, OnlineSettings onlineSettings, final Player leavingPlayer) {
-        final DocumentReference roomToLeaveRef = Drawmatic.getmFirebaseDb()
-                                                            .collection("rooms")
-                                                            .document(roomId);
+        final DocumentReference roomToLeaveRef =
+                Drawmatic.getmFirebaseDb()
+                .collection("rooms")
+                .document(roomId);
 
         Drawmatic.getmFirebaseDb()
                 .runTransaction(new Transaction.Function<Void>() {
@@ -242,16 +225,13 @@ public class OnlineRoomManager {
                         return null;
                     }
                 })
-
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
                         ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
-                        Log.d(TAG, "Transaction success!");
                     }
                 })
-
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -265,57 +245,66 @@ public class OnlineRoomManager {
     /**
      * *********************************************************************************
      * Start Game and Room Status Syncing
-     * **********************************************************************************
+     * *********************************************************************************
      */
     public void syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineGame onlineGame) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
                 .document(onlineGame.getRoomId());
 
-        docRef.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(document));
-
-                            } else {
-                                Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
-                                // TODO room was deleted by room master, player needs to leave the room
-                            }
+        docRef
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(document));
 
                         } else {
-                            Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            // TODO room was deleted by room master, player needs to leave the room
+                        }
+
+                    } else {
+                        Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        docRef
+            .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+
+                    OnlineGame onlineGame = null;
+                    try{
+                        onlineGame = transformDocumentSnapshotToRoomsList(documentSnapshot).get(0);
+                    } catch (NullPointerException exception) {
+                        onlineWaitingPresenter.informToTransToOnlinePage();
+                        onlineWaitingPresenter.informToShowRoomClosedMessage();
+                    }
+
+
+                    if(onlineGame != null) {
+                        if (onlineGame.getOnlineSettings().isInGame()) {
+                            onlineWaitingPresenter.startPlayingOnline();
+                        } else {
+                            onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
                         }
                     }
-                });
-
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
                 }
-
-                OnlineGame onlineGame = transformDocumentSnapshotToRoomsList(documentSnapshot).get(0);
-                if(onlineGame.getOnlineSettings() != null) {
-                    if (onlineGame.getOnlineSettings().isInGame()) {
-                        onlineWaitingPresenter.startPlayingOnline();
-                    } else {
-                        onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
-                    }
-                }
-            }
-        });
+            });
     }
 
     public void setGameStatusToInGame(final OnlineWaitingPresenter onlineWaitingPresenter, final OnlineGame onlineGame) {
-        Player currentPlayer = ((MainPresenter) (((MainActivity) mContext).getMainPresenter())).getCurrentPlayer();
-
-        if (currentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
+        if (mCurrentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
             DocumentReference roomRef = Drawmatic.getmFirebaseDb()
                     .collection("rooms")
@@ -325,34 +314,12 @@ public class OnlineRoomManager {
         }
     }
 
-
-//    public void startOnlineGame(final OnlineWaitingFragment onlineWaitingFragment, final OnlineSettings onlineSettings) {
-//
-//
-//
-////        HashMap<String, Object> playersMap = new HashMap<>();
-////        ArrayList<Player> sortedPlayers = onlineSettings.generateSortedPlayersListById();
-////        playersMap.put("playerOrder", sortedPlayers.indexOf(currentPlayer) + 1);
-////        DocumentReference drawingsRef = roomRef.collection("drawings").document(currentPlayer.getPlayerId());
-////        batch.set(drawingsRef, playersMap);
-//
-//
-////                .addOnCompleteListener(new OnCompleteListener<Void>() {
-////            @Override
-////            public void onComplete(@NonNull Task<Void> task) {
-//
-////            }
-////        });
-//    }
-
-
-
     /**
      * *********************************************************************************
      * Helper Methods
      * *********************************************************************************
      */
-    private ArrayList<OnlineGame> transformDocumentSnapshotToRoomsList(DocumentSnapshot documentSnapshot) {
+    private ArrayList<OnlineGame> transformDocumentSnapshotToRoomsList(DocumentSnapshot documentSnapshot) throws NullPointerException {
         OnlineSettings onlineSettings = documentSnapshot.toObject(OnlineSettings.class);
         OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), onlineSettings);
 

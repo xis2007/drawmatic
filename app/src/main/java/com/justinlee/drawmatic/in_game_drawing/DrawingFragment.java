@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.divyanshu.draw.widget.DrawView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.util.StringUtil;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -132,7 +133,12 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
 
     @Override
     public void showTopic(String topic) {
-        mTextTopicDrawing.setText(topic);
+        if(StringUtil.isEmptyString(topic)) {
+            mTextTopicDrawing.setText("Oops, the previous player has nothing for you");
+        } else {
+            mTextTopicDrawing.setText(topic);
+        }
+
     }
 
     @Override

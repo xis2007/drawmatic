@@ -8,6 +8,8 @@ public interface SetTopicContract {
         void updateTimer(long currentCountDoenTime);
 
         void showCurrentStep(int currentStep, int maxPlayers);
+
+        String getEditTextTopicInput();
     }
 
     interface Presenter extends BasePresenter {

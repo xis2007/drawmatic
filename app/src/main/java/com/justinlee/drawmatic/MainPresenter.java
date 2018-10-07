@@ -162,8 +162,8 @@ public class MainPresenter implements MainContract.Presenter {
         }
         transaction.commit();
 
-        if (mOnlineFragment.getSearchResultRecyclerView() != null) {
-            mOnlineFragment.getSearchResultRecyclerView().setVisibility(View.GONE);
+        if (mOnlineFragment.getSearchedResultContainer() != null) {
+            mOnlineFragment.getSearchedResultContainer().setVisibility(View.GONE);
         }
 
         mMainView.showOnlinePageUi();

@@ -18,6 +18,10 @@ public interface OnlineContract {
         void showOnlineRoomCreationPageUi(int roomType);
 
         void showOnlineGameSettingsPageUi();
+
+        void showNoRoomsResultFoundMessage();
+
+        void showRoomIsInGameMessage();
     }
 
     interface Presenter extends BasePresenter {
@@ -32,5 +36,9 @@ public interface OnlineContract {
         void joinSelectedRoom(OnlineGame onlineGame);
 
         void informToTransToOnlineWaitingPage(OnlineGame onlineGame);
+
+        void informToShowNoRoomsResultFoundMessage();
+
+        void informToShowRoomIsInGameMessage();
     }
 }

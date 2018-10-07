@@ -81,6 +81,11 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     }
 
     @Override
+    public void informToShowRoomClosedMessage() {
+        mOnlineWaitingView.showRoomClosedMessage();
+    }
+
+    @Override
     public void start() {
         // TODO search and check for the room created on server
         mOnlineWaitingView.showRoomNameUi(mOnlineGame.getOnlineSettings().getRoomName());

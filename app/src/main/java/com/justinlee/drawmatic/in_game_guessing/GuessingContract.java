@@ -36,7 +36,7 @@ public interface GuessingContract {
 
         void unregisterListener();
 
-        void setWordCountHint(int wordCount);
+        void setWordCountHint(String theWord);
 
         void finishGame(Game game);
     }

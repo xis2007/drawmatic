@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public interface OnlineWaitingContract {
     interface View extends BaseView<Presenter> {
         void showRoomNameUi(String roomName);
+
+        void showRoomClosedMessage();
     }
 
     interface Presenter extends BasePresenter {
@@ -23,6 +25,8 @@ public interface OnlineWaitingContract {
         void updateOnlineRoomStatus(ArrayList<OnlineGame> newOnlineGame);
 
         void setGameStatusToInGame();
+
+        void informToShowRoomClosedMessage();
     }
 
 }

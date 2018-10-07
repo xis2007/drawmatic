@@ -31,14 +31,16 @@
 
                 <Button
                     android:id="@+id/button_steps_remaining_game_result"
-                    android:layout_width="88dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/box_info_in_game_normal"
-                    android:text="Completed"
+                    android:text="Your Results are Ready, have fun!!"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_quit_game_game_result"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -48,23 +50,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.5"/>
-
-                <TextView
-                    android:id="@+id/text_time_remaining_game_result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:text="See Results Below"
-                    android:textColor="@color/colorWhite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_game_result"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_game_result"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0"/>
 
                 <Button
                     android:id="@+id/button_quit_game_game_result"
@@ -99,6 +84,7 @@
             android:id="@+id/gameResultViewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/colorWhite"
             app:layout_constraintBottom_toTopOf="@+id/flexibleIndicator"
             app:layout_constraintEnd_toEndOf="parent"

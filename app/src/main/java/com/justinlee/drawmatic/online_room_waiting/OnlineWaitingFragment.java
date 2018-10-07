@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -75,6 +76,11 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     @Override
     public void showRoomNameUi(String roomName) {
         mTextHintWaiting.setText(roomName);
+    }
+
+    @Override
+    public void showRoomClosedMessage() {
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room was closed by Room Master", Snackbar.LENGTH_SHORT).show();
     }
 
 

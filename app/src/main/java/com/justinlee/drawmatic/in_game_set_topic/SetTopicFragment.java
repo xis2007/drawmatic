@@ -96,6 +96,9 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         mCurrentStepButton.setText(currentStep + " / " + maxPlayers);
     }
 
+    public String getEditTextTopicInput() {
+        return mEditTextTopicInput.getText().toString();
+    }
 
     /**
      * *********************************************************************************
@@ -106,7 +109,5 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         return mTextTimeRemaining;
     }
 
-    public EditText getEditTextTopicInput() {
-        return mEditTextTopicInput;
-    }
+
 }

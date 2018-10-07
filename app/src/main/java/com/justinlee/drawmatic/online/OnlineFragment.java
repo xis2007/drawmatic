@@ -1,12 +1,12 @@
 package com.justinlee.drawmatic.online;
 
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +35,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     private CardView mButtonCreateOnlineNormalRoom;
     private Button mButtonCreateOnlineTeamRoom;
 
+    private ConstraintLayout mSearchedResultContainer;
     private RecyclerView mSearchResultRecyclerView;
     private SearchedRoomsAdapter mSearchedRoomsAdapter;
 
@@ -62,6 +63,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
         mButtonCreateOnlineNormalRoom = rootView.findViewById(R.id.button_online_normal_mode);
         mEdittextSearchForRooms = rootView.findViewById(R.id.edittext_searchbox_online);
         mSearchResultRecyclerView = rootView.findViewById(R.id.room_list_recyclerview_online);
+        mSearchedResultContainer = rootView.findViewById(R.id.layout_room_list_online);
 
         mButtonCreateOnlineNormalRoom.setOnClickListener(this);
         mEdittextSearchForRooms.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -102,13 +104,13 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     @Override
     public void showOnlineSearchPageUi() {
-        mSearchResultRecyclerView.setVisibility(View.VISIBLE);
+        mSearchedResultContainer.setVisibility(View.VISIBLE);
     }
 
 
     @Override
     public void hideOnlineSearchPageUi() {
-        mSearchResultRecyclerView.setVisibility(View.GONE);
+        mSearchedResultContainer.setVisibility(View.GONE);
     }
 
 
@@ -123,8 +125,18 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     }
 
+    @Override
+    public void showNoRoomsResultFoundMessage() {
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+    }
 
-    @SuppressLint("RestrictedApi")
+
+    @Override
+    public void showRoomIsInGameMessage() {
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Selected Room is in Game", Snackbar.LENGTH_SHORT).show();
+    }
+
+
     @Override
     public void setPresenter(OnlineContract.Presenter presenter) {
         mOnlinePresenter = checkNotNull(presenter);
@@ -168,5 +180,9 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     public SearchedRoomsAdapter getSearchedRoomsAdapter() {
         return mSearchedRoomsAdapter;
+    }
+
+    public ConstraintLayout getSearchedResultContainer() {
+        return mSearchedResultContainer;
     }
 }

@@ -55,8 +55,10 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             @Override
             public void onFinish() {
                 mMainView.showLoadingUi();
-//                new FirestoreManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
-                new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, ((SetTopicFragment) mSetTopicView).getEditTextTopicInput().getText().toString());
+                String inputTopic = mSetTopicView.getEditTextTopicInput();
+                if(inputTopic == null) inputTopic = "";
+
+                new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
             }
         }.start();
     }
@@ -73,14 +75,12 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         } else {
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         }
-
     }
 
     @Override
     public void start() {
         setAndStartTimer();
         setCurrentStep();
-//        new FirestoreManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
     }
 

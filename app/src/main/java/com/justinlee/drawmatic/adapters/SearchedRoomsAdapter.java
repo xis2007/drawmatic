@@ -41,13 +41,24 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
         // TODO ordering may cause problem to positions of each player in the Arraylist
         ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
         ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
-        ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
+        if(currentOnlineGame.getOnlineSettings().isInGame()) {
+            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText("Playing");
+            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
+        } else {
+            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
+            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorWhite));
+        }
 
         ((RoomViewHolder) holder).getRoomItemLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
-                ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi();
+                if(currentOnlineGame.getOnlineSettings().isInGame()) {
+                    mOnlineFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
+                } else {
+                    mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
+                    ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi();
+                }
+
             }
         });
     }
