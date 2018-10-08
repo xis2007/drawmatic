@@ -416,6 +416,27 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void determineOnBackPressedActions() {
+        // if main menu-related fragments are shown, it means a dialog should show to users to confirm they want to leave the app
+        if(mOnlineFragment != null && !mOnlineFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if(mOfflineFragment != null && !mOfflineFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if(mSettingsFragment != null && !mSettingsFragment.isHidden()) mMainView.showLeaveAppDialog();
+
+        // if user is in room creation page, user should return to main menu when back is pressed
+        if(mCreateRoomFragment != null && !mCreateRoomFragment.isHidden()) transToOnlinePage();
+
+        // if user is in room waiting page, user should return to main menu when back is pressed
+        if(mOnlineWaitingFragment != null && !mOnlineWaitingFragment.isHidden()) mOnlineWaitingPresenter.leaveRoom(mOnlineWaitingFragment);
+
+        // if user is in game or results page, user should be prompt with leave game confirmation dialog
+        if(mSetTopicFragment != null && !mSetTopicFragment.isHidden()) mMainView.showLeaveGameDialog();
+        if(mDrawingFragment != null && !mDrawingFragment.isHidden()) mMainView.showLeaveGameDialog();
+        if(mGuessingFragment != null && !mGuessingFragment.isHidden()) mMainView.showLeaveGameDialog();
+        if(mGameResultFragment != null && !mGameResultFragment.isHidden()) mMainView.showLeaveGameDialog();
+
+    }
+
+    @Override
     public void start() {
         // TODO change to transToOffline
         transToOnlinePage();

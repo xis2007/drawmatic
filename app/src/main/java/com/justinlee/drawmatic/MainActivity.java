@@ -16,6 +16,8 @@ import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.activities.LoginActivity;
 import com.justinlee.drawmatic.bases.BaseActivity;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.util.BackLeaveAppBottomSheetDialog;
+import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -110,6 +112,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
+    public void showLeaveAppDialog() {
+        BackLeaveAppBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), "LEAVE_APP_ALERT");
+    }
+
+    @Override
+    public void showLeaveGameDialog() {
+        LeaveGameBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), "LEAVE_GAME_ALERT");
+    }
+
+    @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mMainPresenter = checkNotNull(presenter);
     }
@@ -123,6 +135,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         } else if (requestCode == Constants.Login.LOGIN_ACTIVITY && resultCode == Constants.Login.LOGIN_EXIT) {
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        mMainPresenter.determineOnBackPressedActions();
+//        super.onBackPressed();
     }
 
     /**
@@ -157,7 +175,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     /**
      * ***********************************************************************************
-     * Listeners Setup
+     * NavigationItemListeners Setup
      * ***********************************************************************************
      */
     private void setListeners() {

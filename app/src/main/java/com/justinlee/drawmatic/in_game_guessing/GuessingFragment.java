@@ -119,4 +119,10 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     public String getGuessingInput() {
         return mEditTextGuessingInput.getText().toString();
     }
+
+    @Override
+    public void onStop() {
+        ((GuessingPresenter) mGuessingPresenter).getCountDownTimer().cancel();
+        super.onStop();
+    }
 }

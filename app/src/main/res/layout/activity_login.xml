@@ -31,20 +31,21 @@
         android:text="Pick a Name"
         android:textColor="@color/colorGrey"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edittext_user_name_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_background_login"
-        app:layout_constraintVertical_bias="0.75"/>
+        app:layout_constraintVertical_bias="0.8"/>
 
     <EditText
         android:id="@+id/edittext_user_name_input"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/box_user_name_input_login"
         android:elevation="8dp"
         android:padding="8dp"
@@ -53,7 +54,7 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorGreyDark"
-        android:textSize="36sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/image_background_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,14 +64,14 @@
         android:id="@+id/button_start_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/box_button_login"
         android:elevation="8dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:shadowColor="@android:color/black"
         android:text="Get Started"
         android:textColor="@android:color/white"
@@ -78,6 +79,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittext_user_name_input"
-        app:layout_constraintVertical_bias="0.25"/>
+        app:layout_constraintVertical_bias="0.20"/>
 
 </android.support.constraint.ConstraintLayout>

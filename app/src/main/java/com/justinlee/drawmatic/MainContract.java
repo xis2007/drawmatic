@@ -29,6 +29,10 @@ public interface MainContract {
         // loading Ui
         void showLoadingUi();
         void hideLoadingUi();
+
+        // OnBackPressed related
+        void showLeaveAppDialog();
+        void showLeaveGameDialog();
     }
 
     interface Presenter extends BasePresenter {
@@ -54,6 +58,9 @@ public interface MainContract {
         // loading UI
         void isLoading();
         void isNotLoading();
+
+        // OnBackPressed related
+        void determineOnBackPressedActions();
     }
 
 

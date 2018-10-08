@@ -100,6 +100,12 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         return mEditTextTopicInput.getText().toString();
     }
 
+    @Override
+    public void onStop() {
+        ((SetTopicPresenter) mSetTopicPresenter).getCountDownTimer().cancel();
+        super.onStop();
+    }
+
     /**
      * *********************************************************************************
      * Getters and Setters

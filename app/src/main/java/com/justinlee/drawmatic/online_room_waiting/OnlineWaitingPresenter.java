@@ -38,17 +38,10 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     public void leaveRoom(final OnlineWaitingFragment fragment) {
         mMainPresenter.isLoading();
         Player userAsPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
-//        new FirestoreManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineSettings, userAsPlayer);
         new OnlineRoomManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineGame, userAsPlayer);
 
     }
 
-//    @Override
-//    public void deleteRoom() {
-////        new FirestoreManager((MainActivity) mMainView).deleteRoom(this, mOnlineSettings, mOnlineWaitingView);
-//
-//        new OnlineRoomManager((MainActivity) mMainView).deleteRoom(this, mRoomId, mOnlineSettings, mOnlineWaitingView);
-//    }
 
     @Override
     public void informToTransToOnlinePage() {

@@ -150,4 +150,10 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     public void showCurrentStep(int currentStep, int numPlayers) {
         mCurrentStepButton.setText(currentStep + " / " + numPlayers);
     }
+
+    @Override
+    public void onStop() {
+        ((DrawingPresenter) mDrawingPresenter).getCountDownTimer().cancel();
+        super.onStop();
+    }
 }

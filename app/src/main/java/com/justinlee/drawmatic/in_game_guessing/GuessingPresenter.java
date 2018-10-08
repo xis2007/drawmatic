@@ -18,11 +18,12 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
-
     private GuessingContract.View mGuessingView;
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
+
+    private CountDownTimer mCountDownTimer;
 
     private ListenerRegistration mGuessingListenerRegistration;
 
@@ -66,7 +67,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -137,5 +138,15 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     public void setMainPresenter(MainPresenter mainPresenter) {
         mMainPresenter = mainPresenter;
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Getters and Setters
+     * ***********************************************************************************
+     */
+    public CountDownTimer getCountDownTimer() {
+        return mCountDownTimer;
     }
 }

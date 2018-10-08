@@ -42,27 +42,32 @@ public class LoginActivity extends BaseActivity {
 
     private void initViews() {
         final EditText nameInputEdittext = findViewById(R.id.edittext_user_name_input);
-        Button getStartedButton = findViewById(R.id.button_start_login);
+        final Button getStartedButton = findViewById(R.id.button_start_login);
 
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userNameInputString = nameInputEdittext.getText().toString();
                 if ("".equals(userNameInputString) || userNameInputString.isEmpty()) {
-                    Snackbar.make(findViewById(R.id.constraintLayout_login), "Name Required", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.constraintLayout_login), "Name Input Required", Snackbar.LENGTH_LONG).show();
                 } else {
-                    FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                setResult(Constants.Login.LOGIN_SUCCESS);
-                                saveUserInfo(task);
-                                finish();
-                            } else {
-                                Snackbar.make(findViewById(R.id.constraintLayout_login), "Something went Wrong. Please try again", Snackbar.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    getStartedButton.setBackgroundColor(getResources().getColor(R.color.colorGrey));
+
+                    FirebaseAuth.getInstance()
+                            .signInAnonymously()
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        setResult(Constants.Login.LOGIN_SUCCESS);
+                                        saveUserInfo(task);
+                                        finish();
+                                    } else {
+                                        getStartedButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        Snackbar.make(findViewById(R.id.constraintLayout_login), "Something went Wrong. Please try again", Snackbar.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                 }
             }
         });

@@ -20,6 +20,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
+    private CountDownTimer mCountDownTimer;
+
     public SetTopicPresenter(SetTopicContract.View setTopicView, Game game) {
         mSetTopicView = setTopicView;
         mSetTopicView.setPresenter(this);
@@ -45,7 +47,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        new CountDownTimer(10 * 1000, 1000) {
+        mCountDownTimer = new CountDownTimer(10 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -86,6 +88,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
 
 
+
+
     /**
      * *********************************************************************************
      * Getters and Setters
@@ -99,6 +103,9 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         return mOfflineGame;
     }
 
+    public CountDownTimer getCountDownTimer() {
+        return mCountDownTimer;
+    }
 
     /**
      * ***********************************************************************************
