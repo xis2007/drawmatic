@@ -7,6 +7,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -24,6 +25,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     private CountDownTimer mCountDownTimer;
 
+    private ListenerRegistration mRoomListenerRegistration;
     private ListenerRegistration mGuessingListenerRegistration;
 
     public GuessingPresenter(GuessingContract.View setTopicView, Game game) {
@@ -121,6 +123,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void start() {
+        mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
     }
 
@@ -147,5 +150,9 @@ public class GuessingPresenter implements GuessingContract.Presenter {
      */
     public CountDownTimer getCountDownTimer() {
         return mCountDownTimer;
+    }
+
+    public ListenerRegistration getRoomListenerRegistration() {
+        return mRoomListenerRegistration;
     }
 }

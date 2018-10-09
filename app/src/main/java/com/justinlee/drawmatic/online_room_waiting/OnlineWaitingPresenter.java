@@ -41,7 +41,6 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
         mMainPresenter.isLoading();
         Player userAsPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
         new OnlineRoomManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineGame, userAsPlayer);
-
     }
 
 
@@ -61,7 +60,6 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void updateOnlineRoomStatus(ArrayList<OnlineGame> newOnlineGameList) {
-
         mOnlineGame = newOnlineGameList.get(0);
         if (mOnlineGame != null) {
             ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineGame.getOnlineSettings().getPlayers());

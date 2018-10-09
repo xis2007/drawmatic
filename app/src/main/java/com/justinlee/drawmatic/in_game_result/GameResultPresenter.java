@@ -55,14 +55,13 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void doneViewingResult() {
+        new OnlineInGameManager((MainActivity) mMainView).deleteDataAfterResult(mOnlineGame);
         mMainPresenter.transToOnlinePage();
     }
 
     @Override
     public void start() {
-//        new FirestoreManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
-
     }
 
 

@@ -2,10 +2,12 @@ package com.justinlee.drawmatic.in_game_set_topic;
 
 import android.os.CountDownTimer;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -13,13 +15,14 @@ import com.justinlee.drawmatic.objects.OnlineGame;
 public class SetTopicPresenter implements SetTopicContract.Presenter {
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
-
     private SetTopicContract.View mSetTopicView;
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+
+    private ListenerRegistration mRoomListenerRegistration;
 
     public SetTopicPresenter(SetTopicContract.View setTopicView, Game game) {
         mSetTopicView = setTopicView;
@@ -81,6 +84,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     public void start() {
         setAndStartTimer();
         setCurrentStep();
+
+        mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
     }
 
@@ -103,6 +108,10 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     public CountDownTimer getCountDownTimer() {
         return mCountDownTimer;
+    }
+
+    public ListenerRegistration getRoomListenerRegistration() {
+        return mRoomListenerRegistration;
     }
 
     /**

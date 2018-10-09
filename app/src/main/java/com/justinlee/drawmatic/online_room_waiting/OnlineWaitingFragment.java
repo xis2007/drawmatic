@@ -137,7 +137,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
     @Override
     public void onStop() {
-//        ((OnlineWaitingPresenter) mOnlineWaitingPresenter).getListenerRegistration().remove();
+        ((OnlineWaitingPresenter) mOnlineWaitingPresenter).getListenerRegistration().remove();
         super.onStop();
     }
 

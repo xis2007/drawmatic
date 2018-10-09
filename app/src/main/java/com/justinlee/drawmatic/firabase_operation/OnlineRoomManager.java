@@ -249,59 +249,90 @@ public class OnlineRoomManager {
      * *********************************************************************************
      */
     public ListenerRegistration syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineGame onlineGame) {
+            DocumentReference docRef = Drawmatic.getmFirebaseDb()
+                    .collection("rooms")
+                    .document(onlineGame.getRoomId());
+
+            docRef
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToOnlineGameObject(document));
+
+                                } else {
+                                    Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                                    // TODO room was deleted by room master, player needs to leave the room
+                                }
+
+                            } else {
+                                Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+            // this listener will be alive through out the entire game, so if any players leave while in game
+            // this listener will respond to it
+            // all players will receive a null pointer exception in this case
+            // thus, catching the exception, means that all players should leave the game
+            // data will need to be cleared in both firestire and storage
+            ListenerRegistration listenerRegistration = docRef
+                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "Listen failed.", e);
+                                return;
+                            }
+
+
+                            OnlineGame onlineGame = null;
+                            try{
+                                onlineGame = transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
+                            } catch (NullPointerException exception) {
+                                onlineWaitingPresenter.informToTransToOnlinePage();
+                                onlineWaitingPresenter.informToShowRoomClosedMessage();
+                            }
+
+
+                            if(onlineGame != null) {
+                                if (onlineGame.getOnlineSettings().isInGame()) {
+                                    onlineWaitingPresenter.startPlayingOnline();
+                                } else {
+                                    onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToOnlineGameObject(documentSnapshot));
+                                }
+                            }
+                        }
+                    });
+
+        return listenerRegistration;
+    }
+
+    public ListenerRegistration syncRoomStatusWhileInGame(final MainContract.View mainView, final MainContract.Presenter mainPresenter, OnlineGame onlineGame) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
                 .document(onlineGame.getRoomId());
 
-        docRef
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(document));
-
-                        } else {
-                            Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
-                            // TODO room was deleted by room master, player needs to leave the room
-                        }
-
-                    } else {
-                        Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
         ListenerRegistration listenerRegistration = docRef
-            .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e);
-                        return;
-                    }
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
 
-
-                    OnlineGame onlineGame = null;
-                    try{
-                        onlineGame = transformDocumentSnapshotToRoomsList(documentSnapshot).get(0);
-                    } catch (NullPointerException exception) {
-                        onlineWaitingPresenter.informToTransToOnlinePage();
-                        onlineWaitingPresenter.informToShowRoomClosedMessage();
-                    }
-
-
-                    if(onlineGame != null) {
-                        if (onlineGame.getOnlineSettings().isInGame()) {
-                            onlineWaitingPresenter.startPlayingOnline();
-                        } else {
-                            onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToRoomsList(documentSnapshot));
+                        try{
+                            transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
+                        } catch (NullPointerException exception) {
+                            mainPresenter.transToOnlinePage();
+                            Snackbar.make(((MainActivity) mainView).findViewById(R.id.fragment_container_main), "Key Player Left, Game Stopped", Snackbar.LENGTH_SHORT).show();
                         }
                     }
-                }
-            });
+                });
 
         return listenerRegistration;
     }
@@ -322,7 +353,7 @@ public class OnlineRoomManager {
      * Helper Methods
      * *********************************************************************************
      */
-    private ArrayList<OnlineGame> transformDocumentSnapshotToRoomsList(DocumentSnapshot documentSnapshot) throws NullPointerException {
+    private ArrayList<OnlineGame> transformDocumentSnapshotToOnlineGameObject(DocumentSnapshot documentSnapshot) throws NullPointerException {
         OnlineSettings onlineSettings = documentSnapshot.toObject(OnlineSettings.class);
         OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), onlineSettings);
 

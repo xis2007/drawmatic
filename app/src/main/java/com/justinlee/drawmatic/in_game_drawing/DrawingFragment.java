@@ -154,6 +154,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     @Override
     public void onStop() {
         ((DrawingPresenter) mDrawingPresenter).getCountDownTimer().cancel();
+        ((DrawingPresenter) mDrawingPresenter).getRoomListenerRegistration().remove();
         super.onStop();
     }
 }

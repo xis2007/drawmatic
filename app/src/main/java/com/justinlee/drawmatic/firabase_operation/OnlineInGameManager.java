@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.Continuation;
@@ -50,7 +51,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 public class OnlineInGameManager {
-//    private static final String TAG = "onlineRoomManagerrrrrr";
+    private static final String TAG = "onlineRoomManagerrrrrr";
 
     private Context mContext;
     private FirebaseFirestore mFirebaseDb;
@@ -89,31 +90,31 @@ public class OnlineInGameManager {
         }
 
         docRef
-                .collection("progressOfEachStep")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        // count how many people finished this step, 1 means finished, 0 means not yet
-                        int totalProgressOfThisStep = 0;
-                        int targetProgress = onlineGame.getCurrentStep() * onlineGame.getOnlineSettings().getPlayers().size();
+            .collection("progressOfEachStep")
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    // count how many people finished this step, 1 means finished, 0 means not yet
+                    int totalProgressOfThisStep = 0;
+                    int targetProgress = onlineGame.getCurrentStep() * onlineGame.getOnlineSettings().getPlayers().size();
 
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Map playerProgressMap = documentSnapshot.getData();
-                            long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
-                            playerProgressOfThisStep = (int) playerProgressOfThisStep;
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Map playerProgressMap = documentSnapshot.getData();
+                        long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
+                        playerProgressOfThisStep = (int) playerProgressOfThisStep;
 
-                            if (playerProgressOfThisStep == 1) {
-                                totalProgressOfThisStep++;
-                            }
-                        }
-
-                        // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
-                        if (totalProgressOfThisStep == targetProgress) {
-                            onlineGame.increamentCurrentStep();
-                            setTopicPresenter.transToDrawingPageOnline();
+                        if (playerProgressOfThisStep == 1) {
+                            totalProgressOfThisStep++;
                         }
                     }
-                });
+
+                    // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
+                    if (totalProgressOfThisStep == targetProgress) {
+                        onlineGame.increamentCurrentStep();
+                        setTopicPresenter.transToDrawingPageOnline();
+                    }
+                }
+            });
     }
 
     public void updateSetTopicStepProgressAndUploadTopic(final OnlineGame onlineGame, String inputTopic) {
@@ -502,7 +503,8 @@ public class OnlineInGameManager {
      * Leaving while in game
      * **********************************************************************************
      */
-    public void leaveRoomWhileInGame(OnlineGame onlineGame) {
+    public void leaveRoomAndDeleteDataWhileInGame(OnlineGame onlineGame) {
+        // delete firestore data
         Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -517,5 +519,39 @@ public class OnlineInGameManager {
                         ((MainActivity) mContext).hideLoadingUi();
                     }
                 });
+
+        // delete storage data
+        Drawmatic.getStorageReference().child(onlineGame.getRoomId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: successsssssssssssss");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: failedddddddddddddddddddd");
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void deleteDataAfterResult(OnlineGame onlineGame) {
+        // delete firestore data
+        Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId()).delete();
+
+        // delete storage data
+        Drawmatic.getStorageReference().child(onlineGame.getRoomId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: successsssssssssss");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: failedddddddddddddddddddd");
+                e.printStackTrace();
+            }
+        });
+
     }
 }

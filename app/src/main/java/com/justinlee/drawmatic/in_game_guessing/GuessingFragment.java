@@ -123,6 +123,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     @Override
     public void onStop() {
         ((GuessingPresenter) mGuessingPresenter).getCountDownTimer().cancel();
+        ((GuessingPresenter) mGuessingPresenter).getRoomListenerRegistration().remove();
         super.onStop();
     }
 }

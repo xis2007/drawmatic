@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,8 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
                 case R.id.button_leave_game_bottom_dialog:
                     // TODO inform the server and other players that the game ends
                     if(mOnlineGame != null) {
-                        new OnlineInGameManager(mMainActivity).leaveRoomWhileInGame(mOnlineGame);
+                        Log.d("leaving", "onClick: leaving roommmmmm");
+                        new OnlineInGameManager(mMainActivity).leaveRoomAndDeleteDataWhileInGame(mOnlineGame);
                     } else {
                         mMainActivity.getMainPresenter().transToOnlinePage();
                     }
