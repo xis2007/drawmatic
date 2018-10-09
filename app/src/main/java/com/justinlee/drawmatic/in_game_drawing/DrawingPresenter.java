@@ -1,7 +1,6 @@
 package com.justinlee.drawmatic.in_game_drawing;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.divyanshu.draw.widget.DrawView;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -13,7 +12,6 @@ import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
@@ -43,8 +41,8 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
-    public void promptLeaveRoomAlert(DrawingFragment fragment) {
-        LeaveGameBottomSheetDialog.newInstance((MainActivity) mMainView).show(((MainActivity) mMainView).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
+    public void informActivityToPromptLeaveGameAlert() {
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
     }
 
     @Override
@@ -55,7 +53,6 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void transToGuessingPage() {
         if (mOnlineGame != null) {
-            Log.d(TAG, "transToGuessingPage: trasiting to guessing page");
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         } else {
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);

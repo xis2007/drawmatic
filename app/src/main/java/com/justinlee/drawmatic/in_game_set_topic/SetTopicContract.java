@@ -13,7 +13,7 @@ public interface SetTopicContract {
     }
 
     interface Presenter extends BasePresenter {
-        void promptLeaveRoomWarning(SetTopicFragment fragment);
+        void informActivityToPromptLeaveGameAlert();
 
         void leaveRoom(SetTopicFragment fragment);
 

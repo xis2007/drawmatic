@@ -10,7 +10,6 @@ import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 import com.justinlee.drawmatic.util.StringUtil;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
@@ -41,8 +40,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void promptLeaveRoomAlert(GuessingFragment fragment) {
-        LeaveGameBottomSheetDialog.newInstance((MainActivity) mMainView).show(((MainActivity) mMainView).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
+    public void informActivityToPromptLeaveGameAlert() {
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
     }
 
     @Override

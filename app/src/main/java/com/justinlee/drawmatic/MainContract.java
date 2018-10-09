@@ -32,7 +32,7 @@ public interface MainContract {
 
         // OnBackPressed related
         void showLeaveAppDialog();
-        void showLeaveGameDialog();
+        void showLeaveGameDialog(OnlineGame onlineGame);
     }
 
     interface Presenter extends BasePresenter {
@@ -61,6 +61,7 @@ public interface MainContract {
 
         // OnBackPressed related
         void determineOnBackPressedActions();
+        void informToShowLeaveGameDialog(OnlineGame onlineGame);
     }
 
 

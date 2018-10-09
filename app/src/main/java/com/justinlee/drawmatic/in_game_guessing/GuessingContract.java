@@ -18,7 +18,7 @@ public interface GuessingContract {
     }
 
     interface Presenter extends BasePresenter {
-        void promptLeaveRoomAlert(GuessingFragment fragment);
+        void informActivityToPromptLeaveGameAlert();
 
         void leaveRoom(GuessingFragment fragment);
 

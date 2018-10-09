@@ -14,7 +14,7 @@ public interface DrawingContract {
     }
 
     interface Presenter extends BasePresenter {
-        void promptLeaveRoomAlert(DrawingFragment fragment);
+        void informActivityToPromptLeaveGameAlert();
 
         void leaveRoom(DrawingFragment fragment);
 

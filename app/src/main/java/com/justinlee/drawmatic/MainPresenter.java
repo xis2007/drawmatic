@@ -429,11 +429,16 @@ public class MainPresenter implements MainContract.Presenter {
         if(mOnlineWaitingFragment != null && !mOnlineWaitingFragment.isHidden()) mOnlineWaitingPresenter.leaveRoom(mOnlineWaitingFragment);
 
         // if user is in game or results page, user should be prompt with leave game confirmation dialog
-        if(mSetTopicFragment != null && !mSetTopicFragment.isHidden()) mMainView.showLeaveGameDialog();
-        if(mDrawingFragment != null && !mDrawingFragment.isHidden()) mMainView.showLeaveGameDialog();
-        if(mGuessingFragment != null && !mGuessingFragment.isHidden()) mMainView.showLeaveGameDialog();
-        if(mGameResultFragment != null && !mGameResultFragment.isHidden()) mMainView.showLeaveGameDialog();
+        if(mSetTopicFragment != null && !mSetTopicFragment.isHidden()) mSetTopicPresenter.informActivityToPromptLeaveGameAlert();
+        if(mDrawingFragment != null && !mDrawingFragment.isHidden()) mDrawingPresenter.informActivityToPromptLeaveGameAlert();
+        if(mGuessingFragment != null && !mGuessingFragment.isHidden()) mGuessingPresenter.informActivityToPromptLeaveGameAlert();
+        if(mGameResultFragment != null && !mGameResultFragment.isHidden()) mGameResultPresenter.informActivityToPromptLeaveGameAlert();
 
+    }
+
+    @Override
+    public void informToShowLeaveGameDialog(OnlineGame onlineGame) {
+        mMainView.showLeaveGameDialog(onlineGame);
     }
 
     @Override

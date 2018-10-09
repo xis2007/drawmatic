@@ -18,6 +18,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
@@ -247,7 +248,7 @@ public class OnlineRoomManager {
      * Start Game and Room Status Syncing
      * *********************************************************************************
      */
-    public void syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineGame onlineGame) {
+    public ListenerRegistration syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineGame onlineGame) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
                 .document(onlineGame.getRoomId());
@@ -273,7 +274,7 @@ public class OnlineRoomManager {
                 }
             });
 
-        docRef
+        ListenerRegistration listenerRegistration = docRef
             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -301,6 +302,8 @@ public class OnlineRoomManager {
                     }
                 }
             });
+
+        return listenerRegistration;
     }
 
     public void setGameStatusToInGame(final OnlineWaitingPresenter onlineWaitingPresenter, final OnlineGame onlineGame) {

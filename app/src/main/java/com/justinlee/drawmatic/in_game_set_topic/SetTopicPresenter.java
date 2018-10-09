@@ -9,7 +9,6 @@ import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
 public class SetTopicPresenter implements SetTopicContract.Presenter {
     private MainContract.View mMainView;
@@ -36,9 +35,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     }
 
     @Override
-    public void promptLeaveRoomWarning(SetTopicFragment fragment) {
-        LeaveGameBottomSheetDialog.newInstance((MainActivity) mMainView).show(((MainActivity) mMainView).getSupportFragmentManager(), "LEAVE_ROOM_ALERT");
-    }
+    public void informActivityToPromptLeaveGameAlert() {
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);}
 
     @Override
     public void leaveRoom(SetTopicFragment fragment) {

@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.online_room_waiting;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
@@ -14,11 +15,12 @@ import java.util.ArrayList;
 public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
-
     private OnlineWaitingContract.View mOnlineWaitingView;
 
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
+
+    private ListenerRegistration mListenerRegistration;
 
     public OnlineWaitingPresenter(OnlineWaitingContract.View onlineWaitingView, Game game) {
         mOnlineWaitingView = onlineWaitingView;
@@ -69,21 +71,25 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void setGameStatusToInGame() {
-//        new FirestoreManager((MainActivity) mMainView).setGameStatusToInGame((OnlineWaitingFragment) mOnlineWaitingView, mOnlineGame);
-        new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);
+        // TODO use the player logic
+//        if(mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
+//            mOnlineWaitingView.showNotEnoughPlayersMessage((MainActivity) mMainView);
+//        } else {
+            new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);
+//        }
+
     }
 
     @Override
     public void informToShowRoomClosedMessage() {
-        mOnlineWaitingView.showRoomClosedMessage();
+        mOnlineWaitingView.showRoomClosedMessage((MainActivity) mMainView);
     }
 
     @Override
     public void start() {
         // TODO search and check for the room created on server
         mOnlineWaitingView.showRoomNameUi(mOnlineGame.getOnlineSettings().getRoomName());
-//        new FirestoreManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineSettings);
-        new OnlineRoomManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineGame);
+        mListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineGame);
     }
 
 
@@ -98,6 +104,10 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     public OnlineGame getOnlineGame() {
         return mOnlineGame;
+    }
+
+    public ListenerRegistration getListenerRegistration() {
+        return mListenerRegistration;
     }
 
     /**

@@ -82,7 +82,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
                     break;
 
                 case R.id.button_quit_game_guessing:
-                    mGuessingPresenter.promptLeaveRoomAlert(GuessingFragment.this);
+                    mGuessingPresenter.informActivityToPromptLeaveGameAlert();
                     break;
 
                 default:

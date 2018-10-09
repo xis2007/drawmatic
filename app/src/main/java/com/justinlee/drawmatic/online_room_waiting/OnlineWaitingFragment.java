@@ -79,8 +79,13 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     }
 
     @Override
-    public void showRoomClosedMessage() {
-        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room was closed by Room Master", Snackbar.LENGTH_SHORT).show();
+    public void showRoomClosedMessage(MainActivity mainActivity) {
+        Snackbar.make(mainActivity.findViewById(R.id.fragment_container_main), "Key Player Left, Game Stopped and Game Closed ", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showNotEnoughPlayersMessage(MainActivity mainActivity) {
+        Snackbar.make(mainActivity.findViewById(R.id.fragment_container_main), "Need at least 4 players to begin", Snackbar.LENGTH_SHORT).show();
     }
 
 
@@ -121,7 +126,6 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
                 case R.id.button_start_game_waiting:
                     //TODO not complete yet
-//                    mOnlineWaitingPresenter.informToShowLoadingUi(OnlineWaitingFragment.this);
                     mOnlineWaitingPresenter.setGameStatusToInGame();
                     break;
 
@@ -130,6 +134,12 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
             }
         }
     };
+
+    @Override
+    public void onStop() {
+//        ((OnlineWaitingPresenter) mOnlineWaitingPresenter).getListenerRegistration().remove();
+        super.onStop();
+    }
 
     /**
      * ***********************************************************************************

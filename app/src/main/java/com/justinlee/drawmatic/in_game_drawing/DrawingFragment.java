@@ -89,7 +89,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
                     break;
 
                 case R.id.button_quit_game_drawing:
-                    mDrawingPresenter.promptLeaveRoomAlert(DrawingFragment.this);
+                    mDrawingPresenter.informActivityToPromptLeaveGameAlert();
                     break;
 
                 default:

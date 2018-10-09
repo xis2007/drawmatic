@@ -12,6 +12,8 @@ public interface GameResultContract {
     }
 
     interface Presenter extends BasePresenter {
+        void informActivityToPromptLeaveGameAlert();
+
         void informToShowResults(ArrayList<String> resultStrings);
 
         void deleteFirestoreRoomData();

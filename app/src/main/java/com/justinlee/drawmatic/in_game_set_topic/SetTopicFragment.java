@@ -72,7 +72,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
                     break;
 
                 case R.id.button_quit_game_set_topic:
-                    mSetTopicPresenter.promptLeaveRoomWarning(SetTopicFragment.this);
+                    mSetTopicPresenter.informActivityToPromptLeaveGameAlert();
                     break;
 
                 default:

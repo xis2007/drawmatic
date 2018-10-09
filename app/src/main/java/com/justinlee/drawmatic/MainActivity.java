@@ -16,6 +16,7 @@ import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.activities.LoginActivity;
 import com.justinlee.drawmatic.bases.BaseActivity;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.BackLeaveAppBottomSheetDialog;
 import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 
@@ -117,8 +118,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showLeaveGameDialog() {
-        LeaveGameBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), "LEAVE_GAME_ALERT");
+    public void showLeaveGameDialog(OnlineGame onlineGame) {
+        LeaveGameBottomSheetDialog.newInstance(this).setOnlineGame(onlineGame).show(getSupportFragmentManager(), "LEAVE_GAME_ALERT");
     }
 
     @Override

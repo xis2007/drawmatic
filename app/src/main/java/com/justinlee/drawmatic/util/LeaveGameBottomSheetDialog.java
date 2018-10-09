@@ -11,9 +11,12 @@ import android.widget.Button;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.objects.OnlineGame;
 
 public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
     private static MainActivity mMainActivity;
+    private OnlineGame mOnlineGame;
 
     public LeaveGameBottomSheetDialog() {
     }
@@ -39,7 +42,6 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
 
         buttonStayInGame.setOnClickListener(leaveGameAlertOnClickListener);
         buttonLeaveGame.setOnClickListener(leaveGameAlertOnClickListener);
-
     }
 
     private View.OnClickListener leaveGameAlertOnClickListener = new View.OnClickListener() {
@@ -52,7 +54,12 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
 
                 case R.id.button_leave_game_bottom_dialog:
                     // TODO inform the server and other players that the game ends
-                    mMainActivity.getMainPresenter().transToOnlinePage();
+                    if(mOnlineGame != null) {
+                        new OnlineInGameManager(mMainActivity).leaveRoomWhileInGame(mOnlineGame);
+                    } else {
+                        mMainActivity.getMainPresenter().transToOnlinePage();
+                    }
+
                     dismiss();
                     break;
 
@@ -62,4 +69,14 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
             }
         }
     };
+
+    /**
+     * *********************************************************************************
+     * Getters and Setters
+     * **********************************************************************************
+     */
+    public LeaveGameBottomSheetDialog setOnlineGame(OnlineGame onlineGame) {
+        mOnlineGame = onlineGame;
+        return this;
+    }
 }

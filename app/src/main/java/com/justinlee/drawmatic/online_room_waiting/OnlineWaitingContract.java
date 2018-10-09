@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.online_room_waiting;
 
+import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -10,7 +11,9 @@ public interface OnlineWaitingContract {
     interface View extends BaseView<Presenter> {
         void showRoomNameUi(String roomName);
 
-        void showRoomClosedMessage();
+        void showRoomClosedMessage(MainActivity mainActivity);
+
+        void showNotEnoughPlayersMessage(MainActivity mainActivity);
     }
 
     interface Presenter extends BasePresenter {

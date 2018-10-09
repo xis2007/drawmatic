@@ -33,6 +33,11 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     }
 
     @Override
+    public void informActivityToPromptLeaveGameAlert() {
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+    }
+
+    @Override
     public void informToShowResults(ArrayList<String> resultStrings) {
         mGameResultView.showResults(resultStrings);
         mMainPresenter.isNotLoading();

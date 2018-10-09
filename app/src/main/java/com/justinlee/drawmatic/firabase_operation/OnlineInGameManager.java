@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -492,5 +494,28 @@ public class OnlineInGameManager {
                     }
                 }
             });
+    }
+
+
+    /**
+     * *********************************************************************************
+     * Leaving while in game
+     * **********************************************************************************
+     */
+    public void leaveRoomWhileInGame(OnlineGame onlineGame) {
+        Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        ((MainActivity) mContext).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) mContext).hideLoadingUi();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        ((MainActivity) mContext).hideLoadingUi();
+                    }
+                });
     }
 }
