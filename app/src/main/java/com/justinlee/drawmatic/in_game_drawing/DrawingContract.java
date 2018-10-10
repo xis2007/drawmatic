@@ -36,6 +36,8 @@ public interface DrawingContract {
 
         void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl);
 
+        void saveUrlToOnlineGameObject(String downloadUrl);
+
         void unregisterListener();
 
         void startDrawing();

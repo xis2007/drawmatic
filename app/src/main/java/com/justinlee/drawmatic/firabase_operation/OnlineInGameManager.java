@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.Continuation;
@@ -21,6 +20,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.justinlee.drawmatic.Drawmatic;
@@ -281,6 +281,7 @@ public class OnlineInGameManager {
                         if (task.isSuccessful()) {
                             Uri downloadUrl = task.getResult();
                             drawingPresenter.updateDrawingStepProgressAndUploadImageUrl(downloadUrl.toString());
+                            drawingPresenter.saveUrlToOnlineGameObject(downloadUrl.toString());
                         }
                         // TODO handle error
                     }
@@ -500,17 +501,21 @@ public class OnlineInGameManager {
 
     /**
      * *********************************************************************************
-     * Leaving while in game
+     * Deleting data when leaving game
      * **********************************************************************************
      */
     public void leaveRoomAndDeleteDataWhileInGame(OnlineGame onlineGame) {
         // delete firestore data
-        Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId()).delete()
+        Drawmatic.getmFirebaseDb()
+                .collection("rooms")
+                .document(onlineGame.getRoomId())
+                .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         ((MainActivity) mContext).getMainPresenter().transToOnlinePage();
                         ((MainActivity) mContext).hideLoadingUi();
+                        Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Key Player Left, Game Stopped", Snackbar.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -521,37 +526,25 @@ public class OnlineInGameManager {
                 });
 
         // delete storage data
-        Drawmatic.getStorageReference().child(onlineGame.getRoomId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: successsssssssssssss");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: failedddddddddddddddddddd");
-                e.printStackTrace();
-            }
-        });
+        for (String urlString : onlineGame.getImageUrlStrings()) {
+            FirebaseStorage.getInstance()
+                    .getReferenceFromUrl(urlString)
+                    .delete();
+        }
     }
 
     public void deleteDataAfterResult(OnlineGame onlineGame) {
         // delete firestore data
-        Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId()).delete();
+        Drawmatic.getmFirebaseDb()
+                .collection("rooms")
+                .document(onlineGame.getRoomId())
+                .delete();
 
         // delete storage data
-        Drawmatic.getStorageReference().child(onlineGame.getRoomId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: successsssssssssss");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: failedddddddddddddddddddd");
-                e.printStackTrace();
-            }
-        });
-
+        for (String urlString : onlineGame.getImageUrlStrings()) {
+            FirebaseStorage.getInstance()
+                    .getReferenceFromUrl(urlString)
+                    .delete();
+        }
     }
 }

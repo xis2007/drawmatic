@@ -311,7 +311,7 @@ public class OnlineRoomManager {
         return listenerRegistration;
     }
 
-    public ListenerRegistration syncRoomStatusWhileInGame(final MainContract.View mainView, final MainContract.Presenter mainPresenter, OnlineGame onlineGame) {
+    public ListenerRegistration syncRoomStatusWhileInGame(final MainContract.View mainView, final MainContract.Presenter mainPresenter, final OnlineGame onlineGame) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection("rooms")
                 .document(onlineGame.getRoomId());
@@ -328,8 +328,7 @@ public class OnlineRoomManager {
                         try{
                             transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
                         } catch (NullPointerException exception) {
-                            mainPresenter.transToOnlinePage();
-                            Snackbar.make(((MainActivity) mainView).findViewById(R.id.fragment_container_main), "Key Player Left, Game Stopped", Snackbar.LENGTH_SHORT).show();
+                            new OnlineInGameManager((MainActivity) mainView).leaveRoomAndDeleteDataWhileInGame(onlineGame);
                         }
                     }
                 });

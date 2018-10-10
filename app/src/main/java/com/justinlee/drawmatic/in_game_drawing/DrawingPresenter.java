@@ -117,6 +117,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
+    public void saveUrlToOnlineGameObject(String downloadUrl) {
+        mOnlineGame.getImageUrlStrings().add(downloadUrl);
+    }
+
+    @Override
     public void unregisterListener() {
         mDrawingListenerRegistration.remove();
     }

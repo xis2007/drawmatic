@@ -2,6 +2,8 @@ package com.justinlee.drawmatic.objects;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class OnlineGame extends Game {
     private String mRoomId;
     private OnlineSettings mOnlineSettings;
@@ -13,6 +15,8 @@ public class OnlineGame extends Game {
     private int mTotalSteps;
     private int mCurrentStep;
 
+    private ArrayList<String> mImageUrlStrings;
+
     public OnlineGame(String roomId, OnlineSettings onlineSettings) {
         mRoomId = roomId;
         mOnlineSettings = onlineSettings;
@@ -23,6 +27,8 @@ public class OnlineGame extends Game {
         mIsPlayersOddumbered = (mOnlineSettings.getPlayers().size() % 2) != 0;
         mTotalSteps = mIsPlayersOddumbered ? mOnlineSettings.getPlayers().size() : mOnlineSettings.getPlayers().size() + 1;
         mCurrentStep = 1;
+
+        mImageUrlStrings = new ArrayList<>();
     }
 
     public String getRoomId() {
@@ -65,5 +71,9 @@ public class OnlineGame extends Game {
     public void increamentCurrentStep() {
         Log.d("justinxxxxx", "onEvent: incrementing: " + mCurrentStep);
         mCurrentStep++;
+    }
+
+    public ArrayList<String> getImageUrlStrings() {
+        return mImageUrlStrings;
     }
 }
