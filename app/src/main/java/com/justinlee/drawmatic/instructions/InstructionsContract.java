@@ -1,9 +1,9 @@
-package com.justinlee.drawmatic.offline;
+package com.justinlee.drawmatic.instructions;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
 
-public interface OfflineContract {
+public interface InstructionsContract {
     interface View extends BaseView<Presenter> {
         void showOfflinePageUi();
 

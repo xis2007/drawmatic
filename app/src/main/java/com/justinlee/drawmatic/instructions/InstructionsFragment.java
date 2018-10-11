@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.offline;
+package com.justinlee.drawmatic.instructions;
 
 
 import android.os.Bundle;
@@ -16,15 +16,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OfflineFragment extends Fragment implements OfflineContract.View {
-    private OfflineContract.Presenter mOfflinePresenter;
+public class InstructionsFragment extends Fragment implements InstructionsContract.View {
+    private InstructionsContract.Presenter mOfflinePresenter;
 
-    public OfflineFragment() {
+    public InstructionsFragment() {
         // Required empty public constructor
     }
 
-    public static OfflineFragment newInstance() {
-        return new OfflineFragment();
+    public static InstructionsFragment newInstance() {
+        return new InstructionsFragment();
     }
 
 
@@ -56,7 +56,7 @@ public class OfflineFragment extends Fragment implements OfflineContract.View {
     }
 
     @Override
-    public void setPresenter(@NonNull OfflineContract.Presenter presenter) {
+    public void setPresenter(@NonNull InstructionsContract.Presenter presenter) {
         mOfflinePresenter = checkNotNull(presenter);
     }
 }

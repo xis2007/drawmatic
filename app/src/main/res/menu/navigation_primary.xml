@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_offline"
-        android:icon="@drawable/ic_offline"
+        android:icon="@drawable/ic_instructions"
         android:title="@string/title_offline_mode"/>
 
     <item

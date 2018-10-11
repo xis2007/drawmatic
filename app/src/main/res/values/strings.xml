@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">drawmatic</string>
-    <string name="title_offline_mode">Play Offline</string>
-    <string name="title_online_mode">Play Online</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_offline_mode">How To?</string>
+    <string name="title_online_mode">Play!!</string>
+    <string name="title_settings">Settings~</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--fragment_offline-->
-    <string name="text_offline_hint">Choose Offline Mode</string>
+    <!--fragment_instructions-->
+    <string name="text_hint_instructions">How to play drawmatic?</string>
     <string name="text_normal_mode_offline">Offline \n Normal Mode</string>
     <string name="text_team_mode_offline">Offline \n Team Mode</string>
 
@@ -57,6 +57,11 @@
     <!--credits-->
     <!--Created by Dooder - Freepik.com-->
     <!--https://github.com/Ramotion/fluid-slider-android-->
+
+    <!--navigation icons-->
+    <!--<a href='https://www.freepik.com/free-vector/hand-drawn-business-icons-collection_1091815.htm'>Designed by Dooder</a>-->
+    <!--<a href="https://www.freepik.com/free-vector/hand-drawn-business-icons-collection_1091815.htm">Designed by Dooder</a>-->
+
 
     <!--left and right arrow-->
     <!--<div>Icons made by <a href="https://www.flaticon.com/authors/revicon" title="Revicon">Revicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
