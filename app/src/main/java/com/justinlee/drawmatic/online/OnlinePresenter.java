@@ -28,27 +28,26 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     }
 
     @Override
-    public void createRoomForOnlineNormalMode(OnlineFragment onlineFragment) {
-        ((MainActivity) onlineFragment.getActivity()).getMainPresenter().transToOnlineRoomCreationPage(Constants.OnlineGameMode.ONLINE_NORMAL);
+    public void createRoomForOnlineNormalMode() {
+        mMainPresenter.transToOnlineRoomCreationPage(Constants.OnlineGameMode.ONLINE_NORMAL);
     }
 
     @Override
-    public void startPlayingOnline() {
-
+    public void informToTransToSearchRoomsPage() {
+        mOnlineView.showSearchGamesPageUi();
     }
+
 
     @Override
     public void searchForRooms(OnlineFragment onlineFragment, String inputString) {
-        // TODO query
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_search_rooms));
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(onlineFragment, this, inputString);
-
     }
 
     @Override
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
         ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
-        mOnlineView.showOnlineSearchPageUi();
+//        mOnlineView.showSearchGamesPageUi();
         mMainPresenter.isNotLoading();
     }
 

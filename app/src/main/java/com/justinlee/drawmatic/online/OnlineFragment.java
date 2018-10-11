@@ -16,8 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,14 +32,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class OnlineFragment extends Fragment implements OnlineContract.View, View.OnClickListener {
     private OnlineContract.Presenter mOnlinePresenter;
 
-    private EditText mEdittextSearchForRooms;
-    private CardView mButtonCreateOnlineNormalRoom;
-    private Button mButtonCreateOnlineTeamRoom;
+    private FrameLayout mToolBarHint;
+    private CardView mButtonCreateNewGame;
+    private CardView mButtonSearchGames;
 
+    private FrameLayout mToolBarSearch;
     private ConstraintLayout mSearchedResultContainer;
     private RecyclerView mSearchResultRecyclerView;
     private SearchedRoomsAdapter mSearchedRoomsAdapter;
     private ImageView mButtonCancelSearchForRooms;
+    private EditText mEdittextSearchForRooms;
+
 
 
     public OnlineFragment() {
@@ -69,22 +72,47 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     }
 
     private void initViews(View rootView) {
-        mButtonCreateOnlineNormalRoom = rootView.findViewById(R.id.button_online_normal_mode);
-        mEdittextSearchForRooms = rootView.findViewById(R.id.edittext_searchbox_online);
-        mButtonCancelSearchForRooms = rootView.findViewById(R.id.button_cancel_search_online);
 
-        mButtonCreateOnlineNormalRoom.setOnClickListener(this);
+        // views for game selection
+        mToolBarHint = rootView.findViewById(R.id.frame_hint_play);
+        mToolBarHint.setVisibility(View.VISIBLE);
+
+        mButtonCreateNewGame = rootView.findViewById(R.id.button_new_game_play);
+        mButtonSearchGames = rootView.findViewById(R.id.button_search_game_play);
+        mButtonCreateNewGame.setOnClickListener(this);
+        mButtonSearchGames.setOnClickListener(this);
+
+        // view for game searching
+        mToolBarSearch = rootView.findViewById(R.id.frame_search_bar_play);
+        mToolBarSearch.setVisibility(View.INVISIBLE);
+
+        mEdittextSearchForRooms = rootView.findViewById(R.id.edittext_searchbox_play);
+        mButtonCancelSearchForRooms = rootView.findViewById(R.id.button_cancel_search_play);
         mEdittextSearchForRooms.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if("".equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
                     exitSearch();
-                    Snackbar.make(getActivity().findViewById(R.id.boxes_scrollview_online), "Need to input something", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Need to input something", Snackbar.LENGTH_SHORT).show();
                 } else {
                     exitSearch();
                     mOnlinePresenter.searchForRooms(OnlineFragment.this, v.getText().toString());
                 }
                 return true;
+            }
+        });
+
+        mEdittextSearchForRooms.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    if (hasFocus) {
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                    } else {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                    }
+                }
             }
         });
 
@@ -126,9 +154,22 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
     }
 
+    @Override
+    public void showGameSelectionPageUi() {
+        mToolBarSearch.setVisibility(View.INVISIBLE);
+        mEdittextSearchForRooms.clearFocus();
+
+        mToolBarHint.setVisibility(View.VISIBLE);
+        mSearchedResultContainer.setVisibility(View.GONE);
+    }
+
 
     @Override
-    public void showOnlineSearchPageUi() {
+    public void showSearchGamesPageUi() {
+        mToolBarSearch.setVisibility(View.VISIBLE);
+        mEdittextSearchForRooms.requestFocus();
+
+        mToolBarHint.setVisibility(View.INVISIBLE);
         mSearchedResultContainer.setVisibility(View.VISIBLE);
     }
 
@@ -171,11 +212,12 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.button_online_normal_mode:
-                mOnlinePresenter.createRoomForOnlineNormalMode(this);
+            case R.id.button_new_game_play:
+                mOnlinePresenter.createRoomForOnlineNormalMode();
                 break;
 
-            case R.id.button_online_team_mode:
+            case R.id.button_search_game_play:
+                mOnlinePresenter.informToTransToSearchRoomsPage();
                 break;
 
             default:

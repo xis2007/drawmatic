@@ -12,10 +12,11 @@
     <string name="text_normal_mode_offline">Offline \n Normal Mode</string>
     <string name="text_team_mode_offline">Offline \n Team Mode</string>
 
-    <!--fragment_online-->
-    <string name="text_hint_input_online">Search Rooms Here or Create Room below </string>
-    <string name="text_normal_mode_online">Create\nNew Room</string>
-    <string name="text_team_mode_online">Coming Soon</string>
+    <!--fragment_play-->
+    <string name="text_hint_play">Choose how you want to start</string>
+    <string name="text_hint_input_play">Search Here</string>
+    <string name="text_new_game_play">New\n \t\t\t\t\t Game</string>
+    <string name="text_search_games_play">Search\n \t\t\t\t\t\t\t Game</string>
 
     <!--fragment_create_room-->
     <string name="text_hint_create_room">Setup Your Room</string>

@@ -2,7 +2,6 @@ package com.justinlee.drawmatic;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.view.View;
 
 import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
@@ -14,11 +13,11 @@ import com.justinlee.drawmatic.in_game_result.GameResultFragment;
 import com.justinlee.drawmatic.in_game_result.GameResultPresenter;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicFragment;
 import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
+import com.justinlee.drawmatic.instructions.InstructionsFragment;
+import com.justinlee.drawmatic.instructions.InstructionsPresenter;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.instructions.InstructionsFragment;
-import com.justinlee.drawmatic.instructions.InstructionsPresenter;
 import com.justinlee.drawmatic.online.OnlineFragment;
 import com.justinlee.drawmatic.online.OnlinePresenter;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
@@ -162,8 +161,12 @@ public class MainPresenter implements MainContract.Presenter {
         }
         transaction.commit();
 
-        if (mOnlineFragment.getSearchedResultContainer() != null) {
-            mOnlineFragment.getSearchedResultContainer().setVisibility(View.GONE);
+//        if (mOnlineFragment.getSearchedResultContainer() != null) {
+//            mOnlineFragment.getSearchedResultContainer().setVisibility(View.GONE);
+//        }
+
+        if(mOnlineFragment.getSearchedResultContainer() != null) {
+            mOnlineFragment.showGameSelectionPageUi();
         }
 
         mMainView.showOnlinePageUi();

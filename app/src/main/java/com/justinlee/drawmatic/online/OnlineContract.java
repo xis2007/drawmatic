@@ -11,7 +11,9 @@ public interface OnlineContract {
     interface View extends BaseView<Presenter> {
         void showOnlinePageUi();
 
-        void showOnlineSearchPageUi();
+        void showGameSelectionPageUi();
+
+        void showSearchGamesPageUi();
 
         void hideOnlineSearchPageUi();
 
@@ -25,9 +27,9 @@ public interface OnlineContract {
     }
 
     interface Presenter extends BasePresenter {
-        void createRoomForOnlineNormalMode(OnlineFragment onlineFragment);
+        void createRoomForOnlineNormalMode();
 
-        void startPlayingOnline();
+        void informToTransToSearchRoomsPage();
 
         void searchForRooms(OnlineFragment onlineFragment, String inputString);
 

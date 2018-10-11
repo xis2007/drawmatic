@@ -72,7 +72,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     @Override
     public void showOnlineRoomCreationPageUi() {
-        mPrimaryNavigation.setVisibility(View.GONE);
     }
 
     @Override

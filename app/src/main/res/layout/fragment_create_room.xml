@@ -154,7 +154,6 @@
                         app:bsb_show_section_text="true"
                         app:bsb_show_thumb_text="true"
                         app:bsb_track_color="@color/colorWhite"/>
-
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
