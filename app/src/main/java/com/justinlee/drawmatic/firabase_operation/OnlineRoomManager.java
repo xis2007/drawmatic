@@ -86,14 +86,15 @@ public class OnlineRoomManager {
 
     /**
      * *********************************************************************************
-     * Player opertaions
+     * Player operations
      * **********************************************************************************
      */
-    public void searchForRoom(final OnlineFragment onlineFragment, final OnlineContract.Presenter onlinePresenter, String inputString) {
+    public void searchForRoom(final OnlineFragment onlineFragment, final OnlineContract.Presenter onlinePresenter, final String inputString) {
         CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection("rooms");
 
         collecRef
-            .whereEqualTo("roomName", inputString)
+            .whereGreaterThan("roomName", inputString)
+//            .whereEqualTo("roomName", inputString)
 //            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,7 +103,7 @@ public class OnlineRoomManager {
                     if (task.isSuccessful()) {
                         QuerySnapshot qurySnapshot = task.getResult();
                         if (!qurySnapshot.isEmpty()) {
-                            onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(qurySnapshot));
+                            onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
                         } else {
                             onlinePresenter.informToShowNoRoomsResultFoundMessage();
                         }
@@ -113,7 +114,8 @@ public class OnlineRoomManager {
             });
 
         collecRef
-            .whereEqualTo("roomName", inputString)
+            .whereGreaterThan("roomName", inputString)
+//            .whereEqualTo("roomName", inputString)
 //            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
@@ -122,7 +124,7 @@ public class OnlineRoomManager {
                         Log.w(TAG, "Listen failed.", e);
                         return;
                     }
-                    onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(queryDocumentSnapshots));
+                    onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, queryDocumentSnapshots));
                 }
             });
     }
@@ -362,12 +364,14 @@ public class OnlineRoomManager {
         return onlineGamesList;
     }
 
-    private ArrayList<OnlineGame> transformQuerySnapshotToRoomsList(QuerySnapshot querySnapshot) {
+    private ArrayList<OnlineGame> transformQuerySnapshotToRoomsList(String inputQueryString, QuerySnapshot querySnapshot) {
         List<DocumentSnapshot> documentSnapshots = querySnapshot.getDocuments();
         ArrayList<OnlineGame> onlineGamesList = new ArrayList<>();
         for(DocumentSnapshot documentSnapshot : documentSnapshots) {
             OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), documentSnapshot.toObject(OnlineSettings.class));
-            onlineGamesList.add(onlineGame);
+            if(onlineGame.getOnlineSettings().getRoomName().contains(inputQueryString)) {
+                onlineGamesList.add(onlineGame);
+            }
         }
 
         return onlineGamesList;
