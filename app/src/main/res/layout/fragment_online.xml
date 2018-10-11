@@ -166,7 +166,17 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@drawable/selector_hint_online_search"
-                android:textSize="14sp"/>
+                android:textSize="14sp">
+            </EditText>
+
+            <ImageView
+                android:id="@+id/button_cancel_search_online"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_cancel"
+                android:layout_gravity="end|center"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="2dp"/>
         </FrameLayout>
 
         <android.support.constraint.ConstraintLayout

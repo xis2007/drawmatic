@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
@@ -38,6 +39,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     private ConstraintLayout mSearchedResultContainer;
     private RecyclerView mSearchResultRecyclerView;
     private SearchedRoomsAdapter mSearchedRoomsAdapter;
+    private ImageView mButtonCancelSearchForRooms;
 
 
     public OnlineFragment() {
@@ -60,10 +62,16 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_online, container, false);
 
+        initViews(rootView);
+        initRecyclerView(rootView);
+
+        return rootView;
+    }
+
+    private void initViews(View rootView) {
         mButtonCreateOnlineNormalRoom = rootView.findViewById(R.id.button_online_normal_mode);
         mEdittextSearchForRooms = rootView.findViewById(R.id.edittext_searchbox_online);
-        mSearchResultRecyclerView = rootView.findViewById(R.id.room_list_recyclerview_online);
-        mSearchedResultContainer = rootView.findViewById(R.id.layout_room_list_online);
+        mButtonCancelSearchForRooms = rootView.findViewById(R.id.button_cancel_search_online);
 
         mButtonCreateOnlineNormalRoom.setOnClickListener(this);
         mEdittextSearchForRooms.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -80,11 +88,28 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
             }
         });
 
+//        mEdittextSearchForRooms.settext(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if("".equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
+//                    exitSearch();
+//                    Snackbar.make(getActivity().findViewById(R.id.boxes_scrollview_online), "Need to input something", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//                    exitSearch();
+//                    mOnlinePresenter.searchForRooms(OnlineFragment.this, v.getText().toString());
+//                }
+//                return true;
+//            }
+//        });
+    }
+
+    private void initRecyclerView(View rootView) {
+        mSearchResultRecyclerView = rootView.findViewById(R.id.room_list_recyclerview_online);
+        mSearchedResultContainer = rootView.findViewById(R.id.layout_room_list_online);
+
         mSearchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSearchedRoomsAdapter = new SearchedRoomsAdapter(OnlineFragment.this, null);
         mSearchResultRecyclerView.setAdapter(mSearchedRoomsAdapter);
-
-        return rootView;
     }
 
 

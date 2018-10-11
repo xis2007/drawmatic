@@ -93,7 +93,7 @@ public class OnlineRoomManager {
         CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection("rooms");
 
         collecRef
-            .whereGreaterThan("roomName", inputString)
+//            .whereGreaterThan("roomName", inputString)
 //            .whereEqualTo("roomName", inputString)
 //            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .get()
@@ -114,7 +114,7 @@ public class OnlineRoomManager {
             });
 
         collecRef
-            .whereGreaterThan("roomName", inputString)
+//            .whereGreaterThan("roomName", inputString)
 //            .whereEqualTo("roomName", inputString)
 //            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -368,9 +368,12 @@ public class OnlineRoomManager {
         List<DocumentSnapshot> documentSnapshots = querySnapshot.getDocuments();
         ArrayList<OnlineGame> onlineGamesList = new ArrayList<>();
         for(DocumentSnapshot documentSnapshot : documentSnapshots) {
-            OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), documentSnapshot.toObject(OnlineSettings.class));
-            if(onlineGame.getOnlineSettings().getRoomName().contains(inputQueryString)) {
-                onlineGamesList.add(onlineGame);
+            OnlineSettings onlineSettings = documentSnapshot.toObject(OnlineSettings.class);
+            if(onlineSettings != null) {
+                OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), documentSnapshot.toObject(OnlineSettings.class));
+                if(onlineGame.getOnlineSettings().getRoomName().contains(inputQueryString)) {
+                    onlineGamesList.add(onlineGame);
+                }
             }
         }
 

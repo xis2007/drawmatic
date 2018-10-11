@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity {
                 if ("".equals(userNameInputString) || userNameInputString.isEmpty()) {
                     Snackbar.make(findViewById(R.id.constraintLayout_login), "Name Input Required", Snackbar.LENGTH_LONG).show();
                 } else {
-                    getStartedButton.setBackgroundColor(getResources().getColor(R.color.colorGrey));
+                    getStartedButton.setBackground(getResources().getDrawable(R.drawable.box_button_greyed_login));
 
                     FirebaseAuth.getInstance()
                             .signInAnonymously()
@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity {
                                         saveUserInfo(task);
                                         finish();
                                     } else {
-                                        getStartedButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        getStartedButton.setBackground(getResources().getDrawable(R.drawable.box_button_login));
                                         Snackbar.make(findViewById(R.id.constraintLayout_login), "Something went Wrong. Please try again", Snackbar.LENGTH_LONG).show();
                                     }
                                 }

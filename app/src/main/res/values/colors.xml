@@ -21,10 +21,12 @@
     <color name="colorAlertRed">#a50003</color>
 
     <color name="colorWhite">#ffffff</color>
+    <color name="colorWhiteTrans50">#afffffff</color>
     <color name="colorGreyLight">#d3d3d3</color>
     <color name="colorGrey">#808080</color>
     <color name="colorGreyDark">#434343</color>
     <color name="colorBlack">#000000</color>
 
-    <color name="colorBlack50">#96000000</color>
+    <color name="colorBlack20">#32000000</color>
+    <color name="colorBlack50">#6e000000</color>
 </resources>
