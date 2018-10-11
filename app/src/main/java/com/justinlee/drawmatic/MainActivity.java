@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +29,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     private MainContract.Presenter mMainPresenter;
     private BottomNavigationViewEx mPrimaryNavigation;
 
+    private TextView mLoadingHint;
     private ConstraintLayout mLoadingLayout;
     private SpinKitView mLoadingView;
 
     private boolean mIsUserInGame = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +106,15 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showLoadingUi() {
+    public void showLoadingUi(String loadingHint) {
         mLoadingLayout.setVisibility(View.VISIBLE);
+        mLoadingHint.setText(loadingHint);
     }
 
     @Override
     public void hideLoadingUi() {
         mLoadingLayout.setVisibility(View.GONE);
+        mLoadingHint.setText("");
     }
 
     @Override
@@ -158,6 +163,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     private void setLoadingViews() {
+        mLoadingHint = findViewById(R.id.text_hint_loading);
         mLoadingLayout = findViewById(R.id.layout_loading);
         mLoadingLayout.setVisibility(View.GONE);
     }

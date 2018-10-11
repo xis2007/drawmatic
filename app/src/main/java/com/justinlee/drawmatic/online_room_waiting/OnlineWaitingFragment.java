@@ -62,7 +62,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainContract.View) getActivity()).showLoadingUi();
+        ((MainContract.View) getActivity()).showLoadingUi(getActivity().getResources().getString(R.string.hint_loading_loading_data));
         mOnlineWaitingPresenter.start();
     }
 

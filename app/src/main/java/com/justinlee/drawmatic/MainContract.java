@@ -27,7 +27,7 @@ public interface MainContract {
         void showSettingsPageUi();
 
         // loading Ui
-        void showLoadingUi();
+        void showLoadingUi(String loadingHint);
         void hideLoadingUi();
 
         // OnBackPressed related
@@ -56,12 +56,15 @@ public interface MainContract {
         void transToSettingsPage();
 
         // loading UI
-        void isLoading();
+        void isLoading(String loadingHint);
         void isNotLoading();
 
         // OnBackPressed related
         void determineOnBackPressedActions();
         void informToShowLeaveGameDialog(OnlineGame onlineGame);
+
+        // reseting player
+        void resetCurrentPlayerToParticipant();
     }
 
 

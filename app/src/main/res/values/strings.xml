@@ -39,6 +39,16 @@
     <string name="title_undo">Undo</string>
     <string name="title_redo">Redo</string>
 
+    <!--loading hints-->
+    <string name="hint_loading_search_rooms">Searching for Rooms</string>
+    <string name="hint_loading_creating_room">Creating Room</string>
+    <string name="hint_loading_cancel_room_creation">Canceling Room Creation</string>
+    <string name="hint_loading_prepare_room">Preparing your Room</string>
+    <string name="hint_loading_leaving_room">Leaving Room</string>
+    <string name="hint_loading_starting_game">Be ready to start the Game!</string>
+    <string name="hint_loading_loading_data">Loading Data</string>
+    <string name="hint_loading_joining_room">Joining...</string>
+
 
     <!--activity_main-->
 </resources>

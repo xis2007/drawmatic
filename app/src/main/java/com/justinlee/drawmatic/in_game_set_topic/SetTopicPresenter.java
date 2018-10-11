@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
@@ -57,7 +58,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
             @Override
             public void onFinish() {
-                mMainView.showLoadingUi();
+                mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
                 String inputTopic = mSetTopicView.getEditTextTopicInput();
                 if(inputTopic == null) inputTopic = "";
 

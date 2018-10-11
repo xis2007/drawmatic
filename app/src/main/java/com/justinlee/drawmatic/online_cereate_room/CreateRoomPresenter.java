@@ -3,6 +3,7 @@ package com.justinlee.drawmatic.online_cereate_room;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -28,23 +29,6 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
         mRoomType = roomType;
     }
 
-    @Override
-    public void checkForRoomExistance(String roomName, int numPlayers, float attemptTime) {
-//        if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
-//            mCreateRoomView.promptNameInputAlert();
-//
-//        } else {
-//            mMainPresenter.isLoading();
-//            Player roomMaster = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();
-//            roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
-//            ArrayList<Player> playersList =  new ArrayList<>();
-//            playersList.add(roomMaster);
-//
-//            final OnlineSettings onlineSettings = new OnlineSettings(mRoomType, roomName, numPlayers, attemptTime, playersList);
-//
-//            new FirestoreManager((MainActivity) mMainView).checkForRoomExistance(this, onlineSettings, mCreateRoomView);
-//        }
-    }
 
     @Override
     public void createRoom(String roomName, int numPlayers, float attemptTime) {
@@ -52,7 +36,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
             mCreateRoomView.promptNameInputAlert();
 
         } else {
-            mMainPresenter.isLoading();
+            mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_creating_room));
             Player roomMaster = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();
             roomMaster.setPlayerType(Constants.PlayerType.ROOM_MASTER);
             ArrayList<Player> playersList =  new ArrayList<>();
@@ -74,14 +58,14 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void cancelRoomCreation() {
-        mMainPresenter.isLoading();
+        mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_cancel_room_creation));
         ((MainActivity) mMainView).getMainPresenter().transToOnlinePage();
         mMainPresenter.isNotLoading();
     }
 
     @Override
     public void transToRoomWaitingPage(String roomId, OnlineSettings onlineSettings) {
-        mMainPresenter.isLoading();
+        mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_prepare_room));
         OnlineGame onlineGame = new OnlineGame(roomId, onlineSettings);
         ((MainActivity) mMainView).getMainPresenter().transToOnlineWaitingPage(onlineGame);
     }
@@ -93,7 +77,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void informToShowLoadingUi() {
-        mMainView.showLoadingUi();
+        mMainView.showLoadingUi("Nottttttttttttt useddddddddddddddddddd");
     }
 
     @Override

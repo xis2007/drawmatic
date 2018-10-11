@@ -14,8 +14,6 @@ public interface CreateRoomContract {
     }
 
     interface Presenter extends BasePresenter {
-        void checkForRoomExistance(String roomName, int numPlayers, float attemptTime);
-
         void createRoom(String roomName, int numPlayers, float attemptTime);
 
         void cancelRoomCreation();

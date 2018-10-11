@@ -5,6 +5,7 @@ import android.app.Fragment;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
@@ -39,7 +40,7 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     @Override
     public void searchForRooms(OnlineFragment onlineFragment, String inputString) {
         // TODO query
-        mMainPresenter.isLoading();
+        mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_search_rooms));
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(onlineFragment, this, inputString);
 
     }

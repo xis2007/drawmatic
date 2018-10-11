@@ -56,7 +56,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
                     mOnlineFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
                 } else {
                     mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
-                    ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi();
+                    ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
                 }
 
             }

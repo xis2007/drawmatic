@@ -406,8 +406,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void isLoading() {
-        mMainView.showLoadingUi();
+    public void isLoading(String loadingHint) {
+        mMainView.showLoadingUi(loadingHint);
     }
 
     @Override
@@ -439,6 +439,11 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void informToShowLeaveGameDialog(OnlineGame onlineGame) {
         mMainView.showLeaveGameDialog(onlineGame);
+    }
+
+    @Override
+    public void resetCurrentPlayerToParticipant() {
+        mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
     }
 
     @Override

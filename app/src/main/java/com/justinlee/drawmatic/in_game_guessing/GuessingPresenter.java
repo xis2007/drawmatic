@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
@@ -77,7 +78,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
             @Override
             public void onFinish() {
-                mMainView.showLoadingUi();
+                mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
                 String inputGuessing = mGuessingView.getGuessingInput();
                 if(inputGuessing == null) inputGuessing = "";
                 new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
