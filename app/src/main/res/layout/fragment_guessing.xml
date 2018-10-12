@@ -89,7 +89,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Guess!"
-            android:textSize="36sp"
+            android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout_guessing"/>
@@ -106,7 +106,7 @@
             android:singleLine="true"
             android:textAlignment="center"
             android:textColor="@color/colorGreyDark"
-            android:textSize="30sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_guessing"/>
@@ -127,6 +127,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edittext_topic_guessing"/>
 
+        <TextView
+            android:id="@+id/text_hint_drawing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Guess what this drawing is !!!"
+            app:layout_constraintBottom_toBottomOf="@+id/image_drawing_from_previous"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 
