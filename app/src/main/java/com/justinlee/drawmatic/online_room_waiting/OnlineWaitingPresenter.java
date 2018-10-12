@@ -47,7 +47,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void informToTransToOnlinePage() {
-        mMainPresenter.transToOnlinePage();
+        mMainPresenter.transToPlayPage();
         mMainPresenter.isNotLoading();
     }
 

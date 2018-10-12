@@ -13,18 +13,18 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.OnlineGame;
-import com.justinlee.drawmatic.online.OnlineFragment;
+import com.justinlee.drawmatic.play.PlayFragment;
 
 import java.util.ArrayList;
 
 public class SearchedRoomsAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private OnlineFragment mOnlineFragment;
+    private PlayFragment mPlayFragment;
     private ArrayList<OnlineGame> mOnlineGamesList;
 
-    public SearchedRoomsAdapter(OnlineFragment onlineFragment, ArrayList<OnlineGame> onlineGamesList) {
-        mContext = onlineFragment.getActivity();
-        mOnlineFragment = onlineFragment;
+    public SearchedRoomsAdapter(PlayFragment playFragment, ArrayList<OnlineGame> onlineGamesList) {
+        mContext = playFragment.getActivity();
+        mPlayFragment = playFragment;
         mOnlineGamesList = onlineGamesList;
     }
 
@@ -64,10 +64,10 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if(currentOnlineGame.getOnlineSettings().isInGame()) {
-                        mOnlineFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
+                        mPlayFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
                     } else {
-                        mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
-                        ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
+                        mPlayFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
+                        ((MainContract.View) mPlayFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
                     }
 
                 }

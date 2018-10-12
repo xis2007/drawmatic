@@ -513,7 +513,7 @@ public class OnlineInGameManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) mContext).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) mContext).getMainPresenter().transToPlayPage();
                         ((MainActivity) mContext).hideLoadingUi();
                         Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Key Player Left, Game Stopped", Snackbar.LENGTH_SHORT).show();
                     }

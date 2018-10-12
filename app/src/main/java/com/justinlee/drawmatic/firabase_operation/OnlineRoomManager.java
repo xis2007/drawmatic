@@ -31,9 +31,9 @@ import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.online.OnlineContract;
-import com.justinlee.drawmatic.online.OnlineFragment;
-import com.justinlee.drawmatic.online.OnlinePresenter;
+import com.justinlee.drawmatic.play.PlayContract;
+import com.justinlee.drawmatic.play.PlayFragment;
+import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomContract;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingContract;
@@ -89,7 +89,7 @@ public class OnlineRoomManager {
      * Player operations
      * **********************************************************************************
      */
-    public void searchForRoom(final OnlineFragment onlineFragment, final OnlineContract.Presenter onlinePresenter, final String inputString) {
+    public void searchForRoom(final PlayFragment playFragment, final PlayContract.Presenter playPresenter, final String inputString) {
         CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection("rooms");
 
         collecRef
@@ -103,12 +103,12 @@ public class OnlineRoomManager {
                     if (task.isSuccessful()) {
                         QuerySnapshot qurySnapshot = task.getResult();
                         if (!qurySnapshot.isEmpty()) {
-                            onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
+                            playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
                         } else {
-                            onlinePresenter.informToShowNoRoomsResultFoundMessage();
+                            playPresenter.informToShowNoRoomsResultFoundMessage();
                         }
                     } else {
-                        Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -124,13 +124,13 @@ public class OnlineRoomManager {
                         Log.w(TAG, "Listen failed.", e);
                         return;
                     }
-                    onlinePresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, queryDocumentSnapshots));
+                    playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, queryDocumentSnapshots));
                 }
             });
     }
 
 
-    public void joinRoom(final OnlineFragment onlineFragment, final OnlineGame onlineGame, final OnlinePresenter onlinePresenter, final Player joiningPlayer) {
+    public void joinRoom(final PlayFragment playFragment, final OnlineGame onlineGame, final PlayPresenter playPresenter, final Player joiningPlayer) {
         final DocumentReference roomToJoinRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId());
 
         Drawmatic.getmFirebaseDb()
@@ -142,7 +142,7 @@ public class OnlineRoomManager {
 
                         // if room players maxed out, then player cannot join the game
                         if (mostCurrentOnlineSettings.getCurrentNumPlayers() == mostCurrentOnlineSettings.getMaxPlayers()) {
-                            Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
                         } else {
                             double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
                             transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
@@ -160,13 +160,13 @@ public class OnlineRoomManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        onlinePresenter.informToTransToOnlineWaitingPage(onlineGame);
+                        playPresenter.informToTransToOnlineWaitingPage(onlineGame);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
+                        ((MainContract.View) playFragment.getActivity()).hideLoadingUi();
                         Log.w(TAG, "Transaction failure.", e);
                     }
                 });
@@ -187,7 +187,7 @@ public class OnlineRoomManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) mContext).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) mContext).getMainPresenter().transToPlayPage();
                         ((MainActivity) mContext).hideLoadingUi();
                     }
                 })
@@ -231,7 +231,7 @@ public class OnlineRoomManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToPlayPage();
                         ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
                     }
                 })

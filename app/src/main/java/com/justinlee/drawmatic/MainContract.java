@@ -8,11 +8,11 @@ import com.justinlee.drawmatic.objects.OnlineGame;
 public interface MainContract {
     interface View extends BaseView<Presenter> {
         // offline mode
-        void showOfflinePageUi();
+        void showInstructionsPageUi();
         void showOfflineGameSettingsPageUi();
 
         // online mode
-        void showOnlinePageUi();
+        void showPlayPageUi();
         void showOnlineSearchPageUi();
         void showOnlineRoomCreationPageUi();
         void showOnlineWaitingPageUi();
@@ -37,13 +37,13 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
         // offline mode
-        void transToOfflinePage();
+        void transToInstructionsPage();
         void transToOfflineGameSettingsPage();
 
         // online mode
-        void transToOnlinePage();
+        void transToPlayPage();
         void transToOnlineSearchPage();
-        void transToOnlineRoomCreationPage(int roomType);
+        void transToGameCreationPage(int roomType);
         void transToOnlineWaitingPage(OnlineGame onlineGame);
 
         // in-game pages

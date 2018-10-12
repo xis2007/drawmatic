@@ -57,7 +57,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     public void doneViewingResult() {
         new OnlineInGameManager((MainActivity) mMainView).deleteDataAfterResult(mOnlineGame);
         mMainPresenter.resetCurrentPlayerToParticipant();
-        mMainPresenter.transToOnlinePage();
+        mMainPresenter.transToPlayPage();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.online;
+package com.justinlee.drawmatic.play;
 
 import android.app.Fragment;
 
@@ -14,22 +14,22 @@ import com.justinlee.drawmatic.objects.Player;
 
 import java.util.ArrayList;
 
-public class OnlinePresenter implements OnlineContract.Presenter {
+public class PlayPresenter implements PlayContract.Presenter {
     private static final String TAG = "justin";
 
-    private OnlineContract.View mOnlineView;
+    private PlayContract.View mOnlineView;
 
     private MainContract.View mMainView;
     private MainPresenter mMainPresenter;
 
-    public OnlinePresenter(OnlineContract.View onlineView) {
+    public PlayPresenter(PlayContract.View onlineView) {
         mOnlineView = onlineView;
         mOnlineView.setPresenter(this);
     }
 
     @Override
     public void createRoomForOnlineNormalMode() {
-        mMainPresenter.transToOnlineRoomCreationPage(Constants.OnlineGameMode.ONLINE_NORMAL);
+        mMainPresenter.transToGameCreationPage(Constants.OnlineGameMode.ONLINE_NORMAL);
     }
 
     @Override
@@ -39,17 +39,17 @@ public class OnlinePresenter implements OnlineContract.Presenter {
 
 
     @Override
-    public void searchForRooms(OnlineFragment onlineFragment, String inputString) {
+    public void searchForRooms(PlayFragment playFragment, String inputString) {
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_search_rooms));
-        new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(onlineFragment, this, inputString);
+        new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(playFragment, this, inputString);
     }
 
     @Override
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
         if(onlineGamesList == null || onlineGamesList.size() == 0) {
-            ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(null);
+            ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(null);
         } else {
-            ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
+            ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
         }
 
 //        mOnlineView.showSearchGamesPageUi();
@@ -59,7 +59,7 @@ public class OnlinePresenter implements OnlineContract.Presenter {
     @Override
     public void joinSelectedRoom(OnlineGame onlineGame) {
         Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, onlineGame.getOnlineSettings().getCurrentNumPlayers() + 1);
-        new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).joinRoom((OnlineFragment) mOnlineView, onlineGame, this, userAsPlayer);
+        new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).joinRoom((PlayFragment) mOnlineView, onlineGame, this, userAsPlayer);
 
     }
 

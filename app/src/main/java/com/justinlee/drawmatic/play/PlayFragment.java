@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.online;
+package com.justinlee.drawmatic.play;
 
 
 import android.app.Fragment;
@@ -29,8 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OnlineFragment extends Fragment implements OnlineContract.View, View.OnClickListener {
-    private OnlineContract.Presenter mOnlinePresenter;
+public class PlayFragment extends Fragment implements PlayContract.View, View.OnClickListener {
+    private PlayContract.Presenter mOnlinePresenter;
 
     private FrameLayout mToolBarHint;
     private CardView mButtonCreateNewGame;
@@ -45,13 +45,13 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
 
 
-    public OnlineFragment() {
+    public PlayFragment() {
         // Required empty public constructor
     }
 
 
-    public static OnlineFragment newInstance() {
-        return new OnlineFragment();
+    public static PlayFragment newInstance() {
+        return new PlayFragment();
     }
 
 
@@ -96,7 +96,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
                     Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Need to input something", Snackbar.LENGTH_SHORT).show();
                 } else {
                     exitSearch();
-                    mOnlinePresenter.searchForRooms(OnlineFragment.this, v.getText().toString());
+                    mOnlinePresenter.searchForRooms(PlayFragment.this, v.getText().toString());
                 }
                 return true;
             }
@@ -124,7 +124,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 //                    Snackbar.make(getActivity().findViewById(R.id.boxes_scrollview_online), "Need to input something", Snackbar.LENGTH_SHORT).show();
 //                } else {
 //                    exitSearch();
-//                    mOnlinePresenter.searchForRooms(OnlineFragment.this, v.getText().toString());
+//                    mOnlinePresenter.searchForRooms(PlayFragment.this, v.getText().toString());
 //                }
 //                return true;
 //            }
@@ -136,7 +136,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
         mSearchedResultContainer = rootView.findViewById(R.id.layout_room_list_online);
 
         mSearchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mSearchedRoomsAdapter = new SearchedRoomsAdapter(OnlineFragment.this, null);
+        mSearchedRoomsAdapter = new SearchedRoomsAdapter(PlayFragment.this, null);
         mSearchResultRecyclerView.setAdapter(mSearchedRoomsAdapter);
     }
 
@@ -204,7 +204,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
 
 
     @Override
-    public void setPresenter(OnlineContract.Presenter presenter) {
+    public void setPresenter(PlayContract.Presenter presenter) {
         mOnlinePresenter = checkNotNull(presenter);
     }
 
@@ -237,7 +237,7 @@ public class OnlineFragment extends Fragment implements OnlineContract.View, Vie
      *  Getters and Setters
      *  **********************************************************************************
      */
-    public OnlineContract.Presenter getOnlinePresenter() {
+    public PlayContract.Presenter getOnlinePresenter() {
         return mOnlinePresenter;
     }
 

@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.online;
+package com.justinlee.drawmatic.play;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
@@ -6,7 +6,7 @@ import com.justinlee.drawmatic.objects.OnlineGame;
 
 import java.util.ArrayList;
 
-public interface OnlineContract {
+public interface PlayContract {
 
     interface View extends BaseView<Presenter> {
         void showOnlinePageUi();
@@ -31,7 +31,7 @@ public interface OnlineContract {
 
         void informToTransToSearchRoomsPage();
 
-        void searchForRooms(OnlineFragment onlineFragment, String inputString);
+        void searchForRooms(PlayFragment playFragment, String inputString);
 
         void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList);
 

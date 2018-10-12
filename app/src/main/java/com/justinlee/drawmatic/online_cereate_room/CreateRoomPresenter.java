@@ -59,7 +59,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     @Override
     public void cancelRoomCreation() {
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_cancel_room_creation));
-        ((MainActivity) mMainView).getMainPresenter().transToOnlinePage();
+        ((MainActivity) mMainView).getMainPresenter().transToPlayPage();
         mMainPresenter.isNotLoading();
     }
 
@@ -84,7 +84,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     public void informRoomExists(OnlineSettings onlineSettings) {
         mCreateRoomView.promptRoomExistingAlert();
         mMainPresenter.isNotLoading();
-        mMainPresenter.transToOnlineRoomCreationPage(onlineSettings.getGameMode());
+        mMainPresenter.transToGameCreationPage(onlineSettings.getGameMode());
     }
 
     @Override

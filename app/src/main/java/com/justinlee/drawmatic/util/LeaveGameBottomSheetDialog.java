@@ -59,7 +59,7 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
                         Log.d("leaving", "onClick: leaving roommmmmm");
                         new OnlineInGameManager(mMainActivity).leaveRoomAndDeleteDataWhileInGame(mOnlineGame);
                     } else {
-                        mMainActivity.getMainPresenter().transToOnlinePage();
+                        mMainActivity.getMainPresenter().transToPlayPage();
                     }
 
                     dismiss();

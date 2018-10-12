@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showOfflinePageUi() {
+    public void showInstructionsPageUi() {
         mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showOnlinePageUi() {
+    public void showPlayPageUi() {
         mPrimaryNavigation.setVisibility(View.VISIBLE);
     }
 
@@ -194,11 +194,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         switch (item.getItemId()) {
             case R.id.navigation_offline:
                 setNavigationItemBackground(0);
-                mMainPresenter.transToOfflinePage();
+                mMainPresenter.transToInstructionsPage();
                 return true;
             case R.id.navigation_online:
                 setNavigationItemBackground(1);
-                mMainPresenter.transToOnlinePage();
+                mMainPresenter.transToPlayPage();
                 return true;
             case R.id.navigation_settings:
                 setNavigationItemBackground(2);

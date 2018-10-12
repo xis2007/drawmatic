@@ -18,8 +18,8 @@ import com.justinlee.drawmatic.instructions.InstructionsPresenter;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.online.OnlineFragment;
-import com.justinlee.drawmatic.online.OnlinePresenter;
+import com.justinlee.drawmatic.play.PlayFragment;
+import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomFragment;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
@@ -35,7 +35,7 @@ public class MainPresenter implements MainContract.Presenter {
     private FragmentManager mFragmentManager;
 
     // fragments
-    private OnlineFragment mOnlineFragment;
+    private PlayFragment mPlayFragment;
     private InstructionsFragment mInstructionsFragment;
     private SettingsFragment mSettingsFragment;
 
@@ -47,7 +47,7 @@ public class MainPresenter implements MainContract.Presenter {
     private GameResultFragment mGameResultFragment;
 
     // presenters
-    private OnlinePresenter mOnlinePresenter;
+    private PlayPresenter mPlayPresenter;
     private InstructionsPresenter mInstructionsPresenter;
     private SettingsPresenter mSettingsPresenter;
 
@@ -64,12 +64,12 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOfflinePage() {
+    public void transToInstructionsPage() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mInstructionsFragment == null) mInstructionsFragment = InstructionsFragment.newInstance();
 
-        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mPlayFragment != null) transaction.hide(mPlayFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
 
         if (mCreateRoomFragment != null) {
@@ -99,7 +99,7 @@ public class MainPresenter implements MainContract.Presenter {
         if (mInstructionsPresenter == null) mInstructionsPresenter = new InstructionsPresenter(mInstructionsFragment);
         transaction.commit();
 
-        mMainView.showOfflinePageUi();
+        mMainView.showInstructionsPageUi();
     }
 
     @Override
@@ -108,10 +108,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlinePage() {
+    public void transToPlayPage() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
-        if (mOnlineFragment == null) mOnlineFragment = OnlineFragment.newInstance();
+        if (mPlayFragment == null) mPlayFragment = PlayFragment.newInstance();
 
         if (mInstructionsFragment != null) transaction.hide(mInstructionsFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
@@ -148,28 +148,28 @@ public class MainPresenter implements MainContract.Presenter {
         }
         // TODO add all others
 
-        if (!mOnlineFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mOnlineFragment, "ONLINE");
+        if (!mPlayFragment.isAdded()) {
+            transaction.add(R.id.fragment_container_main, mPlayFragment, "PLAY");
         } else {
-            transaction.show(mOnlineFragment);
+            transaction.show(mPlayFragment);
         }
 
-        if (mOnlinePresenter == null) {
-            mOnlinePresenter = new OnlinePresenter(mOnlineFragment);
-            mOnlinePresenter.setMainView(mMainView);
-            mOnlinePresenter.setMainPresenter(this);
+        if (mPlayPresenter == null) {
+            mPlayPresenter = new PlayPresenter(mPlayFragment);
+            mPlayPresenter.setMainView(mMainView);
+            mPlayPresenter.setMainPresenter(this);
         }
         transaction.commit();
 
-//        if (mOnlineFragment.getSearchedResultContainer() != null) {
-//            mOnlineFragment.getSearchedResultContainer().setVisibility(View.GONE);
+//        if (mPlayFragment.getSearchedResultContainer() != null) {
+//            mPlayFragment.getSearchedResultContainer().setVisibility(View.GONE);
 //        }
 
-        if(mOnlineFragment.getSearchedResultContainer() != null) {
-            mOnlineFragment.showGameSelectionPageUi();
+        if(mPlayFragment.getSearchedResultContainer() != null) {
+            mPlayFragment.showGameSelectionPageUi();
         }
 
-        mMainView.showOnlinePageUi();
+        mMainView.showPlayPageUi();
     }
 
     @Override
@@ -178,13 +178,13 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOnlineRoomCreationPage(int roomType) {
+    public void transToGameCreationPage(int roomType) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mCreateRoomFragment == null) mCreateRoomFragment = CreateRoomFragment.newInstance();
 
         if (mInstructionsFragment != null) transaction.hide(mInstructionsFragment);
-        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mPlayFragment != null) transaction.hide(mPlayFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
 
         if (mOnlineWaitingFragment != null) {
@@ -217,7 +217,7 @@ public class MainPresenter implements MainContract.Presenter {
         if (mOnlineWaitingFragment == null) mOnlineWaitingFragment = OnlineWaitingFragment.newInstance();
 
         if (mInstructionsFragment != null) transaction.hide(mInstructionsFragment);
-        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mPlayFragment != null) transaction.hide(mPlayFragment);
         if (mSettingsFragment != null) transaction.hide(mSettingsFragment);
 
         if (mCreateRoomFragment != null) {
@@ -377,7 +377,7 @@ public class MainPresenter implements MainContract.Presenter {
         if (mSettingsFragment == null) mSettingsFragment = SettingsFragment.newInstance();
 
         if (mInstructionsFragment != null) transaction.hide(mInstructionsFragment);
-        if (mOnlineFragment != null) transaction.hide(mOnlineFragment);
+        if (mPlayFragment != null) transaction.hide(mPlayFragment);
 
         if (mCreateRoomFragment != null) {
             transaction.remove(mCreateRoomFragment);
@@ -421,12 +421,12 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void determineOnBackPressedActions() {
         // if main menu-related fragments are shown, it means a dialog should show to users to confirm they want to leave the app
-        if(mOnlineFragment != null && !mOnlineFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if(mPlayFragment != null && !mPlayFragment.isHidden()) mMainView.showLeaveAppDialog();
         if(mInstructionsFragment != null && !mInstructionsFragment.isHidden()) mMainView.showLeaveAppDialog();
         if(mSettingsFragment != null && !mSettingsFragment.isHidden()) mMainView.showLeaveAppDialog();
 
         // if user is in room creation page, user should return to main menu when back is pressed
-        if(mCreateRoomFragment != null && !mCreateRoomFragment.isHidden()) transToOnlinePage();
+        if(mCreateRoomFragment != null && !mCreateRoomFragment.isHidden()) transToPlayPage();
 
         // if user is in room waiting page, user should return to main menu when back is pressed
         if(mOnlineWaitingFragment != null && !mOnlineWaitingFragment.isHidden()) mOnlineWaitingPresenter.leaveRoom(mOnlineWaitingFragment);
@@ -452,7 +452,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void start() {
         // TODO change to transToOffline
-        transToOnlinePage();
+        transToPlayPage();
         initializeCurrentPlayer();
     }
 

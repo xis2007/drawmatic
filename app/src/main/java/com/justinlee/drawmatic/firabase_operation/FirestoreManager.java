@@ -45,9 +45,9 @@ import com.justinlee.drawmatic.in_game_set_topic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.online.OnlineContract;
-import com.justinlee.drawmatic.online.OnlineFragment;
-import com.justinlee.drawmatic.online.OnlinePresenter;
+import com.justinlee.drawmatic.play.PlayContract;
+import com.justinlee.drawmatic.play.PlayFragment;
+import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomContract;
 import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
 import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingContract;
@@ -125,7 +125,7 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) ((Fragment) onlineWaitingView).getActivity()).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) ((Fragment) onlineWaitingView).getActivity()).getMainPresenter().transToPlayPage();
                         ((MainContract.View) ((Fragment) onlineWaitingView).getActivity()).hideLoadingUi();
                     }
                 })
@@ -142,7 +142,7 @@ public class FirestoreManager {
      * Player opertaions
      * **********************************************************************************
      */
-    public void searchForRoom(final OnlineFragment onlineFragment, final OnlineContract.Presenter onlinePresenter, String inputString) {
+    public void searchForRoom(final PlayFragment playFragment, final PlayContract.Presenter onlinePresenter, String inputString) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb().collection("rooms").document(inputString);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -153,10 +153,10 @@ public class FirestoreManager {
                     if (document.exists()) {
 //                        onlinePresenter.informToShowResultRooms(transformDocumentSnapshotToRoomsList(document));
                     } else {
-                        Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -181,7 +181,7 @@ public class FirestoreManager {
         return onlineSettingsList;
     }
 
-    public void joinRoom(final OnlineFragment onlineFragment, final OnlineSettings onlineSettings, final OnlinePresenter onlinePresenter, final Player joiningPlayer) {
+    public void joinRoom(final PlayFragment playFragment, final OnlineSettings onlineSettings, final PlayPresenter playPresenter, final Player joiningPlayer) {
         final DocumentReference roomToJoinRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineSettings.getRoomName());
 
         Drawmatic.getmFirebaseDb().runTransaction(new Transaction.Function<Void>() {
@@ -192,7 +192,7 @@ public class FirestoreManager {
 
                 // if room players maxed out, then player cannot join the game
                 if (mostCurrentOnlineSettings.getCurrentNumPlayers() == mostCurrentOnlineSettings.getMaxPlayers()) {
-                    Snackbar.make(onlineFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
                 } else {
                     double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
                     transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
@@ -211,15 +211,15 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-//                        onlinePresenter.informToTransToOnlineWaitingPage(onlineSettings);
-//                ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
+//                        playPresenter.informToTransToOnlineWaitingPage(onlineSettings);
+//                ((MainContract.View) playFragment.getActivity()).hideLoadingUi();
                         Log.d(TAG, "Transaction success!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ((MainContract.View) onlineFragment.getActivity()).hideLoadingUi();
+                        ((MainContract.View) playFragment.getActivity()).hideLoadingUi();
                         Log.w(TAG, "Transaction failure.", e);
                     }
                 });
@@ -240,7 +240,7 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToPlayPage();
                         ((MainActivity) onlineWaitingFragment.getActivity()).hideLoadingUi();
                     }
                 })
@@ -280,7 +280,7 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToOnlinePage();
+                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToPlayPage();
                         ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
                         Log.d(TAG, "Transaction success!");
                     }
