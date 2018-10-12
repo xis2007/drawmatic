@@ -159,6 +159,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         mPrimaryNavigation.enableShiftingMode(false);
         mPrimaryNavigation.setSelectedItemId(R.id.navigation_online);
         mPrimaryNavigation.setCurrentItem(1);
+        setNavigationItemBackground(1);
     }
 
     private void setLoadingViews() {
@@ -192,16 +193,44 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navigation_offline:
+                setNavigationItemBackground(0);
                 mMainPresenter.transToOfflinePage();
                 return true;
             case R.id.navigation_online:
+                setNavigationItemBackground(1);
                 mMainPresenter.transToOnlinePage();
                 return true;
             case R.id.navigation_settings:
+                setNavigationItemBackground(2);
                 mMainPresenter.transToSettingsPage();
                 return true;
         }
         return false;
+    }
+
+    void setNavigationItemBackground(int itemNum) {
+        switch (itemNum) {
+            case 0:
+                mPrimaryNavigation.setItemBackground(0, R.drawable.oval_shadow_navigation_button);
+                mPrimaryNavigation.setItemBackground(1, R.drawable.oval_blank_navigation_button);
+                mPrimaryNavigation.setItemBackground(2, R.drawable.oval_blank_navigation_button);
+                break;
+
+            case 1:
+                mPrimaryNavigation.setItemBackground(0, R.drawable.oval_blank_navigation_button);
+                mPrimaryNavigation.setItemBackground(1, R.drawable.oval_shadow_navigation_button);
+                mPrimaryNavigation.setItemBackground(2, R.drawable.oval_blank_navigation_button);
+                break;
+
+            case 2:
+                mPrimaryNavigation.setItemBackground(0, R.drawable.oval_blank_navigation_button);
+                mPrimaryNavigation.setItemBackground(1, R.drawable.oval_blank_navigation_button);
+                mPrimaryNavigation.setItemBackground(2, R.drawable.oval_shadow_navigation_button);
+                break;
+
+            default:
+                break;
+        }
     }
 
 

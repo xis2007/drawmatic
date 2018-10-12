@@ -27,4 +27,9 @@ public class Constants {
         public static final int ROOM_MASTER = 2000;
         public static final int PARTICIPANT = 2100;
     }
+
+    public class RoomViewType {
+        public static final int NO_RESULTS = 100;
+        public static final int ROOM_RESULTS = 101;
+    }
 }

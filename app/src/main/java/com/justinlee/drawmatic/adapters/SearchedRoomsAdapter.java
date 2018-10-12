@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.online.OnlineFragment;
 
@@ -30,42 +31,58 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
-        return new RoomViewHolder(view);
+        View view;
+
+        if(viewType == Constants.RoomViewType.NO_RESULTS) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
+            return new NoRoomViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
+            return new RoomViewHolder(view);
+        }
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final OnlineGame currentOnlineGame = mOnlineGamesList.get(position);
+        if (holder instanceof RoomViewHolder) {
+            final OnlineGame currentOnlineGame = mOnlineGamesList.get(position);
 
-        // TODO ordering may cause problem to positions of each player in the Arraylist
-        ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
-        ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
-        if(currentOnlineGame.getOnlineSettings().isInGame()) {
-            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText("Playing");
-            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
-        } else {
-            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
-            ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorWhite));
-        }
-
-        ((RoomViewHolder) holder).getRoomItemLayout().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentOnlineGame.getOnlineSettings().isInGame()) {
-                    mOnlineFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
-                } else {
-                    mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
-                    ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
-                }
-
+            // TODO ordering may cause problem to positions of each player in the Arraylist
+            ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
+            ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
+            if(currentOnlineGame.getOnlineSettings().isInGame()) {
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText("Playing");
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
+            } else {
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorWhite));
             }
-        });
+
+            ((RoomViewHolder) holder).getRoomItemLayout().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(currentOnlineGame.getOnlineSettings().isInGame()) {
+                        mOnlineFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
+                    } else {
+                        mOnlineFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
+                        ((MainContract.View) mOnlineFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
+                    }
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mOnlineGamesList == null ? Constants.RoomViewType.NO_RESULTS : Constants.RoomViewType.ROOM_RESULTS;
     }
 
     @Override
     public int getItemCount() {
-        return mOnlineGamesList == null ? 0 : mOnlineGamesList.size();
+        return mOnlineGamesList == null ? 1 : mOnlineGamesList.size();
     }
 
     public void swapList(ArrayList<OnlineGame> onlineGamesList) {
@@ -107,6 +124,12 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
         public ConstraintLayout getRoomItemLayout() {
             return roomItemLayout;
+        }
+    }
+
+    public class NoRoomViewHolder extends RecyclerView.ViewHolder {
+        public NoRoomViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }

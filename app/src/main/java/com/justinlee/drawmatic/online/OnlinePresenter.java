@@ -46,7 +46,12 @@ public class OnlinePresenter implements OnlineContract.Presenter {
 
     @Override
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
-        ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
+        if(onlineGamesList == null || onlineGamesList.size() == 0) {
+            ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(null);
+        } else {
+            ((OnlineFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
+        }
+
 //        mOnlineView.showSearchGamesPageUi();
         mMainPresenter.isNotLoading();
     }
