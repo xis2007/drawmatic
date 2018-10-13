@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.merhold.extensiblepageindicator:extensiblepageindicator:1.0.1'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.ramotion.garlandview:garland-view:0.3.2'
+    implementation 'com.github.iammert:ExpandableLayout:1.4.1'
 
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'

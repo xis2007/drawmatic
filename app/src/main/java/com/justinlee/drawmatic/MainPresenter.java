@@ -402,7 +402,11 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mSettingsFragment);
         }
 
-        if (mSettingsPresenter == null) mSettingsPresenter = new SettingsPresenter(mSettingsFragment);
+        if (mSettingsPresenter == null) {
+            mSettingsPresenter = new SettingsPresenter(mSettingsFragment);
+            mSettingsPresenter.setMainView(mMainView);
+            mSettingsPresenter.setMainPresenter(this);
+        }
         transaction.commit();
 
         mMainView.showSettingsPageUi();

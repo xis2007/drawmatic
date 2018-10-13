@@ -10,5 +10,7 @@ public interface SettingsContract {
 
     interface Presenter extends BasePresenter {
         void loadUserProfile();
+
+        void updatePlayerName(String newPlayerName);
     }
 }
