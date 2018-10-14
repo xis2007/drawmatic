@@ -21,7 +21,7 @@ public class OnlineGame extends Game {
         mRoomId = roomId;
         mOnlineSettings = onlineSettings;
 
-        mSetTopicTimeAllowed = 0.5f;
+        mSetTopicTimeAllowed = 1f;
         mDrawingAndGuessingTimeAllowed = mOnlineSettings.getAttemptTime();
 
         mIsPlayersOddumbered = (mOnlineSettings.getPlayers().size() % 2) != 0;

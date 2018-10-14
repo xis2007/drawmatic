@@ -71,6 +71,7 @@ public class InstructionsInnerAdapter extends InnerAdapter<InstructionsInnerAdap
             super(itemView);
 
             mInnerLayout = itemView.findViewById(R.id.layout_inner_item);
+//            mInnerLayout = ((ViewGroup)itemView).getChildAt(0);
             mTextTitle = itemView.findViewById(R.id.text_title_inner);
             mTextContent = itemView.findViewById(R.id.text_content_inner);
             mCardView = itemView.findViewById(R.id.cardView_inner);

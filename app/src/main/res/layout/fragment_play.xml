@@ -184,7 +184,7 @@
             <FrameLayout
                 android:id="@+id/frame_search_bar_play"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:focusableInTouchMode="true"
                 android:visibility="gone">
@@ -192,15 +192,15 @@
                 <EditText
                     android:id="@+id/edittext_searchbox_play"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:background="@drawable/searchbox_online"
                     android:ems="10"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:hint="@string/text_hint_input_play"
                     android:imeOptions="actionDone"
                     android:inputType="textPersonName"
@@ -218,20 +218,21 @@
                     android:layout_gravity="end|center"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="2dp"
-                    android:src="@drawable/ic_cancel"/>
+                    android:src="@drawable/ic_cancel"
+                    android:visibility="gone"/>
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/frame_hint_play"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:focusableInTouchMode="true">
 
                 <TextView
                     android:id="@+id/text_hint_offline"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"

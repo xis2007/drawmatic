@@ -73,8 +73,8 @@ public class InstructionsFragment extends Fragment implements InstructionsContra
     private ArrayList<ArrayList<InnerInstructionsData>> createInstructionsLists() {
         // 1st datalist
         InnerInstructionsData list1Data0 = new InnerInstructionsData("Introduction", null, String.valueOf(R.drawable.bg_instructions1));
-        InnerInstructionsData list1Data1 = new InnerInstructionsData("What is this game?", "This game is a drawing and guessing game. Players will set topic first, the next will draw the topic, and the next will guess the drawing from the previous person.", "https://firebasestorage.googleapis.com/v0/b/drawmatic-jl888.appspot.com/o/drawmatic%2Finstructions%2Fbg_game_selection_2.png?alt=media&token=7881d44c-f542-4a65-9424-60ebb3c44650");
-        InnerInstructionsData list1Data2 = new InnerInstructionsData("Game Requirements?", "Minimum Player: 4\nMaximum Players: 12\nTools: Your Phone~", "");
+        InnerInstructionsData list1Data1 = new InnerInstructionsData("What is this game?", "This is a party game for everyone!\n\nIn this party game, players will draw and guess respectively, from their previous players.\n\nAfter every one finishes, check out who's drawing and guessing is the most ridiculous and hilarious!!\n\nNo need to spend a lot of time learning, anyone can start this game and enjoy in 30 seconds.\n\nSo what is the goal of the game? Well, it is not to win, but to have fun!!!", "");
+        InnerInstructionsData list1Data2 = new InnerInstructionsData("Game Requirements?", "Minimum Player: 4\n\nMaximum Players: 12\n\nTools: Your Phone", "");
 
         ArrayList<InnerInstructionsData> instructionsDataList1 = new ArrayList<>();
         instructionsDataList1.add(list1Data0);
@@ -84,12 +84,20 @@ public class InstructionsFragment extends Fragment implements InstructionsContra
 
         // 2nd datalist
         InnerInstructionsData list2Data0 = new InnerInstructionsData("How to play?", null, String.valueOf(R.drawable.bg_instructions2));
-        InnerInstructionsData list2Data1 = new InnerInstructionsData("Step 1", "Start the games in 2 ways....", "");
-        InnerInstructionsData list2Data2 = new InnerInstructionsData("Step 2", "Join or wait until all players to join the room", "");
-        InnerInstructionsData list2Data3 = new InnerInstructionsData("Step 3", "Room master starts the game...", "");
-        InnerInstructionsData list2Data4 = new InnerInstructionsData("Step 4", "Set the topic...", "");
-        InnerInstructionsData list2Data5 = new InnerInstructionsData("Step 5", "After time ends, you will receive a topic from one of the players, and you will need to translate the topic into a drawing for the next player to guess what your drawing is", "");
-        InnerInstructionsData list2Data6 = new InnerInstructionsData("Step 6", "After time ends, you will receive a drawing from one of the players, and you will need to guess what the drawing is", "");
+        InnerInstructionsData list2Data1 = new InnerInstructionsData("Step 1", "You can start the games in 2 ways. In the main menu, either create a game for others to join, or search and join an existing game your friend created.", "");
+        InnerInstructionsData list2Data2 = new InnerInstructionsData("Step 2", "After every player has joined the game, the creator can start the game", "");
+        InnerInstructionsData list2Data3 = new InnerInstructionsData("Step 3", "In the 1st round, every one should think about a topic and type it into the input box and wait until the time at the top finishes (time amount is one of the room settings of room master)", "");
+        InnerInstructionsData list2Data4 = new InnerInstructionsData("Step 4", "Then, in the 2nd round, the topic will be delivered to the next player automatically, where players will see the topic from some one, and will need to turn the words into a hand-drawing for the next player to guess what it is" +
+                "\n\nNote:" +
+                "\n\nodd-numbered players and even-numbered players will have slightly different rules" +
+                "\n\nOdd-Numbred Players: All players will set a topic and the topic will be delivered to the next player automatically in this 2nd round" +
+                "\n\nEven-Numbered pLayers: All players will set a topic, but the players will have to turn the topic they set in the 1st round into a drawing in this 2nd roundd" +
+                "\n\nThe rest of the game is the same for both odd-numbered players and even-numbered players", "");
+        InnerInstructionsData list2Data5 = new InnerInstructionsData("Step 5", "In the 3rd round, all players will receive a drawing from some one in the game, and your goal is to guess what the drawing is about" +
+                "\n\nHint: word counts is shown in the input section", "");
+        InnerInstructionsData list2Data6 = new InnerInstructionsData("Step 6", "The game will continue with steps 4 and 5 one after the other until each topic goes through all players in the game" +
+                "\n\nAfter every one finishes, each player will have all the drawings and guessings related to the topic they set in the 1st round." +
+                "\n\nPlease swipe left to see how to use the results to enjoy the best part of this game!!", "");
 
         ArrayList<InnerInstructionsData> instructionsDataList2 = new ArrayList<>();
         instructionsDataList2.add(list2Data0);
@@ -102,10 +110,13 @@ public class InstructionsFragment extends Fragment implements InstructionsContra
 
         // 3rd datalist
         InnerInstructionsData list3Data0 = new InnerInstructionsData("Show the Results", null, String.valueOf(R.drawable.bg_instructions3));
-        InnerInstructionsData list3Data1 = new InnerInstructionsData("Step 1", "Recommended to show the results from the first drawing, let every one guess what it is without knowing the answer", "");
-        InnerInstructionsData list3Data2 = new InnerInstructionsData("Step 2", "show the guessing and drawings in order after the first drawing, so every one knows who made hilarious guessing and drawing", "");
-        InnerInstructionsData list3Data3 = new InnerInstructionsData("Step 3", "Show the final answer in the end", "");
-        InnerInstructionsData list3Data4 = new InnerInstructionsData("Step 4", "And...... Hav Fun!", "");
+        InnerInstructionsData list3Data1 = new InnerInstructionsData("Step 1", "After the game finishes, every player will have the results (drawings and guessings) related to the topic they set in the 1st round" +
+                "\n\nGo to the first drawing, let every one guess what the drawing is without knowing the real answer(topic)", "");
+        InnerInstructionsData list3Data2 = new InnerInstructionsData("Step 2", "Continue along with the results one by one to see who is the rotten apple that spoils the barrel!!!", "");
+        InnerInstructionsData list3Data3 = new InnerInstructionsData("Step 3", "Finally, show the final answer to every player", "");
+        InnerInstructionsData list3Data4 = new InnerInstructionsData("Step 4", "Well the above is the recommended way to present the results" +
+                "\n\nBut you can present the results however you like!" +
+                "\n\nThe point is...... Have Fun!", "");
 
         ArrayList<InnerInstructionsData> instructionsDataList3 = new ArrayList<>();
         instructionsDataList3.add(list3Data0);
