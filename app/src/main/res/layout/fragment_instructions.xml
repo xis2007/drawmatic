@@ -10,27 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="efwiavbriebwob;rntweobnpurnbt'on"/>
-
-            </LinearLayout>
-        </ScrollView>
-
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
@@ -54,6 +33,15 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"/>
         </FrameLayout>
+
+        <com.ramotion.garlandview.TailRecyclerView
+            android:id="@+id/tail_recycler_view_instructions"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
 
     </android.support.constraint.ConstraintLayout>
 

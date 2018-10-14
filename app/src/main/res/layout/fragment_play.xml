@@ -149,7 +149,7 @@
                     android:text="@string/text_search_games_play"
                     android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorGreyDark"
                     android:textSize="36sp"
                     android:textStyle="bold"/>
 
@@ -162,7 +162,7 @@
                     android:text="@string/text_search_games_play"
                     android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorWhite"
                     android:textSize="36sp"
                     android:textStyle="bold"/>
 

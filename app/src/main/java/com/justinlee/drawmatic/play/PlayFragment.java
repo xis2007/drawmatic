@@ -63,7 +63,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_online, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_play, container, false);
 
         initViews(rootView);
         initRecyclerView(rootView);
