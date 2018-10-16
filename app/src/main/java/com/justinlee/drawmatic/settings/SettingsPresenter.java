@@ -2,6 +2,7 @@ package com.justinlee.drawmatic.settings;
 
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
+import com.justinlee.drawmatic.User.UserManager;
 
 public class SettingsPresenter implements SettingsContract.Presenter{
     private MainContract.View mMainView;
@@ -20,7 +21,8 @@ public class SettingsPresenter implements SettingsContract.Presenter{
 
     @Override
     public void updatePlayerName(String newPlayerName) {
-        ((MainPresenter) mMainPresenter).getCurrentPlayer().setPlayerName(newPlayerName);
+        UserManager.getInstance().setUserName(newPlayerName);
+//        ((MainPresenter) mMainPresenter).getCurrentPlayer().setPlayerName(newPlayerName);
     }
 
     @Override

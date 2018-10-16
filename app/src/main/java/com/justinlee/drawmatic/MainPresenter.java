@@ -451,7 +451,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void resetCurrentPlayerToParticipant() {
-        mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
+        if(mCurrentPlayer != null) mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
     }
 
     @Override

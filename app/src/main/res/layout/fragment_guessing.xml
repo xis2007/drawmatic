@@ -89,7 +89,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Guess!"
-            android:textSize="30dp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout_guessing"/>
@@ -106,7 +106,7 @@
             android:singleLine="true"
             android:textAlignment="center"
             android:textColor="@color/colorGreyDark"
-            android:textSize="26sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_guessing"/>

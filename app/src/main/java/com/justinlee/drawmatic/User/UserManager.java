@@ -40,6 +40,12 @@ public class UserManager {
 
     public void setUserName(String userName) {
         mUserName = userName;
+
+        Drawmatic.getAppContext()
+                .getSharedPreferences(Constants.UserData.SHAREPREF_USER_DATA_KEY, Context.MODE_PRIVATE)
+                .edit()
+                .putString(Constants.UserData.SHAREPREF_USER_NAME_KEY, userName)
+                .commit();
     }
 
     public void setUserId(String userId) {
