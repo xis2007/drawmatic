@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.justinlee.drawmatic.R;
+
+import io.fabric.sdk.android.Fabric;
 
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "justin";
@@ -27,6 +30,7 @@ public class BaseActivity extends AppCompatActivity {
         setStatusBar();
         setToolBarHeight();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Fabric.with(this, new Crashlytics());
     }
 
     /**

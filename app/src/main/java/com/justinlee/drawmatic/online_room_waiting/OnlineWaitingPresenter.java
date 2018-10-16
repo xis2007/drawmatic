@@ -39,6 +39,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
+        mMainPresenter.resetCurrentPlayerToParticipant();
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_leaving_room));
         Player userAsPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
         new OnlineRoomManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineGame, userAsPlayer);
@@ -71,12 +72,11 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     @Override
     public void setGameStatusToInGame() {
         // TODO use the player logic
-//        if(mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
-//            mOnlineWaitingView.showNotEnoughPlayersMessage((MainActivity) mMainView);
-//        } else {
+        if(mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
+            mOnlineWaitingView.showNotEnoughPlayersMessage((MainActivity) mMainView);
+        } else {
             new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);
-//        }
-
+        }
     }
 
     @Override
