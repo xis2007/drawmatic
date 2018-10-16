@@ -176,7 +176,6 @@ public class OnlineRoomManager {
     public void leaveRoom(final OnlineWaitingFragment onlineWaitingFragment, OnlineGame onlineGame, final Player leavingPlayer) {
         if (leavingPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             deleteRoomWhenRoomMasterLeaves(onlineWaitingFragment, onlineGame.getRoomId(), onlineGame.getOnlineSettings(), leavingPlayer);
-
         } else {
             playerLeavesGame(onlineWaitingFragment, onlineGame.getRoomId(), onlineGame.getOnlineSettings(), leavingPlayer);
         }
@@ -276,11 +275,6 @@ public class OnlineRoomManager {
                         }
                     });
 
-            // this listener will be alive through out the entire game, so if any players leave while in game
-            // this listener will respond to it
-            // all players will receive a null pointer exception in this case
-            // thus, catching the exception, means that all players should leave the game
-            // data will need to be cleared in both firestire and storage
             ListenerRegistration listenerRegistration = docRef
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override

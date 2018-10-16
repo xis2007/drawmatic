@@ -161,13 +161,14 @@ public class MainPresenter implements MainContract.Presenter {
         }
         transaction.commit();
 
-//        if (mPlayFragment.getSearchedResultContainer() != null) {
-//            mPlayFragment.getSearchedResultContainer().setVisibility(View.GONE);
-//        }
 
         if(mPlayFragment.getSearchedResultContainer() != null) {
             mPlayFragment.showGameSelectionPageUi();
         }
+
+        // any time the user trans to play page, the user status should be reset to participant
+        // ex. when room master leaves the game, leaves the room, finishes game...etc
+        resetCurrentPlayerToParticipant();
 
         mMainView.showPlayPageUi();
     }

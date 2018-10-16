@@ -39,7 +39,6 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void leaveRoom(final OnlineWaitingFragment fragment) {
-        mMainPresenter.resetCurrentPlayerToParticipant();
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_leaving_room));
         Player userAsPlayer = ((MainPresenter) ((MainActivity) mMainView).getMainPresenter()).getCurrentPlayer();;
         new OnlineRoomManager((MainActivity) mMainView).leaveRoom(fragment, mOnlineGame, userAsPlayer);
