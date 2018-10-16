@@ -13,6 +13,7 @@ import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.StringUtil;
+import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
     private static final String TAG = "justinxxxxx";
@@ -65,6 +66,11 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     @Override
     public void setDrawing(String imageUrl) {
         mGuessingView.showDrawing(imageUrl);
+    }
+
+    @Override
+    public void setPreviousPlayer() {
+        mGuessingView.showPreviousPlayer(new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcPlayerNameWhereTopicOrDrawingIsRetrieved());
     }
 
     @Override

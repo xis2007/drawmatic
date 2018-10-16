@@ -27,6 +27,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     private Button mCurrentStepButton;
     private TextView mTextTimeRemaining;
     private ImageView mImageToGuess;
+    private TextView mTextPreviousPlayer;
 
     public GuessingFragment() {
         // Required empty public constructor
@@ -70,6 +71,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         mEditTextGuessingInput = rootView.findViewById(R.id.edittext_topic_guessing);
         mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_guessing);
         mImageToGuess = rootView.findViewById(R.id.image_drawing_from_previous);
+        mTextPreviousPlayer = rootView.findViewById(R.id.text_hint_previous_player_guessing);
     }
 
     private View.OnClickListener guessingOnClickListener = new View.OnClickListener() {
@@ -97,6 +99,11 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
                 .load(imageUrl)
                 .thumbnail(0.5f)
                 .into(mImageToGuess);
+    }
+
+    @Override
+    public void showPreviousPlayer(String previousPlayer) {
+        mTextPreviousPlayer.setText("Drawing from: " + previousPlayer);
     }
 
     @Override

@@ -32,6 +32,19 @@ public class TopicDrawingRetrievingUtil {
         }
     }
 
+    public String calcPlayerNameWhereTopicOrDrawingIsRetrieved() {
+        if(mOnlineGame.isPlayersOddumbered()) {
+            int positionOfPlayerInsortedList = getOddNumberedPlayerPosition();
+            String playerName = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerName();
+            return playerName;
+
+        } else {
+            int positionOfPlayerInsortedList = getEvenNumberedPlayerPosition();
+            String playerName = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerName();
+            return playerName;
+        }
+    }
+
     private int getOddNumberedPlayerPosition() {
         int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentStep = mOnlineGame.getCurrentStep();

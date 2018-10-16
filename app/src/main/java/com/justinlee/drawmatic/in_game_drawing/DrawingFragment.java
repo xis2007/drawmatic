@@ -33,6 +33,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     private Button mCurrentStepButton;
     private TextView mTextTimeRemaining;
     private TextView mTextTopicDrawing;
+    private TextView mTextPreviousPlayer;
 
     public DrawingFragment() {
         // Required empty public constructor
@@ -77,6 +78,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     private void initViews(View rootView) {
         mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_drawing);
         mTextTopicDrawing = rootView.findViewById(R.id.textView_topic_drawing);
+        mTextPreviousPlayer = rootView.findViewById(R.id.text_hint_previous_player_drawing);
     }
 
     private View.OnClickListener drawingOnClickListener = new View.OnClickListener() {
@@ -139,6 +141,11 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
             mTextTopicDrawing.setText("Your topic is:   " + topic);
         }
 
+    }
+
+    @Override
+    public void showPreviousPlayer(String previousPlayer) {
+        mTextPreviousPlayer.setText("Topic from: " + previousPlayer);
     }
 
     @Override

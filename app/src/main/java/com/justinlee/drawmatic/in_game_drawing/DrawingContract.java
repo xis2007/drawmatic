@@ -8,6 +8,8 @@ public interface DrawingContract {
     interface View extends BaseView<Presenter> {
         void showTopic(String topic);
 
+        void showPreviousPlayer(String previousPlayer);
+
         void updateTimer(long currentCountDoenTime);
 
         void showCurrentStep(int currentStep, int numPlayers);
@@ -27,6 +29,8 @@ public interface DrawingContract {
         void redoDrawing(DrawView drawView);
 
         void setTopic(String topicString);
+
+        void setPreviousPlayer();
 
         void setAndStartTimer(DrawingFragment drawingFragment);
 

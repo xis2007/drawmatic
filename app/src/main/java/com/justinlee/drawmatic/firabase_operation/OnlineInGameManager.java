@@ -174,6 +174,7 @@ public class OnlineInGameManager {
                             // room master needs to reset all players' progress to 0
                             drawingPresenter.setTopic((String) documentMap.get(dataNumber));
                             drawingPresenter.setCurrentStep();
+                            drawingPresenter.setPreviousPlayer();
                             drawingPresenter.startMonitoringPlayerProgress();
 
                         } else {
@@ -346,6 +347,7 @@ public class OnlineInGameManager {
                         if (document.exists()) {
                             guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
                             guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
+                            guessingPresenter.setPreviousPlayer();
                             guessingPresenter.setCurrentStep();
                             guessingPresenter.startMonitoringPlayerGuessingProgress();
 

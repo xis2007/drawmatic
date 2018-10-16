@@ -8,6 +8,8 @@ public interface GuessingContract {
     interface View extends BaseView<Presenter> {
         void showDrawing(String topic);
 
+        void showPreviousPlayer(String previousPlayer);
+
         void updateTimer(long currentCountDoenTime);
 
         void showCurrentStep(int currentStep, int numPlayers);
@@ -25,6 +27,8 @@ public interface GuessingContract {
         void transToDrawingPage();
 
         void setDrawing(String imageUrl);
+
+        void setPreviousPlayer();
 
         void setAndStartTimer();
 

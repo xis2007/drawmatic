@@ -13,6 +13,7 @@ import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 
 public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
@@ -79,6 +80,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void setTopic(String topicString) {
         mDrawingView.showTopic(topicString);
+    }
+
+    @Override
+    public void setPreviousPlayer() {
+        mDrawingView.showPreviousPlayer(new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcPlayerNameWhereTopicOrDrawingIsRetrieved());
     }
 
     @Override
