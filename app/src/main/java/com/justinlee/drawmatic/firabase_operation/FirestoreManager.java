@@ -191,20 +191,20 @@ public class FirestoreManager {
                 OnlineSettings mostCurrentOnlineSettings = snapshot.toObject(OnlineSettings.class);
 
                 // if room players maxed out, then player cannot join the game
-                if (mostCurrentOnlineSettings.getCurrentNumPlayers() == mostCurrentOnlineSettings.getMaxPlayers()) {
-                    Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
-                    transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
-
-                    HashMap<String, Object> player = new HashMap<>();
-                    player.put("playerName", joiningPlayer.getPlayerName());
-                    player.put("playerId", joiningPlayer.getPlayerId());
-//                    player.put("playerOrder", newCurrentNumPlayers);
-                    player.put("playerType", Constants.PlayerType.PARTICIPANT);
-
-                    transaction.update(roomToJoinRef, "players", FieldValue.arrayUnion(player));
-                }
+//                if (mostCurrentOnlineSettings.getCurrentNumPlayers() == mostCurrentOnlineSettings.getMaxPlayers()) {
+//                    Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//                    double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
+//                    transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
+//
+//                    HashMap<String, Object> player = new HashMap<>();
+//                    player.put("playerName", joiningPlayer.getPlayerName());
+//                    player.put("playerId", joiningPlayer.getPlayerId());
+////                    player.put("playerOrder", newCurrentNumPlayers);
+//                    player.put("playerType", Constants.PlayerType.PARTICIPANT);
+//
+//                    transaction.update(roomToJoinRef, "players", FieldValue.arrayUnion(player));
+//                }
                 return null;
             }
         })
@@ -263,8 +263,8 @@ public class FirestoreManager {
 
                 // if room players maxed out, then player cannot join the game
 
-                double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
-                transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
+//                double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
+//                transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
 
                 HashMap<String, Object> player = new HashMap<>();
                 player.put("playerName", leavingPlayer.getPlayerName());

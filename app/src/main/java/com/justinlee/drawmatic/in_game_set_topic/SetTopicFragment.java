@@ -92,8 +92,8 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     }
 
     @Override
-    public void showCurrentStep(int currentStep, int maxPlayers) {
-        mCurrentStepButton.setText(currentStep + " / " + maxPlayers);
+    public void showCurrentStep(int currentStep, int numPlayers) {
+        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers);
     }
 
     public String getEditTextTopicInput() {

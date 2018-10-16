@@ -104,9 +104,10 @@ public class OnlineRoomManager {
                         QuerySnapshot qurySnapshot = task.getResult();
                         if (!qurySnapshot.isEmpty()) {
                             playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
-                        } else {
-                            playPresenter.informToShowNoRoomsResultFoundMessage();
                         }
+//                        else {
+//                            playPresenter.informToShowNoRoomsResultFoundMessage();
+//                        }
                     } else {
                         Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
@@ -141,11 +142,11 @@ public class OnlineRoomManager {
                         OnlineSettings mostCurrentOnlineSettings = snapshot.toObject(OnlineSettings.class);
 
                         // if room players maxed out, then player cannot join the game
-                        if (mostCurrentOnlineSettings.getCurrentNumPlayers() == mostCurrentOnlineSettings.getMaxPlayers()) {
+                        if (mostCurrentOnlineSettings.getPlayers().size() >= mostCurrentOnlineSettings.getMaxPlayers()) {
                             Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
                         } else {
-                            double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
-                            transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
+//                            double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
+//                            transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
 
                             HashMap<String, Object> player = new HashMap<>();
                             player.put("playerName", joiningPlayer.getPlayerName());
@@ -213,8 +214,8 @@ public class OnlineRoomManager {
 
                         // if room players maxed out, then player cannot join the game
 
-                        double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
-                        transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
+//                        double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
+//                        transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
 
                         HashMap<String, Object> player = new HashMap<>();
                         player.put("playerName", leavingPlayer.getPlayerName());

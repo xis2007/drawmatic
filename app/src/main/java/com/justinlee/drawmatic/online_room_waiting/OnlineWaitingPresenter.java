@@ -64,6 +64,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
         mOnlineGame = newOnlineGameList.get(0);
         if (mOnlineGame != null) {
             ((OnlineWaitingFragment) mOnlineWaitingView).getAdapter().swapList(mOnlineGame.getOnlineSettings().getPlayers());
+            mOnlineWaitingView.showRoomStatusUi(mOnlineGame);
         }
         mMainPresenter.isNotLoading();
     }
@@ -86,7 +87,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
     @Override
     public void start() {
         // TODO search and check for the room created on server
-        mOnlineWaitingView.showRoomNameUi(mOnlineGame.getOnlineSettings().getRoomName());
+        mOnlineWaitingView.showRoomStatusUi(mOnlineGame);
         mListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatus(mOnlineWaitingView, this, mOnlineGame);
     }
 

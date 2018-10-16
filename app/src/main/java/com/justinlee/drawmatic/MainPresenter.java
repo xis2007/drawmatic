@@ -463,7 +463,7 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     private void initializeCurrentPlayer() {
-        mCurrentPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, -1);
+        mCurrentPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT);
     }
 
 

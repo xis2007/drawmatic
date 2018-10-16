@@ -20,6 +20,7 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.RoomWaitingAdapter;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.GridItemDecoration;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -74,8 +75,8 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
     }
 
     @Override
-    public void showRoomNameUi(String roomName) {
-        mTextHintWaiting.setText(roomName);
+    public void showRoomStatusUi(OnlineGame onlineGame) {
+        mTextHintWaiting.setText("Room name: " + onlineGame.getOnlineSettings().getRoomName() + " | Player in Room: " + onlineGame.getOnlineSettings().getPlayers().size() + " / " + onlineGame.getOnlineSettings().getMaxPlayers());
     }
 
     @Override

@@ -56,7 +56,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText("Playing");
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
             } else {
-                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getCurrentNumPlayers() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getPlayers().size() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorWhite));
             }
 

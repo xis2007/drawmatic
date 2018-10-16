@@ -8,7 +8,7 @@ public class Player {
     public Player() {
     }
 
-    public Player(String playerName, String playerId, int playerType,  int playerOrder) {
+    public Player(String playerName, String playerId, int playerType) {
         mPlayerName = playerName;
         mPlayerId = playerId;
         mPlayerType = playerType;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface OnlineWaitingContract {
     interface View extends BaseView<Presenter> {
-        void showRoomNameUi(String roomName);
+        void showRoomStatusUi(OnlineGame onlineGame);
 
         void showRoomClosedMessage(MainActivity mainActivity);
 

@@ -136,7 +136,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         if(StringUtil.isEmptyString(topic)) {
             mTextTopicDrawing.setText("Oops, the previous player has nothing for you");
         } else {
-            mTextTopicDrawing.setText(topic);
+            mTextTopicDrawing.setText("Your topic is:   " + topic);
         }
 
     }
@@ -148,7 +148,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
 
     @Override
     public void showCurrentStep(int currentStep, int numPlayers) {
-        mCurrentStepButton.setText(currentStep + " / " + numPlayers);
+        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers);
     }
 
     @Override

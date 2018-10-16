@@ -52,13 +52,12 @@ public class PlayPresenter implements PlayContract.Presenter {
             ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
         }
 
-//        mOnlineView.showSearchGamesPageUi();
         mMainPresenter.isNotLoading();
     }
 
     @Override
     public void joinSelectedRoom(OnlineGame onlineGame) {
-        Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT, onlineGame.getOnlineSettings().getCurrentNumPlayers() + 1);
+        Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT);
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).joinRoom((PlayFragment) mOnlineView, onlineGame, this, userAsPlayer);
 
     }

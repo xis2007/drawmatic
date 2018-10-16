@@ -16,9 +16,9 @@ public class OnlineSettings extends GameSettings {
     private String mCreator;
     private int mGameMode;
     private int mMaxPlayers;
-    private int mCurrentNumPlayers;
+//    private int mCurrentNumPlayers;
     private float mAttemptTime;
-    private int mCurrentStep;
+//    private int mCurrentStep;
     private boolean mIsInGame;
     private ArrayList<Player> mPlayers;
 
@@ -32,9 +32,9 @@ public class OnlineSettings extends GameSettings {
         mRoomName = roomName;
         mCreator = creator;
         mMaxPlayers = maxPlayers;
-        mCurrentNumPlayers = 1;
+//        mCurrentNumPlayers = 1;
         mAttemptTime = attemptTime;
-        mCurrentStep = 1;
+//        mCurrentStep = 1;
         mIsInGame = false;
         mPlayers = players;
     }
@@ -67,13 +67,13 @@ public class OnlineSettings extends GameSettings {
         mMaxPlayers = maxPlayers;
     }
 
-    public int getCurrentNumPlayers() {
-        return mCurrentNumPlayers;
-    }
+//    public int getCurrentNumPlayers() {
+//        return mCurrentNumPlayers;
+//    }
 
-    public void setCurrentNumPlayers(int currentNumPlayers) {
-        mCurrentNumPlayers = currentNumPlayers;
-    }
+//    public void setCurrentNumPlayers(int currentNumPlayers) {
+//        mCurrentNumPlayers = currentNumPlayers;
+//    }
 
     public float getAttemptTime() {
         return mAttemptTime;
@@ -83,13 +83,13 @@ public class OnlineSettings extends GameSettings {
         mAttemptTime = attemptTime;
     }
 
-    public int getCurrentStep() {
-        return mCurrentStep;
-    }
+//    public int getCurrentStep() {
+//        return mCurrentStep;
+//    }
 
-    public void setCurrentStep(int currentStep) {
-        mCurrentStep = currentStep;
-    }
+//    public void setCurrentStep(int currentStep) {
+//        mCurrentStep = currentStep;
+//    }
 
     public ArrayList<Player> getPlayers() {
         return mPlayers;
