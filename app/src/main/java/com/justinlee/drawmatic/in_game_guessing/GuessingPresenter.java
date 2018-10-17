@@ -75,7 +75,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 60 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;

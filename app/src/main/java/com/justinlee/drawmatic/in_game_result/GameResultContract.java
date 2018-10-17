@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface GameResultContract {
     interface View extends BaseView<Presenter> {
-        void showResults(ArrayList<String> resultStrings);
+        void showResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings);
 
     }
 

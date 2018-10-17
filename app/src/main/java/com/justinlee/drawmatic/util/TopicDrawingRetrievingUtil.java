@@ -6,6 +6,8 @@ import android.util.Log;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
 
+import java.util.ArrayList;
+
 public class TopicDrawingRetrievingUtil {
     private Context mContext;
     private OnlineGame mOnlineGame;
@@ -18,7 +20,7 @@ public class TopicDrawingRetrievingUtil {
     }
 
     public String calcPlayerIdToRetrieveTopicOrDrawing() {
-        if(mOnlineGame.isPlayersOddumbered()) {
+        if (mOnlineGame.isPlayersOddumbered()) {
             int positionOfPlayerInsortedList = getOddNumberedPlayerPosition();
             String playerId = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerId();
             Log.d("sortedList", "calcPlayerIdToRetrieveTopicOrDrawing: " + mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(0).getPlayerName());
@@ -33,7 +35,7 @@ public class TopicDrawingRetrievingUtil {
     }
 
     public String calcPlayerNameWhereTopicOrDrawingIsRetrieved() {
-        if(mOnlineGame.isPlayersOddumbered()) {
+        if (mOnlineGame.isPlayersOddumbered()) {
             int positionOfPlayerInsortedList = getOddNumberedPlayerPosition();
             String playerName = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerName();
             return playerName;
@@ -43,6 +45,38 @@ public class TopicDrawingRetrievingUtil {
             String playerName = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerName();
             return playerName;
         }
+    }
+
+    public ArrayList<String> calcOrderedPlayersForResults() {
+        int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
+        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
+        ArrayList<Player> playersList = mOnlineGame.getOnlineSettings().getPlayers();
+
+        ArrayList<String> orderedPlayersForResult = new ArrayList<>();
+
+
+        if (mOnlineGame.isPlayersOddumbered()) {
+            for (int i = 1; i <= totalPlayers; i++) {
+                if (currentPlayerPositionInList <= (playersList.size() - 1)) {
+                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
+                } else {
+                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList - totalPlayers).getPlayerName());
+                }
+                currentPlayerPositionInList++;
+            }
+        } else {
+            orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
+            for (int i = 1; i <= totalPlayers; i++) {
+                if (currentPlayerPositionInList <= (playersList.size() - 1)) {
+                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
+                } else {
+                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList - totalPlayers).getPlayerName());
+                }
+                currentPlayerPositionInList++;
+            }
+        }
+
+        return orderedPlayersForResult;
     }
 
     private int getOddNumberedPlayerPosition() {
@@ -66,7 +100,7 @@ public class TopicDrawingRetrievingUtil {
         int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
 
         int positionOfPlayerToGetData;
-        if(currentStep <= 2) {
+        if (currentStep <= 2) {
             positionOfPlayerToGetData = currentPlayerPositionInList;
         } else {
             // logic 1
@@ -81,7 +115,7 @@ public class TopicDrawingRetrievingUtil {
 
 
     public int calcItemNumberToRetrieveTopicOrDrawing() {
-        if(mOnlineGame.isPlayersOddumbered()) {
+        if (mOnlineGame.isPlayersOddumbered()) {
             return getOddNumberedPlayerTopicOrDrawing();
         } else {
             return getEvenNumberedPlayerTopicOrDrawing();

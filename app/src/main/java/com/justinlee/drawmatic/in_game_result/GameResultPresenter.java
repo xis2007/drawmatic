@@ -7,6 +7,7 @@ import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void informToShowResults(ArrayList<String> resultStrings) {
-        mGameResultView.showResults(resultStrings);
+        mGameResultView.showResults(resultStrings, new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcOrderedPlayersForResults());
         mMainPresenter.isNotLoading();
     }
 

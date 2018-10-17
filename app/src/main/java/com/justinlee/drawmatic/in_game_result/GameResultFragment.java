@@ -95,11 +95,12 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
 
 
     @Override
-    public void showResults(ArrayList<String> resultStrings) {
+    public void showResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings) {
         Log.d(TAG, "showResults: result strings is: " + resultStrings);
 //        mGameResultImagesAdapter.swapList(resultStrings);
 
-        mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultStrings);
+        mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultStrings, authorStrings);
+        mGameResultViewPager.removeAllViewsInLayout();
         mGameResultViewPager.setAdapter(mPagerAdapter);
         ExtensiblePageIndicator extensiblePageIndicator = getActivity().findViewById(R.id.flexibleIndicator);
         extensiblePageIndicator.initViewPager(mGameResultViewPager);
