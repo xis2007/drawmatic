@@ -21,6 +21,8 @@ public interface SetTopicContract {
 
         void setCurrentStep();
 
+        void restartCountDownTimer();
+
         void transToDrawingPageOnline();
     }
 }

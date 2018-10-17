@@ -57,8 +57,6 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 //            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
 //            return new RoomViewHolder(view);
 //        }
-
-
     }
 
     @Override

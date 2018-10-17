@@ -114,6 +114,11 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
+    public void restartCountDownTimer() {
+        mCountDownTimer.start();
+    }
+
+    @Override
     public void setWordCountHint(String theWord) {
         if(StringUtil.isEmptyString(theWord)) {
             mGuessingView.showWordCountHint(0);

@@ -133,6 +133,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
+    public void restartCountDownTimer() {
+        mCountDownTimer.start();
+    }
+
+    @Override
     public void startDrawing() {
         mMainView.hideLoadingUi();
         setAndStartTimer((DrawingFragment) mDrawingView);
@@ -144,7 +149,6 @@ public class DrawingPresenter implements DrawingContract.Presenter {
         mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
         new OnlineInGameManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
     }
-
 
     /**
      * ***********************************************************************************

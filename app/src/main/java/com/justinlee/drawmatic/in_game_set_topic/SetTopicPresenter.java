@@ -73,6 +73,11 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     }
 
     @Override
+    public void restartCountDownTimer() {
+        mCountDownTimer.start();
+    }
+
+    @Override
     public void transToDrawingPageOnline() {
         if (mOnlineGame != null) {
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);

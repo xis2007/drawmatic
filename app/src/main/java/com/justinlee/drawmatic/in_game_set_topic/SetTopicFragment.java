@@ -100,6 +100,18 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         return mEditTextTopicInput.getText().toString();
     }
 
+
+    /**
+     * *********************************************************************************
+     * Fragment Lifecycle
+     * **********************************************************************************
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSetTopicPresenter.restartCountDownTimer();
+    }
+
     @Override
     public void onStop() {
         ((SetTopicPresenter) mSetTopicPresenter).getCountDownTimer().cancel();

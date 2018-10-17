@@ -158,6 +158,18 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers);
     }
 
+
+    /**
+     * *********************************************************************************
+     * Fragment Lifecycle
+     * **********************************************************************************
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDrawingPresenter.restartCountDownTimer();
+    }
+
     @Override
     public void onStop() {
         ((DrawingPresenter) mDrawingPresenter).getCountDownTimer().cancel();

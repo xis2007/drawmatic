@@ -127,6 +127,18 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         return mEditTextGuessingInput.getText().toString();
     }
 
+
+    /**
+     * *********************************************************************************
+     * Fragment Lifecycle
+     * **********************************************************************************
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        mGuessingPresenter.restartCountDownTimer();
+    }
+
     @Override
     public void onStop() {
         ((GuessingPresenter) mGuessingPresenter).getCountDownTimer().cancel();
