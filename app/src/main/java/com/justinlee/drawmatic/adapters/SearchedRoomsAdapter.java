@@ -100,7 +100,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mOnlineGamesList == null ? 1 : mOnlineGamesList.size();
+        return (mOnlineGamesList == null || mOnlineGamesList.isEmpty()) ? 1 : mOnlineGamesList.size();
     }
 
     public void swapList(ArrayList<OnlineGame> onlineGamesList) {

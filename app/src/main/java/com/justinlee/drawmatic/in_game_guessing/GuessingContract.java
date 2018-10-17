@@ -40,6 +40,8 @@ public interface GuessingContract {
 
         void unregisterListener();
 
+        void stopCountDownTimer();
+
         void restartCountDownTimer();
 
         void setWordCountHint(String theWord);

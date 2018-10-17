@@ -73,8 +73,13 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     }
 
     @Override
+    public void stopCountDownTimer() {
+        if(mCountDownTimer != null) mCountDownTimer.cancel();
+    }
+
+    @Override
     public void restartCountDownTimer() {
-        mCountDownTimer.start();
+//        if(mCountDownTimer != null) mCountDownTimer.start();
     }
 
     @Override

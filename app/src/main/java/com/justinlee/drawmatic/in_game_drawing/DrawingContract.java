@@ -44,6 +44,8 @@ public interface DrawingContract {
 
         void unregisterListener();
 
+        void stopCountDownTimer();
+
         void restartCountDownTimer();
 
         void startDrawing();

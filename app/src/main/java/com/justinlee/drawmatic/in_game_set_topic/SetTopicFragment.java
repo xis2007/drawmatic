@@ -107,14 +107,14 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
      * **********************************************************************************
      */
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         mSetTopicPresenter.restartCountDownTimer();
     }
 
     @Override
     public void onStop() {
-        ((SetTopicPresenter) mSetTopicPresenter).getCountDownTimer().cancel();
+        mSetTopicPresenter.stopCountDownTimer();
         ((SetTopicPresenter) mSetTopicPresenter).getRoomListenerRegistration().remove();
         super.onStop();
     }

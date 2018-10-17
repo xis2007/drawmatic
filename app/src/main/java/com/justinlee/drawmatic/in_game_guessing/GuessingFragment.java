@@ -134,14 +134,14 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
      * **********************************************************************************
      */
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         mGuessingPresenter.restartCountDownTimer();
     }
 
     @Override
     public void onStop() {
-        ((GuessingPresenter) mGuessingPresenter).getCountDownTimer().cancel();
+        mGuessingPresenter.stopCountDownTimer();
         ((GuessingPresenter) mGuessingPresenter).getRoomListenerRegistration().remove();
         super.onStop();
     }

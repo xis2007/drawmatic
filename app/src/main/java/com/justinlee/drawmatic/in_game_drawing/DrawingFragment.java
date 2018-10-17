@@ -164,15 +164,16 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
      * Fragment Lifecycle
      * **********************************************************************************
      */
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         mDrawingPresenter.restartCountDownTimer();
     }
 
     @Override
     public void onStop() {
-        ((DrawingPresenter) mDrawingPresenter).getCountDownTimer().cancel();
+        mDrawingPresenter.stopCountDownTimer();
         ((DrawingPresenter) mDrawingPresenter).getRoomListenerRegistration().remove();
         super.onStop();
     }

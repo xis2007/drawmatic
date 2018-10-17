@@ -50,31 +50,23 @@ public class TopicDrawingRetrievingUtil {
     public ArrayList<String> calcOrderedPlayersForResults() {
         int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
-        ArrayList<Player> playersList = mOnlineGame.getOnlineSettings().getPlayers();
+        ArrayList<Player> playersList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById();
 
         ArrayList<String> orderedPlayersForResult = new ArrayList<>();
 
-
-        if (mOnlineGame.isPlayersOddumbered()) {
-            for (int i = 1; i <= totalPlayers; i++) {
-                if (currentPlayerPositionInList <= (playersList.size() - 1)) {
-                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
-                } else {
-                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList - totalPlayers).getPlayerName());
-                }
-                currentPlayerPositionInList++;
-            }
-        } else {
+        if (!mOnlineGame.isPlayersOddumbered()) {
             orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
-            for (int i = 1; i <= totalPlayers; i++) {
-                if (currentPlayerPositionInList <= (playersList.size() - 1)) {
-                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
-                } else {
-                    orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList - totalPlayers).getPlayerName());
-                }
-                currentPlayerPositionInList++;
-            }
         }
+
+        for (int i = 1; i <= totalPlayers; i++) {
+            if (currentPlayerPositionInList <= (playersList.size() - 1)) {
+                orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList).getPlayerName());
+            } else {
+                orderedPlayersForResult.add(playersList.get(currentPlayerPositionInList - totalPlayers).getPlayerName());
+            }
+            currentPlayerPositionInList++;
+        }
+
 
         return orderedPlayersForResult;
     }
