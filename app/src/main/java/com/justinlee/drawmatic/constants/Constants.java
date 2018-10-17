@@ -29,7 +29,8 @@ public class Constants {
     }
 
     public class RoomViewType {
-        public static final int NO_RESULTS = 100;
-        public static final int ROOM_RESULTS = 101;
+        public static final int INITIAL_SEARCH = 100;
+        public static final int NO_RESULTS = 101;
+        public static final int ROOM_RESULTS = 102;
     }
 }

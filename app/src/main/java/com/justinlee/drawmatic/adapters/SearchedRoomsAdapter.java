@@ -33,13 +33,30 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
-        if(viewType == Constants.RoomViewType.NO_RESULTS) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
-            return new NoRoomViewHolder(view);
-        } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
-            return new RoomViewHolder(view);
+        switch (viewType) {
+            case Constants.RoomViewType.INITIAL_SEARCH:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
+                view.setVisibility(View.INVISIBLE);
+                return new NoRoomViewHolder(view);
+
+            case Constants.RoomViewType.NO_RESULTS:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
+                view.setVisibility(View.VISIBLE);
+                return new NoRoomViewHolder(view);
+
+            default:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
+                view.setVisibility(View.VISIBLE);
+                return new RoomViewHolder(view);
         }
+
+//        if(viewType == Constants.RoomViewType.NO_RESULTS) {
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
+//            return new NoRoomViewHolder(view);
+//        } else {
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
+//            return new RoomViewHolder(view);
+//        }
 
 
     }
@@ -77,7 +94,10 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        return mOnlineGamesList == null ? Constants.RoomViewType.NO_RESULTS : Constants.RoomViewType.ROOM_RESULTS;
+        if(mOnlineGamesList == null) return Constants.RoomViewType.INITIAL_SEARCH;
+        if(mOnlineGamesList.isEmpty()) return  Constants.RoomViewType.NO_RESULTS;
+        return Constants.RoomViewType.ROOM_RESULTS;
+//        return mOnlineGamesList == null ? Constants.RoomViewType.NO_RESULTS : Constants.RoomViewType.ROOM_RESULTS;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class PlayPresenter implements PlayContract.Presenter {
     @Override
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
         if(onlineGamesList == null || onlineGamesList.size() == 0) {
-            ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(null);
+            ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(new ArrayList<OnlineGame>());
         } else {
             ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);
         }
@@ -59,7 +59,6 @@ public class PlayPresenter implements PlayContract.Presenter {
     public void joinSelectedRoom(OnlineGame onlineGame) {
         Player userAsPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT);
         new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).joinRoom((PlayFragment) mOnlineView, onlineGame, this, userAsPlayer);
-
     }
 
     @Override
