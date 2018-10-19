@@ -17,6 +17,10 @@ public interface GuessingContract {
         void showWordCountHint(int wordCount);
 
         String getGuessingInput();
+
+        void hideViews();
+
+        void initiateNextStepButton();
     }
 
     interface Presenter extends BasePresenter {
@@ -47,5 +51,7 @@ public interface GuessingContract {
         void setWordCountHint(String theWord);
 
         void finishGame(Game game);
+
+        void determineIfOfflineGameIsFinished();
     }
 }

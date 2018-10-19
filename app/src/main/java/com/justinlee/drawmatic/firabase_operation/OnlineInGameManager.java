@@ -111,7 +111,7 @@ public class OnlineInGameManager {
                     // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
                     if (totalProgressOfThisStep == targetProgress) {
                         onlineGame.increamentCurrentStep();
-                        setTopicPresenter.transToDrawingPageOnline();
+                        setTopicPresenter.transToDrawingPage();
                     }
                 }
             });

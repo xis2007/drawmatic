@@ -29,7 +29,7 @@ public class PlayPresenter implements PlayContract.Presenter {
 
     @Override
     public void createRoomForOnlineNormalMode() {
-        mMainPresenter.transToGameCreationPage(Constants.OnlineGameMode.ONLINE_NORMAL);
+        mMainPresenter.transToGameCreationPage(Constants.GameMode.ONLINE_NORMAL);
     }
 
     @Override

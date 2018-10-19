@@ -18,6 +18,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     private MainContract.Presenter mMainPresenter;
     private SetTopicContract.View mSetTopicView;
 
+    private boolean mIsInOfflineMode;
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -30,9 +31,11 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         mSetTopicView.setPresenter(this);
 
         if (game instanceof OnlineGame) {
+            mIsInOfflineMode = false;
             mOnlineGame = (OnlineGame) game;
             mOfflineGame = null;
         } else {
+            mIsInOfflineMode = true;
             mOnlineGame = null;
             mOfflineGame = (OfflineGame) game;
         }
@@ -40,7 +43,13 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);}
+        if (mIsInOfflineMode) {
+
+        } else {
+            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+        }
+
+    }
 
     @Override
     public void leaveRoom(SetTopicFragment fragment) {
@@ -49,7 +58,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getSetTopicTimeAllowed() * 10 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getSetTopicTimeAllowed() * 30 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -69,7 +78,11 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        if(mIsInOfflineMode) {
+            mSetTopicView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
+        } else {
+            mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        }
     }
 
     @Override
@@ -83,25 +96,36 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     }
 
     @Override
-    public void transToDrawingPageOnline() {
-        if (mOnlineGame != null) {
-            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
-        } else {
+    public void transToDrawingPage() {
+        if (mIsInOfflineMode) {
+            mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
+        } else {
+            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
         }
     }
 
+
     @Override
     public void start() {
-        setAndStartTimer();
-        setCurrentStep();
+        if(mIsInOfflineMode) {
+            mSetTopicView.hideTimer();
+            mSetTopicView.initiateNextStepButton();
+            setCurrentStep();
+        } else {
+            setAndStartTimer();
+            setCurrentStep();
+            mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
+            new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
 
-        mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
-        new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
+        }
     }
 
-
-
+    /**
+     * *********************************************************************************
+     * Offline Mode
+     * **********************************************************************************
+     */
 
 
     /**
@@ -123,6 +147,10 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     public ListenerRegistration getRoomListenerRegistration() {
         return mRoomListenerRegistration;
+    }
+
+    public boolean isInOfflineMode() {
+        return mIsInOfflineMode;
     }
 
     /**

@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
+import com.suke.widget.SwitchButton;
 import com.xw.repo.BubbleSeekBar;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -21,11 +24,13 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
 
     private CreateRoomContract.Presenter mCreateRoomPresenter;
 
+    private SwitchButton mGameModeswitchButton;
+
     private EditText mEditTextRoomName;
     private BubbleSeekBar mSeekbarMaxPlayers;
     private BubbleSeekBar mSeekbarAttemptTime;
 
-    private int mMaxPlayerProgress = 4;
+    private int mNumPlayerProgress = 4;
     private float mAttemptTimeProgress = 0.5f;
 
     public CreateRoomFragment() {
@@ -91,7 +96,7 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
                 super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat, fromUser);
-                mMaxPlayerProgress = progress;
+                mNumPlayerProgress = progress;
             }
         });
 
@@ -105,7 +110,21 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
     }
 
 
-    public void setupButtonsAndViews(View rootView) {
+    public void setupButtonsAndViews(final View rootView) {
+        mGameModeswitchButton = rootView.findViewById(R.id.switch_button);
+        mGameModeswitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                if(isChecked) {
+                    switchToOfflineUi(rootView);
+                } else {
+                    switchToOnlineUi(rootView);
+                }
+            }
+        });
+
+
+        // buttons for confirmation or cancellation of room creation
         Button cancelButton = rootView.findViewById(R.id.button_cancel_create_room);
         Button nextButton = rootView.findViewById(R.id.button_next_create_room);
 
@@ -113,6 +132,26 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         nextButton.setOnClickListener(buttonOnclickListener);
     }
 
+
+    private void switchToOfflineUi(View rootView) {
+        LinearLayout roomNameLayout = rootView.findViewById(R.id.layout_room_name_create_room);
+        LinearLayout timeAttemptLayout = rootView.findViewById(R.id.layout_time_attempt_create_room);
+        roomNameLayout.setVisibility(View.GONE);
+        timeAttemptLayout.setVisibility(View.GONE);
+
+        TextView tagMaxPlayers = rootView.findViewById(R.id.text_max_players_create_room);
+        tagMaxPlayers.setText("Number of Players");
+    }
+
+    private void switchToOnlineUi(View rootView) {
+        LinearLayout roomNameLayout = rootView.findViewById(R.id.layout_room_name_create_room);
+        LinearLayout timeAttemptLayout = rootView.findViewById(R.id.layout_time_attempt_create_room);
+        roomNameLayout.setVisibility(View.VISIBLE);
+        timeAttemptLayout.setVisibility(View.VISIBLE);
+
+        TextView tagMaxPlayers = rootView.findViewById(R.id.text_max_players_create_room);
+        tagMaxPlayers.setText("Maximum Players");
+    }
 
     private View.OnClickListener buttonOnclickListener = new View.OnClickListener() {
         @Override
@@ -123,8 +162,11 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
                     break;
 
                 case R.id.button_next_create_room:
-                    mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
-//                    mCreateRoomPresenter.checkForRoomExistance(mEditTextRoomName.getText().toString(), mMaxPlayerProgress, mAttemptTimeProgress);
+                    if(mGameModeswitchButton.isChecked()) {
+                        mCreateRoomPresenter.startOfflineGame(mNumPlayerProgress);
+                    } else {
+                        mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mNumPlayerProgress, mAttemptTimeProgress);
+                    }
                     break;
 
                 default:

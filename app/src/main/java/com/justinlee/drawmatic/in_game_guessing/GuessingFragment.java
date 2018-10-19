@@ -127,6 +127,30 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         return mEditTextGuessingInput.getText().toString();
     }
 
+    /**
+     * *********************************************************************************
+     * Offline Mode
+     * **********************************************************************************
+     */
+    @Override
+    public void hideViews() {
+        getActivity().findViewById(R.id.text_time_remaining_guessing).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.image_time_remaining_guessing).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.text_hint_previous_player_guessing).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void initiateNextStepButton() {
+        getActivity()
+                .findViewById(R.id.button_steps_remaining_guessing)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mGuessingPresenter.determineIfOfflineGameIsFinished();
+                    }
+                });
+    }
+
 
     /**
      * *********************************************************************************
@@ -136,13 +160,17 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     @Override
     public void onStart() {
         super.onStart();
-        mGuessingPresenter.restartCountDownTimer();
+        if (!((GuessingPresenter) mGuessingPresenter).isInOfflineMode()) {
+            mGuessingPresenter.restartCountDownTimer();
+        }
     }
 
     @Override
     public void onStop() {
-        mGuessingPresenter.stopCountDownTimer();
-        ((GuessingPresenter) mGuessingPresenter).getRoomListenerRegistration().remove();
+        if (!((GuessingPresenter) mGuessingPresenter).isInOfflineMode()) {
+            mGuessingPresenter.stopCountDownTimer();
+            ((GuessingPresenter) mGuessingPresenter).getRoomListenerRegistration().remove();
+        }
         super.onStop();
     }
 }

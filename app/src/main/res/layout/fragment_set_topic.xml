@@ -43,6 +43,7 @@
                     app:layout_constraintGuide_percent="0.5"/>
 
                 <ImageView
+                    android:id="@+id/image_time_remaining_set_topic"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="4dp"

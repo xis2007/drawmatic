@@ -6,8 +6,8 @@ android {
         applicationId "com.justinlee.drawmatic"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "0.5.0"
+        versionCode 3
+        versionName "0.7.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,6 +37,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.ramotion.garlandview:garland-view:0.3.2'
     implementation 'com.github.iammert:ExpandableLayout:1.4.1'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation ('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }

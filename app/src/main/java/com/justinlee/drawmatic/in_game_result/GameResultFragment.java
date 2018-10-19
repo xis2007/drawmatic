@@ -5,10 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,13 +60,13 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     }
 
 
-    private void initRecyclerView(View rootView) {
-        mGameResultRecyclerView = rootView.findViewById(R.id.gameResultRecyclerView);
-        mGameResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mGameResultRecyclerView.setAdapter(mGameResultImagesAdapter);
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(mGameResultRecyclerView);
-    }
+//    private void initRecyclerView(View rootView) {
+//        mGameResultRecyclerView = rootView.findViewById(R.id.gameResultRecyclerView);
+//        mGameResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        mGameResultRecyclerView.setAdapter(mGameResultImagesAdapter);
+//        SnapHelper snapHelper = new LinearSnapHelper();
+//        snapHelper.attachToRecyclerView(mGameResultRecyclerView);
+//    }
 
     private void initViewPager(View rootView) {
         mGameResultViewPager = rootView.findViewById(R.id.gameResultViewPager);

@@ -158,6 +158,30 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers);
     }
 
+    /**
+     * *********************************************************************************
+     * Offline Mode
+     * **********************************************************************************
+     */
+    @Override
+    public void hideViews() {
+        getActivity().findViewById(R.id.text_time_remaining_drawing).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.image_time_remaining_drawing).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.text_hint_previous_player_drawing).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void initiateNextStepButton() {
+        getActivity()
+                .findViewById(R.id.button_steps_remaining_drawing)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDrawingPresenter.transToGuessingPage();
+                    }
+                });
+    }
+
 
     /**
      * *********************************************************************************
@@ -168,13 +192,18 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     @Override
     public void onStart() {
         super.onStart();
-        mDrawingPresenter.restartCountDownTimer();
+        if (!((DrawingPresenter) mDrawingPresenter).isInOfflineMode()) {
+            mDrawingPresenter.restartCountDownTimer();
+        }
+
     }
 
     @Override
     public void onStop() {
-        mDrawingPresenter.stopCountDownTimer();
-        ((DrawingPresenter) mDrawingPresenter).getRoomListenerRegistration().remove();
+        if (!((DrawingPresenter) mDrawingPresenter).isInOfflineMode()) {
+            mDrawingPresenter.stopCountDownTimer();
+            ((DrawingPresenter) mDrawingPresenter).getRoomListenerRegistration().remove();
+        }
         super.onStop();
     }
 }

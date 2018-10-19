@@ -47,7 +47,7 @@ public interface MainContract {
         void transToOnlineWaitingPage(OnlineGame onlineGame);
 
         // in-game pages
-        void transToSetTopicPage(OnlineGame onlineGame);
+        void transToSetTopicPage(Game game);
         void transToDrawingPage(Game game);
         void transToGuessingPage(Game game);
         void transToGameResultPage(Game game);

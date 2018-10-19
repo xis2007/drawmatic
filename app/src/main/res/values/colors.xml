@@ -21,6 +21,7 @@
     <color name="colorAlertRed">#a50003</color>
 
     <color name="colorWhite">#ffffff</color>
+    <color name="colorWhiteTrans30">#b4cecece</color>
     <color name="colorWhiteTrans50">#afffffff</color>
     <color name="colorGreyLight">#d3d3d3</color>
     <color name="colorGrey">#808080</color>

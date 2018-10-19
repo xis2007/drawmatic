@@ -245,11 +245,17 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToSetTopicPage(OnlineGame onlineGame) {
+    public void transToSetTopicPage(Game game) {
         // TODO go to set topic page
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mSetTopicFragment == null) mSetTopicFragment = SetTopicFragment.newInstance();
+
+        if (mCreateRoomFragment != null) {
+            transaction.remove(mCreateRoomFragment);
+            mCreateRoomFragment = null;
+            mCreateRoomPresenter = null;
+        }
 
         if (mOnlineWaitingFragment != null) {
             transaction.remove(mOnlineWaitingFragment);
@@ -264,7 +270,7 @@ public class MainPresenter implements MainContract.Presenter {
             transaction.show(mSetTopicFragment);
         }
         if (mSetTopicPresenter == null) {
-            mSetTopicPresenter = new SetTopicPresenter(mSetTopicFragment, onlineGame);
+            mSetTopicPresenter = new SetTopicPresenter(mSetTopicFragment, game);
             mSetTopicPresenter.setMainView(mMainView);
             mSetTopicPresenter.setMainPresenter(this);
         }

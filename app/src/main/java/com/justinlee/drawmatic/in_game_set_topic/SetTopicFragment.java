@@ -68,7 +68,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_steps_remaining_set_topic:
-                    mSetTopicPresenter.transToDrawingPageOnline();
+                    mSetTopicPresenter.transToDrawingPage();
                     break;
 
                 case R.id.button_quit_game_set_topic:
@@ -101,6 +101,30 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     }
 
 
+
+    /**
+     * *********************************************************************************
+     * Offline Mode
+     * **********************************************************************************
+     */
+    @Override
+    public void hideTimer() {
+        getActivity().findViewById(R.id.text_time_remaining_set_topic).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.image_time_remaining_set_topic).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void initiateNextStepButton() {
+        getActivity()
+                .findViewById(R.id.button_steps_remaining_set_topic)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSetTopicPresenter.transToDrawingPage();
+                    }
+                });
+    }
+
     /**
      * *********************************************************************************
      * Fragment Lifecycle
@@ -109,13 +133,18 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     @Override
     public void onStart() {
         super.onStart();
-        mSetTopicPresenter.restartCountDownTimer();
+        if (!((SetTopicPresenter) mSetTopicPresenter).isInOfflineMode()) {
+            mSetTopicPresenter.restartCountDownTimer();
+        }
+
     }
 
     @Override
     public void onStop() {
-        mSetTopicPresenter.stopCountDownTimer();
-        ((SetTopicPresenter) mSetTopicPresenter).getRoomListenerRegistration().remove();
+        if (!((SetTopicPresenter) mSetTopicPresenter).isInOfflineMode()) {
+            mSetTopicPresenter.stopCountDownTimer();
+            ((SetTopicPresenter) mSetTopicPresenter).getRoomListenerRegistration().remove();
+        }
         super.onStop();
     }
 

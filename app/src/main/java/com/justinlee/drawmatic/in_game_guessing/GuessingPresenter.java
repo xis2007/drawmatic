@@ -22,6 +22,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     private MainContract.Presenter mMainPresenter;
     private GuessingContract.View mGuessingView;
 
+    private boolean mIsInOfflineMode;
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -35,9 +36,11 @@ public class GuessingPresenter implements GuessingContract.Presenter {
         mGuessingView.setPresenter(this);
 
         if (game instanceof OnlineGame) {
+            mIsInOfflineMode = false;
             mOnlineGame = (OnlineGame) game;
             mOfflineGame = null;
         } else {
+            mIsInOfflineMode = true;
             mOnlineGame = null;
             mOfflineGame = (OfflineGame) game;
         }
@@ -75,7 +78,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -94,7 +97,12 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        if (mIsInOfflineMode) {
+            mGuessingView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
+        } else {
+            mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        }
+
     }
 
     @Override
@@ -130,7 +138,6 @@ public class GuessingPresenter implements GuessingContract.Presenter {
         } else {
             mGuessingView.showWordCountHint(theWord.length());
         }
-
     }
 
     @Override
@@ -140,10 +147,31 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void start() {
-        mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
-        new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
+        if(mIsInOfflineMode) {
+            mGuessingView.hideViews();
+            mGuessingView.initiateNextStepButton();
+            setCurrentStep();
+        } else {
+            mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
+            new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
+
+        }
     }
 
+    /**
+     * ***********************************************************************************
+     * Offline Mode
+     * ***********************************************************************************
+     */
+    @Override
+    public void determineIfOfflineGameIsFinished() {
+        if(mOfflineGame.getCurrentStep() == mOfflineGame.getTotalSteps()) {
+            finishGame(mOfflineGame);
+        } else {
+            mOfflineGame.increamentCurrentStep();
+            transToDrawingPage();
+        }
+    }
 
     /**
      * ***********************************************************************************
@@ -171,5 +199,9 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     public ListenerRegistration getRoomListenerRegistration() {
         return mRoomListenerRegistration;
+    }
+
+    public boolean isInOfflineMode() {
+        return mIsInOfflineMode;
     }
 }

@@ -6,6 +6,8 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.objects.OfflineGame;
+import com.justinlee.drawmatic.objects.OfflineSettings;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
@@ -29,7 +31,6 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
         mRoomType = roomType;
     }
 
-
     @Override
     public void createRoom(String roomName, int numPlayers, float attemptTime) {
         if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
@@ -48,13 +49,6 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
         }
     }
 
-    /**
-     * this will become deprecated
-     */
-//    @Override
-//    public void createRoom(OnlineSettings onlineSettings) {
-//        new FirestoreManager((MainActivity) mMainView).createOnlineRoom(this, onlineSettings, mCreateRoomView);
-//    }
 
     @Override
     public void cancelRoomCreation() {
@@ -90,6 +84,19 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     @Override
     public void start() {
 
+    }
+
+
+    /**
+     * ***********************************************************************************
+     * Offline Methods
+     * ***********************************************************************************
+     */
+    @Override
+    public void startOfflineGame(int numPlayers) {
+        OfflineSettings offlineSettings = new OfflineSettings(Constants.GameMode.OFFLINE_NORMAL, numPlayers);
+        OfflineGame offlineGame = new OfflineGame(offlineSettings);
+        mMainPresenter.transToSetTopicPage(offlineGame);
     }
 
     /**

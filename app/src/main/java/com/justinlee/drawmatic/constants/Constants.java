@@ -16,10 +16,10 @@ public class Constants {
         public static final String SHAREPREF_USER_ID_KEY = "USER_ID";
     }
 
-    public class OnlineGameMode {
+    public class GameMode {
         public static final int ONLINE_NORMAL = 1000;
         public static final int ONLINE_TEAM = 1100;
-        public static final int OFFLINE_ORIGINAL = 1200;
+        public static final int OFFLINE_NORMAL = 1200;
         public static final int OFFLINE_TEAM = 1300;
     }
 

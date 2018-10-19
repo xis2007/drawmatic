@@ -19,8 +19,8 @@
     <string name="text_search_games_play">Search\n \t\t\t\t\t\t\t Game</string>
 
     <!--fragment_create_room-->
-    <string name="text_hint_create_room">Setup Your Room</string>
-    <string name="text_room_name">Room Name</string>
+    <string name="text_hint_create_room">Setup Your Game/Room</string>
+    <string name="text_room_name">Game/Room Name</string>
     <string name="text_maximum_players">Maximum Players</string>
     <string name="text_time_for_each_attempt">Time for Each Attempt (min)</string>
     <string name="text_button_next_create_room">Next</string>

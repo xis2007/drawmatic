@@ -22,6 +22,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     private MainContract.Presenter mMainPresenter;
     private DrawingContract.View mDrawingView;
 
+    private boolean mIsInOfflineMode;
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -35,9 +36,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
         mDrawingView.setPresenter(this);
 
         if (game instanceof OnlineGame) {
+            mIsInOfflineMode = false;
             mOnlineGame = (OnlineGame) game;
             mOfflineGame = null;
         } else {
+            mIsInOfflineMode = true;
             mOnlineGame = null;
             mOfflineGame = (OfflineGame) game;
         }
@@ -45,7 +48,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+        if(mIsInOfflineMode) {
+
+        } else {
+            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+        }
     }
 
     @Override
@@ -55,10 +62,11 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void transToGuessingPage() {
-        if (mOnlineGame != null) {
-            ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
-        } else {
+        if (mIsInOfflineMode) {
+            mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);
+        } else {
+            ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         }
     }
 
@@ -89,7 +97,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setAndStartTimer(final DrawingFragment drawingFragment) {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 20 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -108,7 +116,12 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        if(mIsInOfflineMode) {
+            mDrawingView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
+        } else {
+            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
+        }
+
     }
 
     @Override
@@ -119,7 +132,6 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl) {
         new OnlineInGameManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
-
     }
 
     @Override
@@ -150,9 +162,15 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void start() {
-        // start by preparing this step, need to get topic and set all player progress to 0 first
-        mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
-        new OnlineInGameManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
+        if(mIsInOfflineMode) {
+            mDrawingView.hideViews();
+            mDrawingView.initiateNextStepButton();
+            setCurrentStep();
+        } else {
+            // start by preparing this step, need to get topic and set all player progress to 0 first
+            mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
+            new OnlineInGameManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
+        }
     }
 
     /**
@@ -181,5 +199,9 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     public ListenerRegistration getRoomListenerRegistration() {
         return mRoomListenerRegistration;
+    }
+
+    public boolean isInOfflineMode() {
+        return mIsInOfflineMode;
     }
 }

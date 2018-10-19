@@ -25,5 +25,10 @@ public interface CreateRoomContract {
         void informToShowLoadingUi();
 
         void informRoomExists(OnlineSettings onlineSettings);
+
+        /**
+         * Offline methods
+         */
+        void startOfflineGame(int numPlayers);
     }
 }

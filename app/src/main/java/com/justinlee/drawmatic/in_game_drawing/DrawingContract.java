@@ -13,6 +13,10 @@ public interface DrawingContract {
         void updateTimer(long currentCountDoenTime);
 
         void showCurrentStep(int currentStep, int numPlayers);
+
+        void hideViews();
+
+        void initiateNextStepButton();
     }
 
     interface Presenter extends BasePresenter {

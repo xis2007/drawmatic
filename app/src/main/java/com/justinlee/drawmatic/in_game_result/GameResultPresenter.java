@@ -17,6 +17,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     private GameResultContract.View mGameResultView;
 
+    private boolean mIsInOfflineMode;
     private OnlineGame mOnlineGame;
     private OfflineGame mOfflineGame;
 
@@ -25,9 +26,11 @@ public class GameResultPresenter implements GameResultContract.Presenter {
         mGameResultView.setPresenter(this);
 
         if (game instanceof OnlineGame) {
+            mIsInOfflineMode = false;
             mOnlineGame = (OnlineGame) game;
             mOfflineGame = null;
         } else {
+            mIsInOfflineMode = true;
             mOnlineGame = null;
             mOfflineGame = (OfflineGame) game;
         }
@@ -35,7 +38,12 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+        if(mIsInOfflineMode) {
+
+        } else {
+            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
+        }
+
     }
 
     @Override
@@ -56,14 +64,23 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void doneViewingResult() {
-        new OnlineInGameManager((MainActivity) mMainView).deleteDataAfterResult(mOnlineGame);
-        mMainPresenter.resetCurrentPlayerToParticipant();
-        mMainPresenter.transToPlayPage();
+        if (mIsInOfflineMode) {
+           mMainPresenter.transToPlayPage();
+        } else {
+            new OnlineInGameManager((MainActivity) mMainView).deleteDataAfterResult(mOnlineGame);
+            mMainPresenter.resetCurrentPlayerToParticipant();
+            mMainPresenter.transToPlayPage();
+        }
+
     }
 
     @Override
     public void start() {
-        new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
+        if(mIsInOfflineMode) {
+            // TODO show results
+        } else {
+            new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
+        }
     }
 
 

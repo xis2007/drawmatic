@@ -5,11 +5,15 @@ import com.justinlee.drawmatic.bases.BaseView;
 
 public interface SetTopicContract {
     interface View extends BaseView<Presenter> {
-        void updateTimer(long currentCountDoenTime);
+        void updateTimer(long currentCountDownTime);
 
         void showCurrentStep(int currentStep, int maxPlayers);
 
         String getEditTextTopicInput();
+
+        void hideTimer();
+
+        void initiateNextStepButton();
     }
 
     interface Presenter extends BasePresenter {
@@ -25,6 +29,8 @@ public interface SetTopicContract {
 
         void restartCountDownTimer();
 
-        void transToDrawingPageOnline();
+        void transToDrawingPage();
+
+
     }
 }
