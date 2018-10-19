@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.in_game_drawing;
 
+import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 
 import com.divyanshu.draw.widget.DrawView;
@@ -13,6 +14,7 @@ import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.DrawViewToImageGenerator;
 import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 
 public class DrawingPresenter implements DrawingContract.Presenter {
@@ -121,7 +123,6 @@ public class DrawingPresenter implements DrawingContract.Presenter {
         } else {
             mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
         }
-
     }
 
     @Override
@@ -165,6 +166,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
         if(mIsInOfflineMode) {
             mDrawingView.hideViews();
             mDrawingView.initiateNextStepButton();
+            mDrawingView.showTopic((String) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));
             setCurrentStep();
         } else {
             // start by preparing this step, need to get topic and set all player progress to 0 first
@@ -172,6 +174,19 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             new OnlineInGameManager((MainActivity) mMainView).retrieveTopic(mDrawingView, this, mOnlineGame);
         }
     }
+
+    /**
+     * ***********************************************************************************
+     * Offline Mode
+     * ***********************************************************************************
+     */
+    @Override
+    public void saveDrawingAndTransToGuessingPage(DrawView drawView) {
+        Bitmap drawingBitmap = new DrawViewToImageGenerator().generateBitmapFrom(drawView);
+        mOfflineGame.getOfflineSettings().addItemToResultList(drawingBitmap);
+        transToGuessingPage();
+    }
+
 
     /**
      * ***********************************************************************************

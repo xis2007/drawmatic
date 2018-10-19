@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 public interface GameResultContract {
     interface View extends BaseView<Presenter> {
-        void showResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings);
+        void showOnlineGameResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings);
 
+        void showOfflineGameResults(ArrayList<Object> resultObjects);
     }
 
     interface Presenter extends BasePresenter {
         void informActivityToPromptLeaveGameAlert();
 
-        void informToShowResults(ArrayList<String> resultStrings);
+        void informToShowOnlineGameResults(ArrayList<String> resultStrings);
 
         void deleteFirestoreRoomData();
 

@@ -2,6 +2,7 @@ package com.justinlee.drawmatic.in_game_guessing;
 
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         mGuessingPresenter = checkNotNull(presenter);
     }
 
+
     public void initButtons(View rootView) {
         mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_guessing);
         Button quitGameButton = rootView.findViewById(R.id.button_quit_game_guessing);
@@ -67,12 +69,14 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         quitGameButton.setOnClickListener(guessingOnClickListener);
     }
 
+
     private void initViews(View rootView) {
         mEditTextGuessingInput = rootView.findViewById(R.id.edittext_topic_guessing);
         mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_guessing);
         mImageToGuess = rootView.findViewById(R.id.image_drawing_from_previous);
         mTextPreviousPlayer = rootView.findViewById(R.id.text_hint_previous_player_guessing);
     }
+
 
     private View.OnClickListener guessingOnClickListener = new View.OnClickListener() {
         @Override
@@ -93,13 +97,15 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         }
     };
 
+
     @Override
-    public void showDrawing(String imageUrl) {
+    public void showOnlineDrawing(String imageUrl) {
         Glide.with(getActivity())
                 .load(imageUrl)
                 .thumbnail(0.5f)
                 .into(mImageToGuess);
     }
+
 
     @Override
     public void showPreviousPlayer(String previousPlayer) {
@@ -111,16 +117,19 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         mTextTimeRemaining.setText(String.valueOf(currentCountDownTime));
     }
 
+
     @Override
     public void showCurrentStep(int currentStep, int numPlayers) {
         mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers);
     }
+
 
     @Override
     public void showWordCountHint(int wordCount) {
         mEditTextGuessingInput.setHint("The drawing has " + wordCount + " words");
         mEditTextGuessingInput.setHintTextColor(getActivity().getResources().getColor(R.color.colorGrey));
     }
+
 
     @Override
     public String getGuessingInput() {
@@ -146,11 +155,18 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mGuessingPresenter.determineIfOfflineGameIsFinished();
+                        mGuessingPresenter.saveGuessingAndTransToNextPage(mEditTextGuessingInput.getText().toString());
                     }
                 });
     }
 
+    @Override
+    public void showOfflineDrawing(Bitmap drawing) {
+        Glide.with(getActivity())
+                .load(drawing)
+                .thumbnail(0.5f)
+                .into(mImageToGuess);
+    }
 
     /**
      * *********************************************************************************

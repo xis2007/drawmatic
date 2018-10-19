@@ -8,18 +8,17 @@ import java.io.ByteArrayOutputStream;
 
 public class DrawViewToImageGenerator {
 
-    Bitmap mGeneratedBitmap;
 
     public DrawViewToImageGenerator() {
     }
 
-    public Bitmap generateFrom(View drawView) {
-        Bitmap bitmap = Bitmap.createBitmap( drawView.getLayoutParams().width, drawView.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+    public Bitmap generateBitmapFrom(View drawView) {
+        Bitmap bitmap = Bitmap.createBitmap(drawView.getMeasuredWidth(), drawView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
         Canvas canvas = new Canvas(bitmap);
+        canvas.drawARGB(255, 255, 255, 255);
         drawView.layout(drawView.getLeft(), drawView.getTop(), drawView.getRight(), drawView.getBottom());
         drawView.draw(canvas);
-
-        mGeneratedBitmap = bitmap;
 
         return bitmap;
     }

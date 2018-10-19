@@ -611,7 +611,7 @@ public class FirestoreManager {
 
                     if (document.exists()) {
                         guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
-                        guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
+                        guessingPresenter.setOnlineDrawing((String) documentMap.get(imageUrlDataNumber));
                         guessingPresenter.setCurrentStep();
                         guessingPresenter.startMonitoringPlayerGuessingProgress();
                         Log.d(TAG, "onComplete: retrieved drawing");
@@ -732,7 +732,7 @@ public class FirestoreManager {
 //                        for(int i = 1; i <= documentMap.size(); i++) {
 //                            resourceList.add((String) documentMap.get(i));
 //                        }
-//                        gameResultPresenter.informToShowResults(new ResultAsBitmapsUtil(mContext, gameResultPresenter).generateFrom(resourceList));
+//                        gameResultPresenter.informToShowOnlineGameResults(new ResultAsBitmapsUtil(mContext, gameResultPresenter).generateBitmapFrom(resourceList));
 
                         // passing strings
                         ArrayList<String> resourceStringList = new ArrayList<>();
@@ -740,7 +740,7 @@ public class FirestoreManager {
                             resourceStringList.add((String) documentMap.get(String.valueOf(i)));
                         }
 
-                        gameResultPresenter.informToShowResults(resourceStringList);
+                        gameResultPresenter.informToShowOnlineGameResults(resourceStringList);
                     } else {
                         Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
                     }

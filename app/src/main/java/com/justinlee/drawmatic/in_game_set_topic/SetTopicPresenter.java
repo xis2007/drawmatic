@@ -126,7 +126,11 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
      * Offline Mode
      * **********************************************************************************
      */
-
+    @Override
+    public void saveGuessingAndTransToDrawingPage(String guessing) {
+        mOfflineGame.getOfflineSettings().addItemToResultList(guessing);
+        transToDrawingPage();
+    }
 
     /**
      * *********************************************************************************

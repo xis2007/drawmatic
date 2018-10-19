@@ -120,7 +120,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mSetTopicPresenter.transToDrawingPage();
+                        mSetTopicPresenter.saveGuessingAndTransToDrawingPage(mEditTextTopicInput.getText().toString());
                     }
                 });
     }

@@ -1,12 +1,14 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
+import android.graphics.Bitmap;
+
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;
 import com.justinlee.drawmatic.objects.Game;
 
 public interface GuessingContract {
     interface View extends BaseView<Presenter> {
-        void showDrawing(String topic);
+        void showOnlineDrawing(String topic);
 
         void showPreviousPlayer(String previousPlayer);
 
@@ -21,6 +23,8 @@ public interface GuessingContract {
         void hideViews();
 
         void initiateNextStepButton();
+
+        void showOfflineDrawing(Bitmap drawing);
     }
 
     interface Presenter extends BasePresenter {
@@ -30,7 +34,7 @@ public interface GuessingContract {
 
         void transToDrawingPage();
 
-        void setDrawing(String imageUrl);
+        void setOnlineDrawing(String imageUrl);
 
         void setPreviousPlayer();
 
@@ -52,6 +56,8 @@ public interface GuessingContract {
 
         void finishGame(Game game);
 
-        void determineIfOfflineGameIsFinished();
+        void transToNextPage();
+
+        void saveGuessingAndTransToNextPage(String guessing);
     }
 }

@@ -2,7 +2,7 @@
     <string name="app_name">drawmatic</string>
     <string name="title_offline_mode">How To?</string>
     <string name="title_online_mode">Play!!</string>
-    <string name="title_settings">Settings~</string>
+    <string name="title_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

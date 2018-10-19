@@ -31,6 +31,9 @@ public interface SetTopicContract {
 
         void transToDrawingPage();
 
-
+        /**
+         * Offline Mode
+         */
+        void saveGuessingAndTransToDrawingPage(String guessing);
     }
 }

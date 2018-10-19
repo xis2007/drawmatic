@@ -177,7 +177,7 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mDrawingPresenter.transToGuessingPage();
+                        mDrawingPresenter.saveDrawingAndTransToGuessingPage(mDrawView);
                     }
                 });
     }

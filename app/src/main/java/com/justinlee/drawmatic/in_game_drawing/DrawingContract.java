@@ -53,5 +53,10 @@ public interface DrawingContract {
         void restartCountDownTimer();
 
         void startDrawing();
+
+        /**
+         * Offline Mode
+         */
+        void saveDrawingAndTransToGuessingPage(DrawView drawView);
     }
 }

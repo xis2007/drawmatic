@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.in_game_guessing;
 
+import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 
 import com.google.firebase.firestore.ListenerRegistration;
@@ -67,8 +68,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
-    public void setDrawing(String imageUrl) {
-        mGuessingView.showDrawing(imageUrl);
+    public void setOnlineDrawing(String imageUrl) {
+        mGuessingView.showOnlineDrawing(imageUrl);
     }
 
     @Override
@@ -150,6 +151,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
         if(mIsInOfflineMode) {
             mGuessingView.hideViews();
             mGuessingView.initiateNextStepButton();
+            mGuessingView.showOfflineDrawing((Bitmap) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));
             setCurrentStep();
         } else {
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
@@ -164,7 +166,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
      * ***********************************************************************************
      */
     @Override
-    public void determineIfOfflineGameIsFinished() {
+    public void transToNextPage() {
         if(mOfflineGame.getCurrentStep() == mOfflineGame.getTotalSteps()) {
             finishGame(mOfflineGame);
         } else {
@@ -172,6 +174,13 @@ public class GuessingPresenter implements GuessingContract.Presenter {
             transToDrawingPage();
         }
     }
+
+    @Override
+    public void saveGuessingAndTransToNextPage(String guessing) {
+        mOfflineGame.getOfflineSettings().addItemToResultList(guessing);
+        transToNextPage();
+    }
+
 
     /**
      * ***********************************************************************************

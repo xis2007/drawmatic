@@ -31,4 +31,8 @@ public class OfflineGame extends Game {
     public void increamentCurrentStep() {
         mCurrentStep++;
     }
+
+    public OfflineSettings getOfflineSettings() {
+        return mOfflineSettings;
+    }
 }

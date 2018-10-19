@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,10 +91,7 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
 
 
     @Override
-    public void showResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings) {
-        Log.d(TAG, "showResults: result strings is: " + resultStrings);
-//        mGameResultImagesAdapter.swapList(resultStrings);
-
+    public void showOnlineGameResults(ArrayList<String> resultStrings, ArrayList<String> authorStrings) {
         mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultStrings, authorStrings);
         mGameResultViewPager.removeAllViewsInLayout();
         mGameResultViewPager.setAdapter(mPagerAdapter);
@@ -106,5 +102,19 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     @Override
     public void setPresenter(GameResultContract.Presenter presenter) {
         mGameResultPresenter = presenter;
+    }
+
+    /**
+     * ***********************************************************************************
+     * Offline Mode
+     * ***********************************************************************************
+     */
+    @Override
+    public void showOfflineGameResults(ArrayList<Object> resultObjects) {
+        mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultObjects);
+        mGameResultViewPager.removeAllViewsInLayout();
+        mGameResultViewPager.setAdapter(mPagerAdapter);
+        ExtensiblePageIndicator extensiblePageIndicator = getActivity().findViewById(R.id.flexibleIndicator);
+        extensiblePageIndicator.initViewPager(mGameResultViewPager);
     }
 }

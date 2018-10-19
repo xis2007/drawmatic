@@ -47,8 +47,8 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     }
 
     @Override
-    public void informToShowResults(ArrayList<String> resultStrings) {
-        mGameResultView.showResults(resultStrings, new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcOrderedPlayersForResults());
+    public void informToShowOnlineGameResults(ArrayList<String> resultStrings) {
+        mGameResultView.showOnlineGameResults(resultStrings, new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcOrderedPlayersForResults());
         mMainPresenter.isNotLoading();
     }
 
@@ -77,11 +77,18 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     @Override
     public void start() {
         if(mIsInOfflineMode) {
-            // TODO show results
+            mGameResultView.showOfflineGameResults(mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList());
         } else {
             new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);
         }
     }
+
+    /**
+     * ***********************************************************************************
+     * Offline Mode
+     * ***********************************************************************************
+     */
+
 
 
     /**

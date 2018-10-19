@@ -346,7 +346,7 @@ public class OnlineInGameManager {
 
                         if (document.exists()) {
                             guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
-                            guessingPresenter.setDrawing((String) documentMap.get(imageUrlDataNumber));
+                            guessingPresenter.setOnlineDrawing((String) documentMap.get(imageUrlDataNumber));
                             guessingPresenter.setPreviousPlayer();
                             guessingPresenter.setCurrentStep();
                             guessingPresenter.startMonitoringPlayerGuessingProgress();
@@ -488,7 +488,7 @@ public class OnlineInGameManager {
                             for (int i = 1; i <= documentMap.size(); i++) {
                                 resourceStringList.add((String) documentMap.get(String.valueOf(i)));
                             }
-                            gameResultPresenter.informToShowResults(resourceStringList);
+                            gameResultPresenter.informToShowOnlineGameResults(resourceStringList);
 
                         } else {
                             Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
