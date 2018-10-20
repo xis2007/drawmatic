@@ -29,6 +29,7 @@ public interface MainContract {
         // loading Ui
         void showLoadingUi(String loadingHint);
         void hideLoadingUi();
+        void showTapToNextStepUi();
 
         // OnBackPressed related
         void showLeaveAppDialog();
@@ -58,6 +59,7 @@ public interface MainContract {
         // loading UI
         void isLoading(String loadingHint);
         void isNotLoading();
+        void informToShowTapToNextStepUi();
 
         // OnBackPressed related
         void determineOnBackPressedActions();

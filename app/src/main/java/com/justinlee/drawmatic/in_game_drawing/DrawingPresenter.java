@@ -156,6 +156,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void start() {
         if(mIsInOfflineMode) {
+            mMainPresenter.informToShowTapToNextStepUi();
             mDrawingView.hideViews();
             mDrawingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
             mDrawingView.showTopic((String) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));

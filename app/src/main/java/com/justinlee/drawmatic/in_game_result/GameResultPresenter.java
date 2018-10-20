@@ -77,6 +77,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     @Override
     public void start() {
         if(mIsInOfflineMode) {
+            mMainPresenter.informToShowTapToNextStepUi();
             mGameResultView.showOfflineGameResults(mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList());
         } else {
             new OnlineInGameManager((MainActivity) mMainView).retrieveGameResults(mGameResultView, this, mOnlineGame);

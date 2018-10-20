@@ -117,6 +117,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
+    public void showTapToNextStepUi() {
+        mLoadingLayout.setVisibility(View.VISIBLE);
+        mLoadingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLoadingLayout.setVisibility(View.GONE);
+                mLoadingLayout.setOnClickListener(null);
+            }
+        });
+        mLoadingHint.setText("Tap to start the next step");
+    }
+
+    @Override
     public void showLeaveAppDialog() {
         BackLeaveAppBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), "LEAVE_APP_ALERT");
     }

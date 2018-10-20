@@ -430,6 +430,11 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void informToShowTapToNextStepUi() {
+        mMainView.showTapToNextStepUi();
+    }
+
+    @Override
     public void determineOnBackPressedActions() {
         // if main menu-related fragments are shown, it means a dialog should show to users to confirm they want to leave the app
         if(mPlayFragment != null && !mPlayFragment.isHidden()) mMainView.showLeaveAppDialog();

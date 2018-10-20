@@ -144,6 +144,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     @Override
     public void start() {
         if(mIsInOfflineMode) {
+            mMainPresenter.informToShowTapToNextStepUi();
             mGuessingView.hideViews();
             mGuessingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
             mGuessingView.showOfflineDrawing((Bitmap) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));

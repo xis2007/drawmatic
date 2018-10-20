@@ -159,6 +159,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
                             });
     }
 
+
     @Override
     public void showOfflineDrawing(Bitmap drawing) {
         Glide.with(getActivity())
