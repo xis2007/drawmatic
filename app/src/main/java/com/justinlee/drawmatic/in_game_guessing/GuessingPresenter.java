@@ -79,7 +79,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setAndStartTimer() {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 30 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -98,12 +98,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        if (mIsInOfflineMode) {
-            mGuessingView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
-        } else {
-            mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
-        }
-
+        mGuessingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
     }
 
     @Override
@@ -150,9 +145,8 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     public void start() {
         if(mIsInOfflineMode) {
             mGuessingView.hideViews();
-            mGuessingView.initiateNextStepButton();
+            mGuessingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
             mGuessingView.showOfflineDrawing((Bitmap) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));
-            setCurrentStep();
         } else {
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
             new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);

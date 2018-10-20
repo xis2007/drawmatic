@@ -13,7 +13,10 @@ public interface SetTopicContract {
 
         void hideTimer();
 
-        void initiateNextStepButton();
+        /**
+         * Offline Mode
+         */
+        void initiateNextStepButton(int currentStep, int numPlayers);
     }
 
     interface Presenter extends BasePresenter {

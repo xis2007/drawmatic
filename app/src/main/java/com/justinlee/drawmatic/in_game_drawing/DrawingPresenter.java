@@ -50,11 +50,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        if(mIsInOfflineMode) {
-
-        } else {
-            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
-        }
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
     }
 
     @Override
@@ -99,7 +95,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setAndStartTimer(final DrawingFragment drawingFragment) {
-        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 10 * 1000), 1000) {
+        mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 60 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
@@ -118,11 +114,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        if(mIsInOfflineMode) {
-            mDrawingView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
-        } else {
-            mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
-        }
+        mDrawingView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
     }
 
     @Override
@@ -165,9 +157,8 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     public void start() {
         if(mIsInOfflineMode) {
             mDrawingView.hideViews();
-            mDrawingView.initiateNextStepButton();
+            mDrawingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
             mDrawingView.showTopic((String) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));
-            setCurrentStep();
         } else {
             // start by preparing this step, need to get topic and set all player progress to 0 first
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);

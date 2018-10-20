@@ -22,7 +22,10 @@ public interface GuessingContract {
 
         void hideViews();
 
-        void initiateNextStepButton();
+        /**
+         * Offline Mode
+         */
+        void initiateNextStepButton(int currentStep, int numPlayers);
 
         void showOfflineDrawing(Bitmap drawing);
     }

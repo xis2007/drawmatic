@@ -85,10 +85,10 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.button_steps_remaining_drawing:
-                    // TODO cancel this function in production
-                    mDrawingPresenter.transToGuessingPage();
-                    break;
+//                case R.id.button_steps_remaining_drawing:
+//                    // TODO cancel this function in production
+//                    mDrawingPresenter.transToGuessingPage();
+//                    break;
 
                 case R.id.button_quit_game_drawing:
                     mDrawingPresenter.informActivityToPromptLeaveGameAlert();
@@ -165,21 +165,20 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
      */
     @Override
     public void hideViews() {
-        getActivity().findViewById(R.id.text_time_remaining_drawing).setVisibility(View.INVISIBLE);
-        getActivity().findViewById(R.id.image_time_remaining_drawing).setVisibility(View.INVISIBLE);
-        getActivity().findViewById(R.id.text_hint_previous_player_drawing).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.text_time_remaining_drawing).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.image_time_remaining_drawing).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.text_hint_previous_player_drawing).setVisibility(View.GONE);
     }
 
     @Override
-    public void initiateNextStepButton() {
-        getActivity()
-                .findViewById(R.id.button_steps_remaining_drawing)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mDrawingPresenter.saveDrawingAndTransToGuessingPage(mDrawView);
-                    }
-                });
+    public void initiateNextStepButton(int currentStep, int numPlayers) {
+        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers + ", Tap to Next");
+        mCurrentStepButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mDrawingPresenter.saveDrawingAndTransToGuessingPage(mDrawView);
+                                }
+                            });
     }
 
 

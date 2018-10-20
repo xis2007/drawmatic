@@ -43,12 +43,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        if (mIsInOfflineMode) {
-
-        } else {
-            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
-        }
-
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
     }
 
     @Override
@@ -78,11 +73,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void setCurrentStep() {
-        if(mIsInOfflineMode) {
-            mSetTopicView.showCurrentStep(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
-        } else {
-            mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
-        }
+        mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
     }
 
     @Override
@@ -110,8 +101,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     public void start() {
         if(mIsInOfflineMode) {
             mSetTopicView.hideTimer();
-            mSetTopicView.initiateNextStepButton();
-            setCurrentStep();
+            mSetTopicView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
         } else {
             setAndStartTimer();
             setCurrentStep();

@@ -16,7 +16,10 @@ public interface DrawingContract {
 
         void hideViews();
 
-        void initiateNextStepButton();
+        /**
+         * Offline Mode
+         */
+        void initiateNextStepButton(int currentStep, int numPlayers);
     }
 
     interface Presenter extends BasePresenter {

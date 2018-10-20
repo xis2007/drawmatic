@@ -59,7 +59,6 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_set_topic);
         mQuitGameButton = rootView.findViewById(R.id.button_quit_game_set_topic);
 
-        mCurrentStepButton.setOnClickListener(setTopicOnClickListener);
         mQuitGameButton.setOnClickListener(setTopicOnClickListener);
     }
 
@@ -67,9 +66,9 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.button_steps_remaining_set_topic:
-                    mSetTopicPresenter.transToDrawingPage();
-                    break;
+//                case R.id.button_steps_remaining_set_topic:
+//                    mSetTopicPresenter.transToDrawingPage();
+//                    break;
 
                 case R.id.button_quit_game_set_topic:
                     mSetTopicPresenter.informActivityToPromptLeaveGameAlert();
@@ -109,15 +108,14 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
      */
     @Override
     public void hideTimer() {
-        getActivity().findViewById(R.id.text_time_remaining_set_topic).setVisibility(View.INVISIBLE);
-        getActivity().findViewById(R.id.image_time_remaining_set_topic).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.text_time_remaining_set_topic).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.image_time_remaining_set_topic).setVisibility(View.GONE);
     }
 
     @Override
-    public void initiateNextStepButton() {
-        getActivity()
-                .findViewById(R.id.button_steps_remaining_set_topic)
-                .setOnClickListener(new View.OnClickListener() {
+    public void initiateNextStepButton(int currentStep, int numPlayers) {
+        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers + ", Tap to Next");
+        mCurrentStepButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mSetTopicPresenter.saveGuessingAndTransToDrawingPage(mEditTextTopicInput.getText().toString());
