@@ -140,7 +140,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="2dp"
             android:maxLines="1"
-            android:text="Guess what this drawing is !!!"
+            android:text="Guess what this drawing is!"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_drawing_from_previous"
             app:layout_constraintEnd_toEndOf="parent"

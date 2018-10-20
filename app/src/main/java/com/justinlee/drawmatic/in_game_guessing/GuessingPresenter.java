@@ -88,12 +88,18 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
             @Override
             public void onFinish() {
-                mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
-                String inputGuessing = mGuessingView.getGuessingInput();
-                if(inputGuessing == null) inputGuessing = "";
-                new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
+                updateGuessingStepProgressAndUploadGuessing();
             }
         }.start();
+    }
+
+    @Override
+    public void updateGuessingStepProgressAndUploadGuessing() {
+        mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
+        String inputGuessing = mGuessingView.getGuessingInput();
+        if(inputGuessing == null) inputGuessing = "";
+
+        new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
     }
 
     @Override

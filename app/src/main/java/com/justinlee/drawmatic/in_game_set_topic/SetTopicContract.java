@@ -34,6 +34,8 @@ public interface SetTopicContract {
 
         void transToDrawingPage();
 
+        void updateSetTopicStepProgressAndUploadTopic();
+
         /**
          * Offline Mode
          */

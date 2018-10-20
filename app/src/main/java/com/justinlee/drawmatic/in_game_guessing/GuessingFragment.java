@@ -82,10 +82,10 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-//                case R.id.button_steps_remaining_guessing:
-//                    // TODO cancel this function in production
-//                    mGuessingPresenter.transToDrawingPage();
-//                    break;
+                case R.id.button_steps_remaining_guessing:
+                    // TODO cancel this function in production
+                    mGuessingPresenter.updateGuessingStepProgressAndUploadGuessing();
+                    break;
 
                 case R.id.button_quit_game_guessing:
                     mGuessingPresenter.informActivityToPromptLeaveGameAlert();

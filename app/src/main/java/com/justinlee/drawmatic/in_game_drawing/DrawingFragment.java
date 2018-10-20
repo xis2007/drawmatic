@@ -85,10 +85,9 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-//                case R.id.button_steps_remaining_drawing:
-//                    // TODO cancel this function in production
-//                    mDrawingPresenter.transToGuessingPage();
-//                    break;
+                case R.id.button_steps_remaining_drawing:
+                    mDrawingPresenter.uploadImageAndGetImageUrl();
+                    break;
 
                 case R.id.button_quit_game_drawing:
                     mDrawingPresenter.informActivityToPromptLeaveGameAlert();

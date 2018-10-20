@@ -59,6 +59,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         mCurrentStepButton = rootView.findViewById(R.id.button_steps_remaining_set_topic);
         mQuitGameButton = rootView.findViewById(R.id.button_quit_game_set_topic);
 
+        mCurrentStepButton.setOnClickListener(setTopicOnClickListener);
         mQuitGameButton.setOnClickListener(setTopicOnClickListener);
     }
 
@@ -66,9 +67,9 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-//                case R.id.button_steps_remaining_set_topic:
-//                    mSetTopicPresenter.transToDrawingPage();
-//                    break;
+                case R.id.button_steps_remaining_set_topic:
+                    mSetTopicPresenter.updateSetTopicStepProgressAndUploadTopic();
+                    break;
 
                 case R.id.button_quit_game_set_topic:
                     mSetTopicPresenter.informActivityToPromptLeaveGameAlert();

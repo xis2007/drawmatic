@@ -51,6 +51,8 @@ public interface DrawingContract {
 
         void unregisterListener();
 
+        void uploadImageAndGetImageUrl();
+
         void stopCountDownTimer();
 
         void restartCountDownTimer();

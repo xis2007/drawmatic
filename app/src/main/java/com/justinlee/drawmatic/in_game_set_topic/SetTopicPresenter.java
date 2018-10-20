@@ -62,13 +62,18 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
             @Override
             public void onFinish() {
-                mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
-                String inputTopic = mSetTopicView.getEditTextTopicInput();
-                if(inputTopic == null) inputTopic = "";
-
-                new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
+                updateSetTopicStepProgressAndUploadTopic();
             }
         }.start();
+    }
+
+    @Override
+    public void updateSetTopicStepProgressAndUploadTopic() {
+        mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
+        String inputTopic = mSetTopicView.getEditTextTopicInput();
+        if(inputTopic == null) inputTopic = "";
+
+        new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
     }
 
     @Override

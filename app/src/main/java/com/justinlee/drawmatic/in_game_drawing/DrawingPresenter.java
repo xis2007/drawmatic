@@ -104,12 +104,17 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
             @Override
             public void onFinish() {
-                mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
-                // TODO change below parameters
-                new OnlineInGameManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
-
+                uploadImageAndGetImageUrl();
             }
         }.start();
+    }
+
+    @Override
+    public void uploadImageAndGetImageUrl() {
+        mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
+        // TODO change below parameters
+        new OnlineInGameManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
+
     }
 
     @Override

@@ -57,6 +57,8 @@ public interface GuessingContract {
 
         void setWordCountHint(String theWord);
 
+        void updateGuessingStepProgressAndUploadGuessing();
+
         void finishGame(Game game);
 
         void transToNextPage();
