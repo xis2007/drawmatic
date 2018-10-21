@@ -139,6 +139,9 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         roomNameLayout.setVisibility(View.GONE);
         timeAttemptLayout.setVisibility(View.GONE);
 
+        TextView attemptTimeNote = rootView.findViewById(R.id.textView7);
+        attemptTimeNote.setVisibility(View.GONE);
+
         TextView tagMaxPlayers = rootView.findViewById(R.id.text_max_players_create_room);
         tagMaxPlayers.setText("Number of Players");
     }
@@ -148,6 +151,9 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         LinearLayout timeAttemptLayout = rootView.findViewById(R.id.layout_time_attempt_create_room);
         roomNameLayout.setVisibility(View.VISIBLE);
         timeAttemptLayout.setVisibility(View.VISIBLE);
+
+        TextView attemptTimeNote = rootView.findViewById(R.id.textView7);
+        attemptTimeNote.setVisibility(View.VISIBLE);
 
         TextView tagMaxPlayers = rootView.findViewById(R.id.text_max_players_create_room);
         tagMaxPlayers.setText("Maximum Players");

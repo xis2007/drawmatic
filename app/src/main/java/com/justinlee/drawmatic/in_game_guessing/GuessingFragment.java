@@ -126,7 +126,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
     @Override
     public void showWordCountHint(int wordCount) {
-        mEditTextGuessingInput.setHint("The drawing has " + wordCount + " words");
+        mEditTextGuessingInput.setHint(wordCount + " words");
         mEditTextGuessingInput.setHintTextColor(getActivity().getResources().getColor(R.color.colorGrey));
     }
 

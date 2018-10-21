@@ -167,7 +167,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/box_items_create_room"
                     android:elevation="3dp"
                     android:orientation="vertical"
@@ -207,6 +207,17 @@
                         app:bsb_show_thumb_text="true"
                         app:bsb_track_color="@color/colorGreyLight"/>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Note: The amount of time defined here is for drawing. Guessing time will be 1/2 of the time defined."
+                    tools:layout_editor_absoluteX="107dp"
+                    tools:layout_editor_absoluteY="123dp"/>
             </LinearLayout>
         </ScrollView>
 

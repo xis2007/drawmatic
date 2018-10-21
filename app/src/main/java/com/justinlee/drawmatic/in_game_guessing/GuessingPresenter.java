@@ -2,6 +2,7 @@ package com.justinlee.drawmatic.in_game_guessing;
 
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
@@ -135,6 +136,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setWordCountHint(String theWord) {
+        Log.d(TAG, "setWordCountHint: the word is: " + theWord);
         if(StringUtil.isEmptyString(theWord)) {
             mGuessingView.showWordCountHint(0);
         } else {
@@ -149,15 +151,17 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void start() {
+        Log.d(TAG, "start: is in offline? " + mIsInOfflineMode);
         if(mIsInOfflineMode) {
             mMainPresenter.informToShowTapToNextStepUi();
             mGuessingView.hideViews();
             mGuessingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
             mGuessingView.showOfflineDrawing((Bitmap) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 2));
+            setWordCountHint((String) mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList().get(mOfflineGame.getCurrentStep() - 3));
+
         } else {
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
             new OnlineInGameManager((MainActivity) mMainView).retrieveDrawingAndWordCount(mGuessingView, this, mOnlineGame);
-
         }
     }
 
