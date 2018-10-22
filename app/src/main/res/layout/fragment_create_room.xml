@@ -138,26 +138,88 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"/>
 
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/seekbar_payer_number_create_room"
+                    <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                        android:id="@+id/toggleGroup_numPlayer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="12dp"
-                        app:bsb_bubble_color="@color/colorPrimary"
-                        app:bsb_bubble_text_color="@color/colorWhite"
-                        app:bsb_max="12"
-                        app:bsb_min="4"
-                        app:bsb_progress="1"
-                        app:bsb_second_track_color="@color/colorPrimary"
-                        app:bsb_section_count="8"
-                        app:bsb_section_text_position="bottom_sides"
-                        app:bsb_seek_by_section="true"
-                        app:bsb_show_section_mark="true"
-                        app:bsb_show_section_text="true"
-                        app:bsb_show_thumb_text="true"
-                        app:bsb_track_color="@color/colorGreyLight"/>
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:tbgCheckedButton="@+id/numPlayer_4"
+                        app:tbgFlow="true">
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="5"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="6"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="7"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="8"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="9"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="11"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/numPlayer_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="12"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                    </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,28 +246,48 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"/>
 
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/seekbar_attempt_time_create_room"
+                    <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                        android:id="@+id/toggleGroup_attemptTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="12dp"
-                        app:bsb_bubble_color="@color/colorPrimary"
-                        app:bsb_bubble_text_color="@color/colorWhite"
-                        app:bsb_is_float_type="true"
-                        app:bsb_max="2"
-                        app:bsb_min="0.5"
-                        app:bsb_progress="0.5"
-                        app:bsb_second_track_color="@color/colorPrimary"
-                        app:bsb_section_count="3"
-                        app:bsb_section_text_position="bottom_sides"
-                        app:bsb_seek_by_section="true"
-                        app:bsb_show_progress_in_float="true"
-                        app:bsb_show_section_mark="true"
-                        app:bsb_show_section_text="true"
-                        app:bsb_show_thumb_text="true"
-                        app:bsb_track_color="@color/colorGreyLight"/>
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:tbgCheckedButton="@+id/min_05"
+                        app:tbgFlow="true">
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/min_05"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.5"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/min_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="1.0"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/min_15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="1.5"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                        <com.nex3z.togglebuttongroup.button.CircularToggle
+                            android:id="@+id/min_20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="2.0"
+                            app:tbgMarkerColor="@color/colorPrimary"/>
+
+                    </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
                 </LinearLayout>
 
                 <TextView

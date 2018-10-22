@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
+import com.nex3z.togglebuttongroup.SingleSelectToggleGroup;
 import com.suke.widget.SwitchButton;
 import com.xw.repo.BubbleSeekBar;
 
@@ -29,9 +31,12 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
     private EditText mEditTextRoomName;
     private BubbleSeekBar mSeekbarMaxPlayers;
     private BubbleSeekBar mSeekbarAttemptTime;
+    private SingleSelectToggleGroup mAttemptTimeToggleGroup;
+    private SingleSelectToggleGroup mNumPlayerToggleGroup;
 
     private int mNumPlayerProgress = 4;
     private float mAttemptTimeProgress = 0.5f;
+
 
     public CreateRoomFragment() {
         // Required empty public constructor
@@ -89,22 +94,85 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
 
 
     public void setupSeekbar(View rootView) {
-        mSeekbarMaxPlayers = rootView.findViewById(R.id.seekbar_payer_number_create_room);
-        mSeekbarAttemptTime = rootView.findViewById(R.id.seekbar_attempt_time_create_room);
+//        mSeekbarMaxPlayers = rootView.findViewById(R.id.seekbar_payer_number_create_room);
+//        mSeekbarAttemptTime = rootView.findViewById(R.id.seekbar_attempt_time_create_room);
 
-        mSeekbarMaxPlayers.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+//        mSeekbarMaxPlayers.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+//            @Override
+//            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+//                super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat, fromUser);
+//                mNumPlayerProgress = progress;
+//            }
+//        });
+
+//        mSeekbarAttemptTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+//            @Override
+//            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+//                super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat, fromUser);
+//                mAttemptTimeProgress = progressFloat;
+//            }
+//        });
+
+        mNumPlayerToggleGroup = rootView.findViewById(R.id.toggleGroup_numPlayer);
+        mNumPlayerToggleGroup.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
             @Override
-            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat, fromUser);
-                mNumPlayerProgress = progress;
+            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.numPlayer_4:
+                        mNumPlayerProgress = 4;
+                        break;
+                    case R.id.numPlayer_5:
+                        mNumPlayerProgress = 5;
+                        break;
+                    case R.id.numPlayer_6:
+                        mNumPlayerProgress = 6;
+                        break;
+                    case R.id.numPlayer_7:
+                        mNumPlayerProgress = 7;
+                        break;
+                    case R.id.numPlayer_8:
+                        mNumPlayerProgress = 8;
+                        break;
+                    case R.id.numPlayer_9:
+                        mNumPlayerProgress = 9;
+                        break;
+                    case R.id.numPlayer_10:
+                        mNumPlayerProgress = 10;
+                        break;
+                    case R.id.numPlayer_11:
+                        mNumPlayerProgress = 11;
+                        break;
+                    case R.id.numPlayer_12:
+                        mNumPlayerProgress = 12;
+                        break;
+                    default:
+                        break;
+                }
+                Log.d(TAG, "onCheckedChanged: num player is: " + mNumPlayerProgress);
             }
         });
 
-        mSeekbarAttemptTime.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+        mAttemptTimeToggleGroup = rootView.findViewById(R.id.toggleGroup_attemptTime);
+        mAttemptTimeToggleGroup.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
             @Override
-            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                super.getProgressOnFinally(bubbleSeekBar, progress, progressFloat, fromUser);
-                mAttemptTimeProgress = progressFloat;
+            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.min_05:
+                        mAttemptTimeProgress = 0.5f;
+                        break;
+                    case R.id.min_10:
+                        mAttemptTimeProgress = 1.0f;
+                        break;
+                    case R.id.min_15:
+                        mAttemptTimeProgress = 1.5f;
+                        break;
+                    case R.id.min_20:
+                        mAttemptTimeProgress = 2.0f;
+                        break;
+                    default:
+                        break;
+                }
+                Log.d(TAG, "onCheckedChanged: attempt time is: " + mAttemptTimeProgress);
             }
         });
     }
