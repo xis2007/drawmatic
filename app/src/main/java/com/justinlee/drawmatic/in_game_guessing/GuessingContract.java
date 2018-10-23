@@ -43,6 +43,8 @@ public interface GuessingContract {
 
         void setAndStartTimer();
 
+        void setAndStartTimeOutTimer();
+
         void setCurrentStep();
 
         void startMonitoringPlayerGuessingProgress();
@@ -52,6 +54,8 @@ public interface GuessingContract {
         void unregisterListener();
 
         void stopCountDownTimer();
+
+        void stopTimeOutTimer();
 
         void restartCountDownTimer();
 

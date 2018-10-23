@@ -30,11 +30,15 @@ public interface SetTopicContract {
 
         void stopCountDownTimer();
 
+        void stopTimeOutTimer();
+
         void restartCountDownTimer();
 
         void transToDrawingPage();
 
         void updateSetTopicStepProgressAndUploadTopic();
+
+        void setAndStartTimeOutTimer();
 
         /**
          * Offline Mode

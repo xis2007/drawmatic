@@ -112,12 +112,10 @@
             android:layout_height="0dp"
             android:layout_margin="3dp"
             android:background="@color/colorAccentLight"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav_in_game"
+            app:layout_constraintBottom_toTopOf="@+id/text_hint_drawing"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_topic_drawing"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView_topic_drawing"/>
 
         <com.divyanshu.draw.widget.DrawView
             android:id="@+id/drawView"
@@ -128,7 +126,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:background="@color/colorWhite"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav_in_game"
+            app:layout_constraintBottom_toTopOf="@+id/text_hint_drawing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_topic_drawing"/>
@@ -149,26 +147,27 @@
             android:id="@+id/text_hint_drawing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
             android:maxLines="1"
             android:text="Draw The Topic in the Yellow Box"
             android:textAlignment="center"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/drawView"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav_in_game"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/drawView"/>
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/text_hint_previous_player_drawing"
+            />
 
         <TextView
             android:id="@+id/text_hint_previous_player_drawing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="5dp"
             android:text="Topic From"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/text_hint_drawing"
-            app:layout_constraintStart_toStartOf="@+id/drawView"/>
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav_in_game"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

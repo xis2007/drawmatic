@@ -14,10 +14,10 @@
             android:id="@+id/linearLayout_guessing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal"
-            android:weightSum="5"
             android:padding="8dp"
-            android:background="@color/colorPrimary">
+            android:weightSum="5">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -85,11 +85,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView_guessing"
+            android:id="@+id/text_hint_title_guessing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Guess!"
             android:textSize="24sp"
@@ -99,10 +98,9 @@
 
         <EditText
             android:id="@+id/edittext_topic_guessing"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/box_topic_input_in_game"
             android:padding="8dp"
@@ -112,50 +110,47 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_guessing"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_hint_title_guessing"/>
 
         <ImageView
             android:id="@+id/image_drawing_from_previous"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:adjustViewBounds="true"
             android:scaleType="center"
             android:src="@color/colorGreyLight"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/text_hint_guessing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edittext_topic_guessing"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/edittext_topic_guessing"/>
 
         <TextView
             android:id="@+id/text_hint_guessing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
             android:maxLines="1"
             android:text="Guess what this drawing is!"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_drawing_from_previous"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/image_drawing_from_previous"/>
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/text_hint_previous_player_guessing"/>
 
         <TextView
             android:id="@+id/text_hint_previous_player_guessing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="5dp"
             android:text="Drawing From"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/text_hint_guessing"
-            app:layout_constraintStart_toStartOf="@+id/image_drawing_from_previous"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 

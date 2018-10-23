@@ -12,6 +12,7 @@ import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
+import com.justinlee.drawmatic.util.timer.TimeOutTimer;
 
 public class SetTopicPresenter implements SetTopicContract.Presenter {
     private MainContract.View mMainView;
@@ -23,6 +24,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+    private CountDownTimer mTimeOutTimer;
 
     private ListenerRegistration mRoomListenerRegistration;
 
@@ -63,6 +65,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             @Override
             public void onFinish() {
                 updateSetTopicStepProgressAndUploadTopic();
+                setAndStartTimeOutTimer();
             }
         }.start();
     }
@@ -76,6 +79,16 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
     }
 
+
+    /**
+     * After each round ends, this timer should be started to count for 15 minutes
+     * After 15 minutes, if not all players are finished, it means somehting is wrong and will be timed out
+     */
+    @Override
+    public void setAndStartTimeOutTimer() {
+        mTimeOutTimer = new TimeOutTimer((long) (15 * 1000), 1000, (MainActivity) mMainView, mOnlineGame).start();
+    }
+
     @Override
     public void setCurrentStep() {
         mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
@@ -84,6 +97,11 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     @Override
     public void stopCountDownTimer() {
         if(mCountDownTimer != null) mCountDownTimer.cancel();
+    }
+
+    @Override
+    public void stopTimeOutTimer() {
+        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
     }
 
     @Override
@@ -97,6 +115,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         } else {
+            stopTimeOutTimer();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
         }
     }

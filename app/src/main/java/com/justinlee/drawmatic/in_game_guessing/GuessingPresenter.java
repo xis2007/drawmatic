@@ -16,6 +16,7 @@ import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.StringUtil;
 import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
+import com.justinlee.drawmatic.util.timer.TimeOutTimer;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
     private static final String TAG = "justinxxxxx";
@@ -29,6 +30,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+    private CountDownTimer mTimeOutTimer;
 
     private ListenerRegistration mRoomListenerRegistration;
     private ListenerRegistration mGuessingListenerRegistration;
@@ -63,6 +65,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
         if (mOnlineGame != null) {
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
         } else {
+            stopTimeOutTimer();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         }
 
@@ -89,9 +92,19 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
             @Override
             public void onFinish() {
+                setAndStartTimeOutTimer();
                 updateGuessingStepProgressAndUploadGuessing();
             }
         }.start();
+    }
+
+    /**
+     * After each round ends, this timer should be started to count for 15 minutes
+     * After 15 minutes, if not all players are finished, it means somehting is wrong and will be timed out
+     */
+    @Override
+    public void setAndStartTimeOutTimer() {
+        mTimeOutTimer = new TimeOutTimer((long) (15 * 1000), 1000, (MainActivity) mMainView, mOnlineGame).start();
     }
 
     @Override
@@ -130,6 +143,11 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     }
 
     @Override
+    public void stopTimeOutTimer() {
+        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
+    }
+
+    @Override
     public void restartCountDownTimer() {
 //        if(mCountDownTimer != null) mCountDownTimer.start();
     }
@@ -146,12 +164,12 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void finishGame(Game game) {
+        stopTimeOutTimer();
         mMainPresenter.transToGameResultPage(game);
     }
 
     @Override
     public void start() {
-        Log.d(TAG, "start: is in offline? " + mIsInOfflineMode);
         if(mIsInOfflineMode) {
             mMainPresenter.informToShowTapToNextStepUi();
             mGuessingView.hideViews();

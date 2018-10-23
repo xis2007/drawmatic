@@ -39,7 +39,9 @@ public interface DrawingContract {
 
         void setPreviousPlayer();
 
-        void setAndStartTimer(DrawingFragment drawingFragment);
+        void setAndStartTimer();
+
+        void setAndStartTimeOutTimer();
 
         void setCurrentStep();
 
@@ -54,6 +56,8 @@ public interface DrawingContract {
         void uploadImageAndGetImageUrl();
 
         void stopCountDownTimer();
+
+        void stopTimeOutTimer();
 
         void restartCountDownTimer();
 

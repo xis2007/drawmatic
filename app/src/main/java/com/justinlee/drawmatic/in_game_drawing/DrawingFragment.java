@@ -110,6 +110,8 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
         mInGameNavigation = rootView.findViewById(R.id.bottom_nav_in_game);
         mInGameNavigation.enableAnimation(false);
         mInGameNavigation.enableShiftingMode(false);
+        mInGameNavigation.setIconSize(25, 25);
+        mInGameNavigation.setTextVisibility(false);
 
         mInGameNavigation.setOnNavigationItemSelectedListener(inGameNavListener);
     }

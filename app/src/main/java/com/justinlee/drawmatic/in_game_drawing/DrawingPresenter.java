@@ -16,6 +16,7 @@ import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.DrawViewToImageGenerator;
 import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
+import com.justinlee.drawmatic.util.timer.TimeOutTimer;
 
 public class DrawingPresenter implements DrawingContract.Presenter {
     private static final String TAG = "justinx";
@@ -29,6 +30,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+    private CountDownTimer mTimeOutTimer;
 
     private ListenerRegistration mRoomListenerRegistration;
     private ListenerRegistration mDrawingListenerRegistration;
@@ -64,6 +66,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);
         } else {
+            stopTimeOutTimer();
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         }
     }
@@ -90,11 +93,13 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void setPreviousPlayer() {
-        mDrawingView.showPreviousPlayer(new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcPlayerNameWhereTopicOrDrawingIsRetrieved());
+        mDrawingView.showPreviousPlayer(new TopicDrawingRetrievingUtil((MainActivity) mMainView,
+                mOnlineGame,
+                ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcPlayerNameWhereTopicOrDrawingIsRetrieved());
     }
 
     @Override
-    public void setAndStartTimer(final DrawingFragment drawingFragment) {
+    public void setAndStartTimer() {
         mCountDownTimer = new CountDownTimer((long) (mOnlineGame.getDrawingAndGuessingTimeAllowed() * 60 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -105,15 +110,26 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             @Override
             public void onFinish() {
                 uploadImageAndGetImageUrl();
+                setAndStartTimeOutTimer();
             }
         }.start();
+    }
+
+    /**
+     * After each round ends, this timer should be started to count for 15 minutes
+     * After 15 minutes, if not all players are finished, it means somehting is wrong and will be timed out
+     */
+    @Override
+    public void setAndStartTimeOutTimer() {
+        mTimeOutTimer = new TimeOutTimer((long) (15 * 1000), 1000, (MainActivity) mMainView, mOnlineGame).start();
     }
 
     @Override
     public void uploadImageAndGetImageUrl() {
         mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         // TODO change below parameters
-        new OnlineInGameManager((MainActivity) mMainView).uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
+        new OnlineInGameManager((MainActivity) mMainView)
+                .uploadImageAndGetImageUrl(DrawingPresenter.this, mOnlineGame, ((MainActivity) mMainView).findViewById(R.id.drawView));
 
     }
 
@@ -147,6 +163,13 @@ public class DrawingPresenter implements DrawingContract.Presenter {
         if(mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
+
+    @Override
+    public void stopTimeOutTimer() {
+        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
+    }
+
+
     @Override
     public void restartCountDownTimer() {
 //        if(mCountDownTimer != null) mCountDownTimer.start();
@@ -155,7 +178,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void startDrawing() {
         mMainView.hideLoadingUi();
-        setAndStartTimer((DrawingFragment) mDrawingView);
+        setAndStartTimer();
     }
 
     @Override

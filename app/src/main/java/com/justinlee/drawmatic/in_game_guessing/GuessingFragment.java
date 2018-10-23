@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GuessingFragment extends Fragment implements GuessingContract.View {
     private GuessingContract.Presenter mGuessingPresenter;
 
+    private TextView mTextHintTitle;
     private EditText mEditTextGuessingInput;
     private Button mCurrentStepButton;
     private TextView mTextTimeRemaining;
@@ -71,6 +72,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
 
     private void initViews(View rootView) {
+        mTextHintTitle = rootView.findViewById(R.id.text_hint_title_guessing);
         mEditTextGuessingInput = rootView.findViewById(R.id.edittext_topic_guessing);
         mTextTimeRemaining = rootView.findViewById(R.id.text_time_remaining_guessing);
         mImageToGuess = rootView.findViewById(R.id.image_drawing_from_previous);
@@ -126,8 +128,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
     @Override
     public void showWordCountHint(int wordCount) {
-        mEditTextGuessingInput.setHint(wordCount + " words");
-        mEditTextGuessingInput.setHintTextColor(getActivity().getResources().getColor(R.color.colorGrey));
+        mTextHintTitle.setText("Guess - " + wordCount + " words");
     }
 
 
