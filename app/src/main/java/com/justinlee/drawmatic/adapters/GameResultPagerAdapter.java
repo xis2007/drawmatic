@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.justinlee.drawmatic.R;
 
 import java.util.ArrayList;
@@ -52,11 +54,11 @@ public class GameResultPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public int getCount() {//必须实现
+    public int getCount() { //必须实现
         if(mIsInOfflineMode) {
             return mResultObjects.size();
         } else {
-            return mResultStrings.size();
+            return mResultStrings.size() + 1;
         }
     }
 
@@ -85,24 +87,52 @@ public class GameResultPagerAdapter extends PagerAdapter {
             }
 
         } else {
+
             // Online Mode
-            if(position % 2 == 0) {
-                resultImage.setVisibility(View.GONE);
-                resultText.setText(mResultStrings.get(position));
-                authorText.setText("by " + mAuthorStrings.get(position));
+            if(position == 2) {
+                // for ad
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_banner_ad, container, false);
+                insertAdToView(view);
 
+            } else if (position < 2){
+                // for results before ad
+                if(position % 2 == 0) {
+                    resultImage.setVisibility(View.GONE);
+                    resultText.setText(mResultStrings.get(position));
+                    authorText.setText("by " + mAuthorStrings.get(position));
+
+                } else {
+                    resultText.setVisibility(View.GONE);
+                    Glide.with(mContext).load(mResultStrings.get(position)).into(resultImage);
+                    authorText.setText("by " + mAuthorStrings.get(position));
+                }
             } else {
-                resultText.setVisibility(View.GONE);
-                Glide.with(mContext).load(mResultStrings.get(position)).into(resultImage);
-                authorText.setText("by " + mAuthorStrings.get(position));
-            }
-        }
+                // for results after ad
+                if(position % 2 == 0) {
+                    resultText.setVisibility(View.GONE);
+                    Glide.with(mContext).load(mResultStrings.get(position - 1)).into(resultImage);
+                    authorText.setText("by " + mAuthorStrings.get(position - 1));
 
+                } else {
+                    resultImage.setVisibility(View.GONE);
+                    resultText.setText(mResultStrings.get(position - 1));
+                    authorText.setText("by " + mAuthorStrings.get(position - 1));
+                }
+            }
+
+
+        }
 
 //        container.removeAllViewsInLayout();
 //        container.removeAllViews();
         container.addView(view);
         return view;
+    }
+
+    private void insertAdToView(View view) {
+        AdView adView = view.findViewById(R.id.bannerAdView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override

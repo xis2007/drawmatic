@@ -11,7 +11,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.MobileAds;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.FirebaseConstants;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -32,6 +34,11 @@ public class BaseActivity extends AppCompatActivity {
         setStatusBar();
         setToolBarHeight();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Initialize Admob
+        MobileAds.initialize(this, FirebaseConstants.TEST_APP_ID_ADMOB);
+
+        // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());
     }
 
