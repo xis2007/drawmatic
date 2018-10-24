@@ -27,6 +27,7 @@ public class GameResultPagerAdapter extends PagerAdapter {
 
     // Offline Mode Data
     private ArrayList<Object> mResultObjects;
+    private AdView mAdView;
 
 //    private ArrayList<View> mViewList;
 
@@ -54,7 +55,7 @@ public class GameResultPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public int getCount() { //必须实现
+    public int getCount() {
         if(mIsInOfflineMode) {
             return mResultObjects.size();
         } else {
@@ -67,8 +68,10 @@ public class GameResultPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+
+
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {//必须实现，实例化
+    public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_game_result_image, container, false);
         ImageView resultImage = view.findViewById(R.id.image_game_result);
         TextView resultText = view.findViewById(R.id.text_game_result);
@@ -119,24 +122,24 @@ public class GameResultPagerAdapter extends PagerAdapter {
                     authorText.setText("by " + mAuthorStrings.get(position - 1));
                 }
             }
-
-
         }
 
-//        container.removeAllViewsInLayout();
-//        container.removeAllViews();
         container.addView(view);
         return view;
     }
 
     private void insertAdToView(View view) {
-        AdView adView = view.findViewById(R.id.bannerAdView);
+        mAdView = view.findViewById(R.id.bannerAdView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {//必须实现，销毁
+    public void destroyItem(ViewGroup container, int position, Object object) {
 //        container.removeView(mViewList.get(position));
+    }
+
+    public AdView getAdView() {
+        return mAdView;
     }
 }

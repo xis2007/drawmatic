@@ -186,7 +186,8 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
     public void onStop() {
         if (!((GuessingPresenter) mGuessingPresenter).isInOfflineMode()) {
             mGuessingPresenter.stopCountDownTimer();
-            ((GuessingPresenter) mGuessingPresenter).getRoomListenerRegistration().remove();
+            mGuessingPresenter.removeRoomListenerRegistration();
+            mGuessingPresenter.saveUnproperlyProcessedData();
         }
         super.onStop();
     }

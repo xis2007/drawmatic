@@ -7,6 +7,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
@@ -89,6 +90,8 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         mTimeOutTimer = new TimeOutTimer((long) (15 * 1000), 1000, (MainActivity) mMainView, mOnlineGame).start();
     }
 
+
+
     @Override
     public void setCurrentStep() {
         mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
@@ -107,6 +110,18 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     @Override
     public void restartCountDownTimer() {
 //        if(mCountDownTimer != null) mCountDownTimer.start();
+    }
+
+    @Override
+    public void removeRoomListenerRegistration() {
+        mRoomListenerRegistration.remove();
+    }
+
+    @Override
+    public void saveUnproperlyProcessedData() {
+        OnlineExpiredDataManager onlineExpiredDataManager = new OnlineExpiredDataManager((MainActivity) mMainView);
+        onlineExpiredDataManager.saveRoomToPref(mOnlineGame.getRoomId());
+        onlineExpiredDataManager.saveDataToPref(mOnlineGame.getImageUrlStrings());
     }
 
     @Override
@@ -161,10 +176,6 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     public CountDownTimer getCountDownTimer() {
         return mCountDownTimer;
-    }
-
-    public ListenerRegistration getRoomListenerRegistration() {
-        return mRoomListenerRegistration;
     }
 
     public boolean isInOfflineMode() {

@@ -42,5 +42,7 @@ public interface PlayContract {
         void informToShowNoRoomsResultFoundMessage();
 
         void informToShowRoomIsInGameMessage();
+
+        void clearServerUnproperlyProcessedDat();
     }
 }

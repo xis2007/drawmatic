@@ -142,7 +142,8 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
     public void onStop() {
         if (!((SetTopicPresenter) mSetTopicPresenter).isInOfflineMode()) {
             mSetTopicPresenter.stopCountDownTimer();
-            ((SetTopicPresenter) mSetTopicPresenter).getRoomListenerRegistration().remove();
+            mSetTopicPresenter.removeRoomListenerRegistration();
+            mSetTopicPresenter.saveUnproperlyProcessedData();
         }
         super.onStop();
     }

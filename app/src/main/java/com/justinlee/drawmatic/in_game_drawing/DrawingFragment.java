@@ -188,7 +188,6 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
      * Fragment Lifecycle
      * **********************************************************************************
      */
-
     @Override
     public void onStart() {
         super.onStart();
@@ -202,7 +201,8 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     public void onStop() {
         if (!((DrawingPresenter) mDrawingPresenter).isInOfflineMode()) {
             mDrawingPresenter.stopCountDownTimer();
-            ((DrawingPresenter) mDrawingPresenter).getRoomListenerRegistration().remove();
+            mDrawingPresenter.removeRoomListenerRegistration();
+            mDrawingPresenter.saveUnproperlyProcessedData();
         }
         super.onStop();
     }

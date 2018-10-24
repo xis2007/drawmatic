@@ -8,6 +8,7 @@ import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
@@ -78,8 +79,15 @@ public class PlayPresenter implements PlayContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void clearServerUnproperlyProcessedDat() {
+        OnlineExpiredDataManager onlineExpiredDataManager = new OnlineExpiredDataManager((MainActivity) mMainView);
+        onlineExpiredDataManager.deleteExpiredRoom(onlineExpiredDataManager.deleteRoomFromPref());
+        onlineExpiredDataManager.deleteExpiredStorageData(onlineExpiredDataManager.deleteDataFromPref());
+    }
 
+    @Override
+    public void start() {
+        clearServerUnproperlyProcessedDat();
     }
 
 

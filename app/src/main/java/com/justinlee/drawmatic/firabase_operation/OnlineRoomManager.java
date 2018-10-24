@@ -183,7 +183,10 @@ public class OnlineRoomManager {
     }
 
     private void deleteRoomWhenRoomMasterLeaves(final OnlineWaitingFragment onlineWaitingFragment, String roomId, final OnlineSettings onlineSettings, final Player leavingPlayer) {
-        Drawmatic.getmFirebaseDb().collection("rooms").document(roomId).delete()
+        Drawmatic.getmFirebaseDb()
+                .collection("rooms")
+                .document(roomId)
+                .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

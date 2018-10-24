@@ -65,6 +65,10 @@ public interface GuessingContract {
 
         void finishGame(Game game);
 
+        void removeRoomListenerRegistration();
+
+        void saveUnproperlyProcessedData();
+
         void transToNextPage();
 
         void saveGuessingAndTransToNextPage(String guessing);

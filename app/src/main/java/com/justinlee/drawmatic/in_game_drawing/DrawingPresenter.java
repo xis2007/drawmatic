@@ -9,6 +9,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
@@ -179,6 +180,18 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     public void startDrawing() {
         mMainView.hideLoadingUi();
         setAndStartTimer();
+    }
+
+    @Override
+    public void removeRoomListenerRegistration() {
+        mRoomListenerRegistration.remove();
+    }
+
+    @Override
+    public void saveUnproperlyProcessedData() {
+        OnlineExpiredDataManager onlineExpiredDataManager = new OnlineExpiredDataManager((MainActivity) mMainView);
+        onlineExpiredDataManager.saveRoomToPref(mOnlineGame.getRoomId());
+        onlineExpiredDataManager.saveDataToPref(mOnlineGame.getImageUrlStrings());
     }
 
     @Override

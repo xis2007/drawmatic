@@ -9,6 +9,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
@@ -109,7 +110,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void updateGuessingStepProgressAndUploadGuessing() {
-        mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
+        mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         String inputGuessing = mGuessingView.getGuessingInput();
         if(inputGuessing == null) inputGuessing = "";
 
@@ -166,6 +167,18 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     public void finishGame(Game game) {
         stopTimeOutTimer();
         mMainPresenter.transToGameResultPage(game);
+    }
+
+    @Override
+    public void removeRoomListenerRegistration() {
+        mRoomListenerRegistration.remove();
+    }
+
+    @Override
+    public void saveUnproperlyProcessedData() {
+        OnlineExpiredDataManager onlineExpiredDataManager = new OnlineExpiredDataManager((MainActivity) mMainView);
+        onlineExpiredDataManager.saveRoomToPref(mOnlineGame.getRoomId());
+        onlineExpiredDataManager.saveDataToPref(mOnlineGame.getImageUrlStrings());
     }
 
     @Override

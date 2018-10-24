@@ -61,6 +61,10 @@ public interface DrawingContract {
 
         void restartCountDownTimer();
 
+        void removeRoomListenerRegistration();
+
+        void saveUnproperlyProcessedData();
+
         void startDrawing();
 
         /**

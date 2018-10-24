@@ -50,6 +50,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     public void informToShowOnlineGameResults(ArrayList<String> resultStrings) {
         mGameResultView.showOnlineGameResults(resultStrings, new TopicDrawingRetrievingUtil((MainActivity) mMainView, mOnlineGame, ((MainPresenter) mMainPresenter).getCurrentPlayer()).calcOrderedPlayersForResults());
         mMainPresenter.isNotLoading();
+//        mMainPresenter.informToShowTapToNextStepUi();
     }
 
     @Override

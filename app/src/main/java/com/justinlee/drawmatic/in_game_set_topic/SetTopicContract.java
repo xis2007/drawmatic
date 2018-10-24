@@ -40,6 +40,10 @@ public interface SetTopicContract {
 
         void setAndStartTimeOutTimer();
 
+        void removeRoomListenerRegistration();
+
+        void saveUnproperlyProcessedData();
+
         /**
          * Offline Mode
          */
