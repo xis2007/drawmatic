@@ -76,7 +76,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
     @Override
     public void showRoomStatusUi(OnlineGame onlineGame) {
-        mTextHintWaiting.setText("Room name: " + onlineGame.getOnlineSettings().getRoomName() + " | Player in Room: " + onlineGame.getOnlineSettings().getPlayers().size() + " / " + onlineGame.getOnlineSettings().getMaxPlayers());
+        mTextHintWaiting.setText(getString(R.string.hint_room_name) + onlineGame.getOnlineSettings().getRoomName() + getString(R.string.hint_player_in_room) + onlineGame.getOnlineSettings().getPlayers().size() + " / " + onlineGame.getOnlineSettings().getMaxPlayers());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
 
     @Override
     public void showNotEnoughPlayersMessage(MainActivity mainActivity) {
-        Snackbar.make(mainActivity.findViewById(R.id.fragment_container_main), "Need at least 4 players to begin", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mainActivity.findViewById(R.id.fragment_container_main), R.string.hint_min_players_requirements, Snackbar.LENGTH_SHORT).show();
     }
 
 

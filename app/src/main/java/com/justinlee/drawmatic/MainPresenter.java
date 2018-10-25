@@ -91,7 +91,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mInstructionsFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mInstructionsFragment, "OFFLINE");
+            transaction.add(R.id.fragment_container_main, mInstructionsFragment, Constants.FragmentFlag.FLAG_INSTRUCTIONS);
         } else {
             transaction.show(mInstructionsFragment);
         }
@@ -149,7 +149,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mPlayFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mPlayFragment, "PLAY");
+            transaction.add(R.id.fragment_container_main, mPlayFragment, Constants.FragmentFlag.FLAG_PLAY);
         } else {
             transaction.show(mPlayFragment);
         }
@@ -196,7 +196,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mCreateRoomFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mCreateRoomFragment, "CREATE_ROOM");
+            transaction.add(R.id.fragment_container_main, mCreateRoomFragment, Constants.FragmentFlag.FLAG_CREATE_ROOM);
         } else {
             transaction.show(mCreateRoomFragment);
         }
@@ -229,7 +229,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mOnlineWaitingFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mOnlineWaitingFragment, "CREATE_ROOM");
+            transaction.add(R.id.fragment_container_main, mOnlineWaitingFragment, Constants.FragmentFlag.FLAG_WAITING);
         } else {
             transaction.show(mOnlineWaitingFragment);
         }
@@ -265,7 +265,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mSetTopicFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mSetTopicFragment, "SET_TOPIC");
+            transaction.add(R.id.fragment_container_main, mSetTopicFragment, Constants.FragmentFlag.FLAG_SET_TOPIC);
         } else {
             transaction.show(mSetTopicFragment);
         }
@@ -299,7 +299,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mDrawingFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mDrawingFragment, "DRAWING");
+            transaction.add(R.id.fragment_container_main, mDrawingFragment, Constants.FragmentFlag.FLAG_DRAWING);
         } else {
             transaction.show(mDrawingFragment);
         }
@@ -328,7 +328,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mGuessingFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mGuessingFragment, "GUESSING");
+            transaction.add(R.id.fragment_container_main, mGuessingFragment, Constants.FragmentFlag.FLAG_GUESSING);
         } else {
             transaction.show(mGuessingFragment);
         }
@@ -362,7 +362,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
 
         if (!mGameResultFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mGameResultFragment, "GAME_RESULT");
+            transaction.add(R.id.fragment_container_main, mGameResultFragment, Constants.FragmentFlag.FLAG_GAME_RESULT);
         } else {
             transaction.show(mGameResultFragment);
         }
@@ -404,7 +404,7 @@ public class MainPresenter implements MainContract.Presenter {
         // TODO add all others
 
         if (!mSettingsFragment.isAdded()) {
-            transaction.add(R.id.fragment_container_main, mSettingsFragment, "SETTINGS");
+            transaction.add(R.id.fragment_container_main, mSettingsFragment, Constants.FragmentFlag.FLAG_SETTINGS);
         } else {
             transaction.show(mSettingsFragment);
         }

@@ -18,15 +18,11 @@ import com.ramotion.garlandview.inner.InnerRecyclerView;
 import java.util.ArrayList;
 
 public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapter.InstructionsOuterItem> {
-
     private final ArrayList<ArrayList<InnerInstructionsData>> mInstructionsList;
-//    private final RecyclerView.RecycledViewPool mPool;
 
     public InstructionsOuterAdapter(ArrayList<ArrayList<InnerInstructionsData>> instructionsList) {
         mInstructionsList = instructionsList;
 
-//        mPool = new RecyclerView.RecycledViewPool();
-//        mPool.setMaxRecycledViews(0, 16);
     }
 
     @NonNull
@@ -38,7 +34,6 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
 
     @Override
     public void onBindViewHolder(@NonNull InstructionsOuterItem holder, int position) {
-//        holder.getHeaderTitle().setText(mInstructionsList.get(position).get(0).getInstructionTitle());
         holder.setContent(mInstructionsList.get(position), position);
     }
 
@@ -51,8 +46,6 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
     public int getItemViewType(int position) {
         return R.layout.item_outer_instructions;
     }
-
-
 
 
 
@@ -128,20 +121,6 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
         @Override
         public View getHeaderAlphaView() {
             return mHeaderAlpha;
-        }
-
-
-
-        public View getHeaderAlpha() {
-            return mHeaderAlpha;
-        }
-
-        public TextView getHeaderTitle() {
-            return mHeaderTitle;
-        }
-
-        public InnerRecyclerView getInnerRecyclerView() {
-            return mInnerRecyclerView;
         }
 
         public void setContent(@NonNull ArrayList<InnerInstructionsData> innerDataList, int position) {

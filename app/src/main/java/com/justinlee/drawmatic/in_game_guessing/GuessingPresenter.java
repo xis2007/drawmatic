@@ -2,13 +2,13 @@ package com.justinlee.drawmatic.in_game_guessing;
 
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
@@ -20,8 +20,6 @@ import com.justinlee.drawmatic.util.TopicDrawingRetrievingUtil;
 import com.justinlee.drawmatic.util.timer.TimeOutTimer;
 
 public class GuessingPresenter implements GuessingContract.Presenter {
-    private static final String TAG = "justinxxxxx";
-
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
     private GuessingContract.View mGuessingView;
@@ -112,7 +110,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     public void updateGuessingStepProgressAndUploadGuessing() {
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         String inputGuessing = mGuessingView.getGuessingInput();
-        if(inputGuessing == null) inputGuessing = "";
+        if(inputGuessing == null) inputGuessing = Constants.NO_STRING;
 
         new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
     }
@@ -155,7 +153,6 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setWordCountHint(String theWord) {
-        Log.d(TAG, "setWordCountHint: the word is: " + theWord);
         if(StringUtil.isEmptyString(theWord)) {
             mGuessingView.showWordCountHint(0);
         } else {

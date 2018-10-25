@@ -33,4 +33,23 @@ public class Constants {
         public static final int NO_RESULTS = 101;
         public static final int ROOM_RESULTS = 102;
     }
+
+    public class FragmentFlag {
+        public static final String FLAG_LEAVE_APP_ALERT = "LEAVE_APP_ALERT";
+        public static final String FLAG_LEAVE_GAME_ALERT = "LEAVE_GAME_ALERT";
+        public static final String FLAG_INSTRUCTIONS = "INSTRUCTIONS";
+        public static final String FLAG_PLAY = "PLAY";
+        public static final String FLAG_SETTINGS = "SETTINGS";
+
+        public static final String FLAG_CREATE_ROOM = "CREATE_ROOM";
+        public static final String FLAG_WAITING = "WAITING";
+        public static final String FLAG_SET_TOPIC = "SET_TOPIC";
+        public static final String FLAG_DRAWING = "DRAWING";
+        public static final String FLAG_GUESSING = "GUESSING";
+        public static final String FLAG_GAME_RESULT = "GAME_RESULT";
+
+    }
+
+    public static final String NO_STRING = "";
+    public static final String SPACE_STRING = " ";
 }

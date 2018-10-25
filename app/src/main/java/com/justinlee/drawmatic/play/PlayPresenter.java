@@ -67,11 +67,6 @@ public class PlayPresenter implements PlayContract.Presenter {
         mMainPresenter.transToOnlineWaitingPage(onlineGame);
     }
 
-    @Override
-    public void informToShowNoRoomsResultFoundMessage() {
-        mMainPresenter.isNotLoading();
-        mOnlineView.showNoRoomsResultFoundMessage();
-    }
 
     @Override
     public void informToShowRoomIsInGameMessage() {

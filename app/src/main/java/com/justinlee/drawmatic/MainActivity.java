@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.justinlee.drawmatic.User.UserManager;
 import com.justinlee.drawmatic.activities.LoginActivity;
 import com.justinlee.drawmatic.bases.BaseActivity;
 import com.justinlee.drawmatic.constants.Constants;
@@ -24,8 +22,6 @@ import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MainActivity extends BaseActivity implements MainContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "justinxx";
-
     private MainContract.Presenter mMainPresenter;
     private BottomNavigationViewEx mPrimaryNavigation;
 
@@ -45,9 +41,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         } else {
             promptForLogin();
         }
-
-        Log.d(TAG, "saveUserInfo: user name is: " + UserManager.getInstance().getUserName());
-        Log.d(TAG, "saveUserInfo: user id is: " + UserManager.getInstance().getUserId());
     }
 
     @Override
@@ -113,7 +106,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     @Override
     public void hideLoadingUi() {
         mLoadingLayout.setVisibility(View.GONE);
-        mLoadingHint.setText("");
+        mLoadingHint.setText(Constants.NO_STRING);
     }
 
     @Override
@@ -126,17 +119,17 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
                 mLoadingLayout.setOnClickListener(null);
             }
         });
-        mLoadingHint.setText("Tap to start the next step");
+        mLoadingHint.setText(R.string.hint_tap_to_next_step);
     }
 
     @Override
     public void showLeaveAppDialog() {
-        BackLeaveAppBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), "LEAVE_APP_ALERT");
+        BackLeaveAppBottomSheetDialog.newInstance(this).show(getSupportFragmentManager(), Constants.FragmentFlag.FLAG_LEAVE_APP_ALERT);
     }
 
     @Override
     public void showLeaveGameDialog(OnlineGame onlineGame) {
-        LeaveGameBottomSheetDialog.newInstance(this).setOnlineGame(onlineGame).show(getSupportFragmentManager(), "LEAVE_GAME_ALERT");
+        LeaveGameBottomSheetDialog.newInstance(this).setOnlineGame(onlineGame).show(getSupportFragmentManager(), Constants.FragmentFlag.FLAG_LEAVE_GAME_ALERT);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.justinlee.drawmatic.constants.FirebaseConstants;
 
 public class Drawmatic extends Application {
     private static Context mContext;
@@ -40,6 +41,6 @@ public class Drawmatic extends Application {
     }
 
     private void initializeFirebaseStorage() {
-        mStorageReference = FirebaseStorage.getInstance().getReference("rooms");
+        mStorageReference = FirebaseStorage.getInstance().getReference(FirebaseConstants.Storage.REF_ROOMS);
     }
 }

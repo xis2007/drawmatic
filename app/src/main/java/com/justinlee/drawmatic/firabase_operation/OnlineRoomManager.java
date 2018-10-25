@@ -28,6 +28,7 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.constants.FirebaseConstants;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
@@ -65,7 +66,7 @@ public class OnlineRoomManager {
      */
     public void createOnlineRoom(final CreateRoomPresenter createRoomPresenter, final OnlineSettings onlineSettings, final CreateRoomContract.View createRoomView) {
         final DocumentReference newRoomReference = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document();
 
         newRoomReference
@@ -90,12 +91,9 @@ public class OnlineRoomManager {
      * **********************************************************************************
      */
     public void searchForRoom(final PlayFragment playFragment, final PlayContract.Presenter playPresenter, final String inputString) {
-        CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection("rooms");
+        CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection(FirebaseConstants.Firestore.COLLECTION_ROOMS);
 
         collecRef
-//            .whereGreaterThan("roomName", inputString)
-//            .whereEqualTo("roomName", inputString)
-//            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -115,9 +113,6 @@ public class OnlineRoomManager {
             });
 
         collecRef
-//            .whereGreaterThan("roomName", inputString)
-//            .whereEqualTo("roomName", inputString)
-//            .whereGreaterThan("timeStamp", getDateTimeWithinThreeHours())
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -132,7 +127,9 @@ public class OnlineRoomManager {
 
 
     public void joinRoom(final PlayFragment playFragment, final OnlineGame onlineGame, final PlayPresenter playPresenter, final Player joiningPlayer) {
-        final DocumentReference roomToJoinRef = Drawmatic.getmFirebaseDb().collection("rooms").document(onlineGame.getRoomId());
+        final DocumentReference roomToJoinRef = Drawmatic.getmFirebaseDb()
+                                                            .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
+                                                            .document(onlineGame.getRoomId());
 
         Drawmatic.getmFirebaseDb()
                 .runTransaction(new Transaction.Function<Void>() {
@@ -144,16 +141,14 @@ public class OnlineRoomManager {
                         // if room players maxed out, then player cannot join the game
                         if (mostCurrentOnlineSettings.getPlayers().size() >= mostCurrentOnlineSettings.getMaxPlayers()) {
                             Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "players maxed out", Snackbar.LENGTH_SHORT).show();
+
                         } else {
-//                            double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() + 1;
-//                            transaction.update(roomToJoinRef, "currentNumPlayers", newCurrentNumPlayers);
-
                             HashMap<String, Object> player = new HashMap<>();
-                            player.put("playerName", joiningPlayer.getPlayerName());
-                            player.put("playerId", joiningPlayer.getPlayerId());
-                            player.put("playerType", Constants.PlayerType.PARTICIPANT);
+                            player.put(FirebaseConstants.Firestore.KEY_PLAYER_NAME, joiningPlayer.getPlayerName());
+                            player.put(FirebaseConstants.Firestore.KEY_PLAYER_ID, joiningPlayer.getPlayerId());
+                            player.put(FirebaseConstants.Firestore.KEY_PLAYER_TYPE, Constants.PlayerType.PARTICIPANT);
 
-                            transaction.update(roomToJoinRef, "players", FieldValue.arrayUnion(player));
+                            transaction.update(roomToJoinRef, FirebaseConstants.Firestore.KEY_PLAYERS, FieldValue.arrayUnion(player));
                         }
                         return null;
                     }
@@ -184,7 +179,7 @@ public class OnlineRoomManager {
 
     private void deleteRoomWhenRoomMasterLeaves(final OnlineWaitingFragment onlineWaitingFragment, String roomId, final OnlineSettings onlineSettings, final Player leavingPlayer) {
         Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(roomId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -205,28 +200,19 @@ public class OnlineRoomManager {
     private void playerLeavesGame(final OnlineWaitingFragment onlineWaitingFragment, String roomId, OnlineSettings onlineSettings, final Player leavingPlayer) {
         final DocumentReference roomToLeaveRef =
                 Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(roomId);
 
         Drawmatic.getmFirebaseDb()
                 .runTransaction(new Transaction.Function<Void>() {
                     @Override
                     public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                        DocumentSnapshot snapshot = transaction.get(roomToLeaveRef);
-                        OnlineSettings mostCurrentOnlineSettings = snapshot.toObject(OnlineSettings.class);
-
-                        // if room players maxed out, then player cannot join the game
-
-//                        double newCurrentNumPlayers = mostCurrentOnlineSettings.getCurrentNumPlayers() - 1;
-//                        transaction.update(roomToLeaveRef, "currentNumPlayers", newCurrentNumPlayers);
-
                         HashMap<String, Object> player = new HashMap<>();
-                        player.put("playerName", leavingPlayer.getPlayerName());
-                        player.put("playerId", leavingPlayer.getPlayerId());
-        //                    player.put("playerOrder", newCurrentNumPlayers);
-                        player.put("playerType", leavingPlayer.getPlayerType());
+                        player.put(FirebaseConstants.Firestore.KEY_PLAYER_NAME, leavingPlayer.getPlayerName());
+                        player.put(FirebaseConstants.Firestore.KEY_PLAYER_ID, leavingPlayer.getPlayerId());
+                        player.put(FirebaseConstants.Firestore.KEY_PLAYER_TYPE, leavingPlayer.getPlayerType());
 
-                        transaction.update(roomToLeaveRef, "players", FieldValue.arrayRemove(player));
+                        transaction.update(roomToLeaveRef, FirebaseConstants.Firestore.KEY_PLAYERS, FieldValue.arrayRemove(player));
 
                         return null;
                     }
@@ -255,7 +241,7 @@ public class OnlineRoomManager {
      */
     public ListenerRegistration syncRoomStatus(final OnlineWaitingContract.View onlineWaitingView, final OnlineWaitingPresenter onlineWaitingPresenter, OnlineGame onlineGame) {
             DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                    .collection("rooms")
+                    .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                     .document(onlineGame.getRoomId());
 
             docRef
@@ -313,7 +299,7 @@ public class OnlineRoomManager {
 
     public ListenerRegistration syncRoomStatusWhileInGame(final MainContract.View mainView, final MainContract.Presenter mainPresenter, final OnlineGame onlineGame) {
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
         ListenerRegistration listenerRegistration = docRef
@@ -340,9 +326,9 @@ public class OnlineRoomManager {
         if (mCurrentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
             DocumentReference roomRef = Drawmatic.getmFirebaseDb()
-                    .collection("rooms")
+                    .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                     .document(onlineGame.getRoomId());
-            batch.update(roomRef, "inGame", true);
+            batch.update(roomRef, FirebaseConstants.Firestore.KEY_IN_GAME, true);
             batch.commit();
         }
     }

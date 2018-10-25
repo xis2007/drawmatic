@@ -49,14 +49,6 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
                 view.setVisibility(View.VISIBLE);
                 return new RoomViewHolder(view);
         }
-
-//        if(viewType == Constants.RoomViewType.NO_RESULTS) {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_no_result, parent, false);
-//            return new NoRoomViewHolder(view);
-//        } else {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
-//            return new RoomViewHolder(view);
-//        }
     }
 
     @Override
@@ -68,7 +60,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
             ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
             if(currentOnlineGame.getOnlineSettings().isInGame()) {
-                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText("Playing");
+                ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(R.string.hint_playing_searchedRooms);
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
             } else {
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(currentOnlineGame.getOnlineSettings().getPlayers().size() + " / " + currentOnlineGame.getOnlineSettings().getMaxPlayers());
@@ -95,7 +87,6 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
         if(mOnlineGamesList == null) return Constants.RoomViewType.INITIAL_SEARCH;
         if(mOnlineGamesList.isEmpty()) return  Constants.RoomViewType.NO_RESULTS;
         return Constants.RoomViewType.ROOM_RESULTS;
-//        return mOnlineGamesList == null ? Constants.RoomViewType.NO_RESULTS : Constants.RoomViewType.ROOM_RESULTS;
     }
 
     @Override
@@ -118,7 +109,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
         private ConstraintLayout roomItemLayout;
 
 
-        public RoomViewHolder(View itemView) {
+        RoomViewHolder(View itemView) {
             super(itemView);
 
             mTextRoomName = itemView.findViewById(R.id.text_room_name_searched);
@@ -128,19 +119,19 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             roomItemLayout = itemView.findViewById(R.id.layout_item_room);
         }
 
-        public TextView getTextRoomName() {
+        TextView getTextRoomName() {
             return mTextRoomName;
         }
 
-        public TextView getTextRoomCreater() {
+        TextView getTextRoomCreater() {
             return mTextRoomCreater;
         }
 
-        public TextView getTextNumPlayersInRoom() {
+        TextView getTextNumPlayersInRoom() {
             return mTextNumPlayersInRoom;
         }
 
-        public ConstraintLayout getRoomItemLayout() {
+        ConstraintLayout getRoomItemLayout() {
             return roomItemLayout;
         }
     }

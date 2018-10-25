@@ -26,6 +26,7 @@
     <color name="colorGreyLight">#d3d3d3</color>
     <color name="colorGrey">#808080</color>
     <color name="colorGreyDark">#434343</color>
+    <color name="colorGrey50">#803B3B3B</color>
     <color name="colorBlack">#000000</color>
 
     <color name="colorBlack20">#32000000</color>

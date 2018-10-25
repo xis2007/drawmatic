@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.InnerInstructionsData;
 import com.ramotion.garlandview.inner.InnerAdapter;
 import com.ramotion.garlandview.inner.InnerItem;
@@ -71,7 +72,6 @@ public class InstructionsInnerAdapter extends InnerAdapter<InstructionsInnerAdap
             super(itemView);
 
             mInnerLayout = itemView.findViewById(R.id.layout_inner_item);
-//            mInnerLayout = ((ViewGroup)itemView).getChildAt(0);
             mTextTitle = itemView.findViewById(R.id.text_title_inner);
             mTextContent = itemView.findViewById(R.id.text_content_inner);
             mCardView = itemView.findViewById(R.id.cardView_inner);
@@ -87,7 +87,7 @@ public class InstructionsInnerAdapter extends InnerAdapter<InstructionsInnerAdap
             mTextTitle.setText(data.getInstructionTitle());
             mTextContent.setText(data.getInstructionContent());
 
-            if(data.getImageSource().equals("") || data.getImageSource().isEmpty()) {
+            if(data.getImageSource().equals(Constants.NO_STRING) || data.getImageSource().isEmpty()) {
                 mCardView.setVisibility(View.GONE);
             } else {
                 mCardView.setVisibility(View.VISIBLE);

@@ -65,6 +65,7 @@
                     android:layout_weight="1"
                     android:text="01:56"
                     android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -75,7 +76,7 @@
                     android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/box_info_in_game_alert"
-                    android:text="Quit"
+                    android:text="@string/button_quit_drawing"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -150,14 +151,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="5dp"
             android:maxLines="1"
-            android:text="Draw The Topic in the Yellow Box"
+            android:text="@string/hint_game_drawing"
             android:textAlignment="center"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/bottom_nav_in_game"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/text_hint_previous_player_drawing"
-            />
+            app:layout_constraintStart_toEndOf="@+id/text_hint_previous_player_drawing"/>
 
         <TextView
             android:id="@+id/text_hint_previous_player_drawing"

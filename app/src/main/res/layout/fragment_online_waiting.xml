@@ -34,8 +34,7 @@
 
         <LinearLayout
             android:id="@+id/linearlayout_button_waiting"
-            android:layout_width=
-                "0dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="8dp"

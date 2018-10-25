@@ -18,8 +18,6 @@ import com.justinlee.drawmatic.bases.BaseActivity;
 import com.justinlee.drawmatic.constants.Constants;
 
 public class LoginActivity extends BaseActivity {
-    private static final String TAG = "justinx";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,7 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 String userNameInputString = nameInputEdittext.getText().toString();
                 if ("".equals(userNameInputString) || userNameInputString.isEmpty()) {
-                    Snackbar.make(findViewById(R.id.constraintLayout_login), "Name Input Required", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.constraintLayout_login), R.string.snackbar_hint_name_input, Snackbar.LENGTH_LONG).show();
                 } else {
                     getStartedButton.setBackground(getResources().getDrawable(R.drawable.box_button_greyed_login));
 
@@ -64,7 +62,7 @@ public class LoginActivity extends BaseActivity {
                                         finish();
                                     } else {
                                         getStartedButton.setBackground(getResources().getDrawable(R.drawable.box_button_login));
-                                        Snackbar.make(findViewById(R.id.constraintLayout_login), "Something went Wrong. Please try again", Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(findViewById(R.id.constraintLayout_login), R.string.snackbar_hint_something_went_wrong, Snackbar.LENGTH_LONG).show();
                                     }
                                 }
                             });

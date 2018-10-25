@@ -7,6 +7,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
+import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
 import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
@@ -75,7 +76,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     public void updateSetTopicStepProgressAndUploadTopic() {
         mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         String inputTopic = mSetTopicView.getEditTextTopicInput();
-        if(inputTopic == null) inputTopic = "";
+        if(inputTopic == null) inputTopic = Constants.NO_STRING;
 
         new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
     }
@@ -146,7 +147,6 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             setCurrentStep();
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
             new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
-
         }
     }
 

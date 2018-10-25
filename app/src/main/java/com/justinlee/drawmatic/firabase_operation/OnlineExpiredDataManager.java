@@ -95,7 +95,7 @@ public class OnlineExpiredDataManager {
         SharedPreferences.Editor editor = roomSharedPreferences.edit();
 
         // checks whether there are other existing rooms registered in the sharedpreferences
-        // multiple rooms stored in the sharedpreferences will be stored in consecutive integers in String format
+        // multiple rooms stored in the sharedPreferences will be stored in consecutive integers in String format
         ArrayList<String> dataStringsList = new ArrayList<>();
         int totalDataStoredCount = 0;
         while (!roomSharedPreferences.getString(String.valueOf(totalDataStoredCount), String.valueOf(-1)).equals(String.valueOf(-1))) {

@@ -84,10 +84,10 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
             public void renderParent(View view, String s, boolean b, int parentPosition) {
                 switch (parentPosition) {
                     case 0:
-                        ((TextView) view.findViewById(R.id.text_title_parent_about_settings)).setText("About");
+                        ((TextView) view.findViewById(R.id.text_title_parent_about_settings)).setText(R.string.title_about);
                         break;
                     case 1:
-                        ((TextView) view.findViewById(R.id.text_title_parent_about_settings)).setText("Privacy & Policy");
+                        ((TextView) view.findViewById(R.id.text_title_parent_about_settings)).setText(R.string.title_privacy_policy);
                         break;
                     default:
                         break;
@@ -98,10 +98,10 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
             public void renderChild(View view, String s, int parentPosition, int childPosition) {
                 switch (parentPosition) {
                     case 0:
-                        ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setText("This app is......");
+                        ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setText(R.string.des_this_app);
                         break;
                     case 1:
-                        ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setText("Please go to the link for more information");
+                        ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setText(R.string.des_privacy_policy);
                         break;
                     default:
                         break;

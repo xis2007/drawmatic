@@ -75,13 +75,6 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void informRoomExists(OnlineSettings onlineSettings) {
-        mCreateRoomView.promptRoomExistingAlert();
-        mMainPresenter.isNotLoading();
-        mMainPresenter.transToGameCreationPage(onlineSettings.getGameMode());
-    }
-
-    @Override
     public void start() {
 
     }

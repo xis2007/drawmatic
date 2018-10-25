@@ -21,8 +21,6 @@ public interface PlayContract {
 
         void showOnlineGameSettingsPageUi();
 
-        void showNoRoomsResultFoundMessage();
-
         void showRoomIsInGameMessage();
     }
 
@@ -38,8 +36,6 @@ public interface PlayContract {
         void joinSelectedRoom(OnlineGame onlineGame);
 
         void informToTransToOnlineWaitingPage(OnlineGame onlineGame);
-
-        void informToShowNoRoomsResultFoundMessage();
 
         void informToShowRoomIsInGameMessage();
 

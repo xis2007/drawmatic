@@ -5,14 +5,12 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.adapters.GameResultImagesAdapter;
 import com.justinlee.drawmatic.adapters.GameResultPagerAdapter;
 import com.merhold.extensiblepageindicator.ExtensiblePageIndicator;
 
@@ -25,9 +23,6 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     private static final String TAG = "justinxxxxx";
 
     private GameResultContract.Presenter mGameResultPresenter;
-
-    private RecyclerView mGameResultRecyclerView;
-    private GameResultImagesAdapter mGameResultImagesAdapter;
 
     private ViewPager mGameResultViewPager;
     private GameResultPagerAdapter mPagerAdapter;
@@ -44,28 +39,18 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGameResultImagesAdapter = new GameResultImagesAdapter(getActivity(), (GameResultPresenter) mGameResultPresenter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_result, container, false);
 
-//        initRecyclerView(rootView);
         initViewPager(rootView);
         initViews(rootView);
 
         return rootView;
     }
 
-
-//    private void initRecyclerView(View rootView) {
-//        mGameResultRecyclerView = rootView.findViewById(R.id.gameResultRecyclerView);
-//        mGameResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        mGameResultRecyclerView.setAdapter(mGameResultImagesAdapter);
-//        SnapHelper snapHelper = new LinearSnapHelper();
-//        snapHelper.attachToRecyclerView(mGameResultRecyclerView);
-//    }
 
     private void initViewPager(View rootView) {
         mGameResultViewPager = rootView.findViewById(R.id.gameResultViewPager);
@@ -114,6 +99,7 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
         mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultObjects);
         mGameResultViewPager.removeAllViewsInLayout();
         mGameResultViewPager.setAdapter(mPagerAdapter);
+        mGameResultViewPager.setOffscreenPageLimit(5);
         ExtensiblePageIndicator extensiblePageIndicator = getActivity().findViewById(R.id.flexibleIndicator);
         extensiblePageIndicator.initViewPager(mGameResultViewPager);
     }

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.adapters.SearchedRoomsAdapter;
+import com.justinlee.drawmatic.constants.Constants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -91,9 +92,9 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
         mEdittextSearchForRooms.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if("".equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
+                if(Constants.NO_STRING.equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
                     exitSearch();
-                    Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Need to input something", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), R.string.hint_room_name_input, Snackbar.LENGTH_SHORT).show();
                 } else {
                     exitSearch();
                     mOnlinePresenter.searchForRooms(PlayFragment.this, v.getText().toString());
@@ -115,20 +116,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
                 }
             }
         });
-
-//        mEdittextSearchForRooms.settext(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if("".equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
-//                    exitSearch();
-//                    Snackbar.make(getActivity().findViewById(R.id.boxes_scrollview_online), "Need to input something", Snackbar.LENGTH_SHORT).show();
-//                } else {
-//                    exitSearch();
-//                    mOnlinePresenter.searchForRooms(PlayFragment.this, v.getText().toString());
-//                }
-//                return true;
-//            }
-//        });
     }
 
     private void initRecyclerView(View rootView) {
@@ -191,15 +178,10 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
 
     }
 
-    @Override
-    public void showNoRoomsResultFoundMessage() {
-        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
-    }
-
 
     @Override
     public void showRoomIsInGameMessage() {
-        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), "Selected Room is in Game", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), R.string.hint_selected_room_is_in_game, Snackbar.LENGTH_SHORT).show();
     }
 
 

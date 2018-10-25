@@ -9,8 +9,6 @@ public interface CreateRoomContract {
         void showCreatedRoomUi();
 
         void promptNameInputAlert();
-
-        void promptRoomExistingAlert();
     }
 
     interface Presenter extends BasePresenter {
@@ -23,8 +21,6 @@ public interface CreateRoomContract {
         void informToHideLoadingUi();
 
         void informToShowLoadingUi();
-
-        void informRoomExists(OnlineSettings onlineSettings);
 
         /**
          * Offline methods

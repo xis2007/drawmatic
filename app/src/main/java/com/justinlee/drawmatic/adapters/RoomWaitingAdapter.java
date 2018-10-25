@@ -66,10 +66,9 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
         private ImageView mProfilePic;
         private TextView mPlayerName;
         private TextView mPlayerType;
-        private int mPlayerOrder;
 
 
-        public PlayerViewHolder(View itemView) {
+        PlayerViewHolder(View itemView) {
             super(itemView);
 
             mProfilePic = itemView.findViewById(R.id.image_player_profile_pic);
@@ -77,15 +76,15 @@ public class RoomWaitingAdapter extends RecyclerView.Adapter {
             mPlayerType = itemView.findViewById(R.id.text_player_type);
         }
 
-        public ImageView getProfilePic() {
+        ImageView getProfilePic() {
             return mProfilePic;
         }
 
-        public TextView getPlayerName() {
+        TextView getPlayerName() {
             return mPlayerName;
         }
 
-        public TextView getPlayerType() {
+        TextView getPlayerType() {
             return mPlayerType;
         }
     }

@@ -11,6 +11,21 @@ public class FirebaseConstants {
 
     public class Firestore {
         public static final String COLLECTION_ROOMS = "rooms";
+        public static final String COLLECTION_DRAWINGS = "drawings";
+        public static final String COLLECTION_PROGRESS_EACH_STEP = "progressOfEachStep";
+
+        public static final String DOCUMENT_FINISHED_CURRENT_STEP = "finishedCurrentStep";
+
+
+        public static final String KEY_IN_GAME = "inGame";
+        public static final String KEY_PLAYER_NAME = "playerName";
+        public static final String KEY_PLAYER_ID = "playerId";
+        public static final String KEY_PLAYER_TYPE = "playerType";
+        public static final String KEY_PLAYERS = "players";
+    }
+
+    public class Storage {
+        public static final String REF_ROOMS = "rooms";
 
     }
 }

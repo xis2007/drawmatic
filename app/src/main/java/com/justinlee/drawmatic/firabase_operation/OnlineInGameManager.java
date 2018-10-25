@@ -29,6 +29,7 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.constants.FirebaseConstants;
 import com.justinlee.drawmatic.in_game_drawing.DrawingContract;
 import com.justinlee.drawmatic.in_game_drawing.DrawingFragment;
 import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
@@ -51,8 +52,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 public class OnlineInGameManager {
-    private static final String TAG = "onlineRoomManagerrrrrr";
-
     private Context mContext;
     private FirebaseFirestore mFirebaseDb;
     private Player mCurrentPlayer;
@@ -70,7 +69,7 @@ public class OnlineInGameManager {
      */
     public void monitorSetTopicProgress(final MainContract.View mainView, final SetTopicPresenter setTopicPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
         // at beginning of the game, room master set all players current step progress to 0
@@ -80,9 +79,9 @@ public class OnlineInGameManager {
             HashMap<String, Object> progressMap = new HashMap<>();
             for (Player player : onlineGame.getOnlineSettings().getPlayers()) {
                 DocumentReference progressRef = docRef
-                        .collection("progressOfEachStep")
+                        .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                         .document(player.getPlayerId());
-                progressMap.put("finishedCurrentStep", 0);
+                progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, 0);
                 batch.set(progressRef, progressMap);
             }
 
@@ -90,7 +89,7 @@ public class OnlineInGameManager {
         }
 
         docRef
-            .collection("progressOfEachStep")
+            .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -100,7 +99,7 @@ public class OnlineInGameManager {
 
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         Map playerProgressMap = documentSnapshot.getData();
-                        long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
+                        long playerProgressOfThisStep = (long) playerProgressMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
                         playerProgressOfThisStep = (int) playerProgressOfThisStep;
 
                         if (playerProgressOfThisStep == 1) {
@@ -119,9 +118,9 @@ public class OnlineInGameManager {
 
     public void updateSetTopicStepProgressAndUploadTopic(final OnlineGame onlineGame, String inputTopic) {
         DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(mCurrentPlayer.getPlayerId());
 
         Map<String, String> map = new HashMap();
@@ -133,12 +132,12 @@ public class OnlineInGameManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         DocumentReference currentUserProgressRef = Drawmatic.getmFirebaseDb()
-                                .collection("rooms")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                                 .document(onlineGame.getRoomId())
-                                .collection("progressOfEachStep")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                                 .document(mCurrentPlayer.getPlayerId());
                         Map progressMap = new HashMap();
-                        progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
+                        progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, onlineGame.getCurrentStep());
                         currentUserProgressRef.update(progressMap);
                     }
                 });
@@ -156,9 +155,9 @@ public class OnlineInGameManager {
         final String dataNumber = String.valueOf(topicDrawingRetrievingUtil.calcItemNumberToRetrieveTopicOrDrawing());
 
         DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(playerIdToGetTopicOrDrawing);
 
         docRef
@@ -190,11 +189,11 @@ public class OnlineInGameManager {
 
     public ListenerRegistration monitorDrawingProgress(final DrawingContract.View drawingView, final DrawingPresenter drawingPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
         docRef
-            .collection("progressOfEachStep")
+            .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
             .document(mCurrentPlayer.getPlayerId())
             .get()
             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -204,7 +203,7 @@ public class OnlineInGameManager {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Map finishedCurrentStepMap = document.getData();
-                            long retrievedValue = (long) finishedCurrentStepMap.get("finishedCurrentStep");
+                            long retrievedValue = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
                             int finishedCurrentStep = (int) retrievedValue;
 
                             if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
@@ -222,7 +221,7 @@ public class OnlineInGameManager {
             });
 
         final ListenerRegistration listenerRegistration = docRef
-                .collection("progressOfEachStep")
+                .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -232,7 +231,7 @@ public class OnlineInGameManager {
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Map playerProgressMap = documentSnapshot.getData();
-                            long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
+                            long playerProgressOfThisStep = (long) playerProgressMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
                             playerProgressOfThisStep = (int) playerProgressOfThisStep;
 
                             if (playerProgressOfThisStep == onlineGame.getCurrentStep()) {
@@ -291,9 +290,9 @@ public class OnlineInGameManager {
 
     public void updateDrawingStepProgressAndUploadImageUrl(DrawingContract.Presenter drawingPresenter, final OnlineGame onlineGame, String downloadUrl) {
         DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(new TopicDrawingRetrievingUtil(mContext, onlineGame, mCurrentPlayer).calcPlayerIdToRetrieveTopicOrDrawing());
 
         Map map = new HashMap();
@@ -305,13 +304,13 @@ public class OnlineInGameManager {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         DocumentReference currentUserProgressRef = Drawmatic.getmFirebaseDb()
-                                .collection("rooms")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                                 .document(onlineGame.getRoomId())
-                                .collection("progressOfEachStep")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                                 .document(mCurrentPlayer.getPlayerId());
 
                         Map progressMap = new HashMap();
-                        progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
+                        progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, onlineGame.getCurrentStep());
                         currentUserProgressRef.update(progressMap);
                     }
                 });
@@ -330,9 +329,9 @@ public class OnlineInGameManager {
         final String topicDataNumber = String.valueOf(Integer.valueOf(imageUrlDataNumber) - 1);
 
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(playerIdToGetTopicOrDrawing);
 
         docRef
@@ -365,11 +364,11 @@ public class OnlineInGameManager {
 
     public ListenerRegistration monitorGuessingProgress(final GuessingContract.View guessingView, final GuessingPresenter guessingPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
         docRef
-            .collection("progressOfEachStep")
+            .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
             .document(mCurrentPlayer.getPlayerId())
             .get()
             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -379,7 +378,7 @@ public class OnlineInGameManager {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Map finishedCurrentStepMap = document.getData();
-                            long finishedCurrentStep = (long) finishedCurrentStepMap.get("finishedCurrentStep");
+                            long finishedCurrentStep = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
                             finishedCurrentStep = (int) finishedCurrentStep;
 
                             if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
@@ -396,7 +395,7 @@ public class OnlineInGameManager {
             });
 
         ListenerRegistration listenerRegistration = docRef
-                .collection("progressOfEachStep")
+                .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -407,7 +406,7 @@ public class OnlineInGameManager {
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Map playerProgressMap = documentSnapshot.getData();
-                            long playerProgressOfThisStep = (long) playerProgressMap.get("finishedCurrentStep");
+                            long playerProgressOfThisStep = (long) playerProgressMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
                             playerProgressOfThisStep = (int) playerProgressOfThisStep;
 
                             if (playerProgressOfThisStep == onlineGame.getCurrentStep()) {
@@ -434,9 +433,9 @@ public class OnlineInGameManager {
 
     public void updateGuessingStepProgressAndUploadGuessing(final GuessingContract.Presenter guessingPresenter, final OnlineGame onlineGame, String guessing) {
         DocumentReference currentUserDrawingsRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(new TopicDrawingRetrievingUtil(mContext, onlineGame, mCurrentPlayer).calcPlayerIdToRetrieveTopicOrDrawing());
 
         Map map = new HashMap();
@@ -448,13 +447,13 @@ public class OnlineInGameManager {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         DocumentReference currentUserProgressRef = Drawmatic.getmFirebaseDb()
-                                .collection("rooms")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                                 .document(onlineGame.getRoomId())
-                                .collection("progressOfEachStep")
+                                .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                                 .document(mCurrentPlayer.getPlayerId());
 
                         Map progressMap = new HashMap();
-                        progressMap.put("finishedCurrentStep", onlineGame.getCurrentStep());
+                        progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, onlineGame.getCurrentStep());
                         currentUserProgressRef.update(progressMap);
                     }
                 });
@@ -468,9 +467,9 @@ public class OnlineInGameManager {
      */
     public void retrieveGameResults(final GameResultContract.View gameResultView, final GameResultPresenter gameResultPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
-                .collection("drawings")
+                .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(mCurrentPlayer.getPlayerId());
 
         docRef
@@ -509,7 +508,7 @@ public class OnlineInGameManager {
     public void leaveRoomAndDeleteDataWhileInGame(OnlineGame onlineGame) {
         // delete firestore data
         Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -538,7 +537,7 @@ public class OnlineInGameManager {
     public void deleteDataAfterResult(OnlineGame onlineGame) {
         // delete firestore data
         Drawmatic.getmFirebaseDb()
-                .collection("rooms")
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId())
                 .delete();
 

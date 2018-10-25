@@ -325,7 +325,7 @@
                 android:gravity="center"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-                android:text="Choose the room you want to join"
+                android:text="@string/hint_choose_room"
                 android:textColor="@color/colorGrey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

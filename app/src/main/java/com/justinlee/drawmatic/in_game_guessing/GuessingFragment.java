@@ -111,7 +111,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
     @Override
     public void showPreviousPlayer(String previousPlayer) {
-        mTextPreviousPlayer.setText("Drawing from: " + previousPlayer);
+        mTextPreviousPlayer.setText(getString(R.string.hint_drawing_from) + previousPlayer);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
     @Override
     public void showWordCountHint(int wordCount) {
-        mTextHintTitle.setText("Guess - " + wordCount + " words");
+        mTextHintTitle.setText(getString(R.string.hint_title_guess_1) + wordCount + getString(R.string.hint_title_guess_2));
     }
 
 
@@ -151,7 +151,7 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
 
     @Override
     public void initiateNextStepButton(int currentStep, int numPlayers) {
-        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers + ", Tap to Next");
+        mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers + getString(R.string.hint_tap_to_next));
         mCurrentStepButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

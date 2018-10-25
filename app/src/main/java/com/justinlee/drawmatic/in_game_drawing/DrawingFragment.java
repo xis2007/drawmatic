@@ -137,16 +137,16 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     @Override
     public void showTopic(String topic) {
         if(StringUtil.isEmptyString(topic)) {
-            mTextTopicDrawing.setText("Oops, the previous player has nothing for you");
+            mTextTopicDrawing.setText(R.string.hint_nothing_for_player);
         } else {
-            mTextTopicDrawing.setText("Your topic is:   " + topic);
+            mTextTopicDrawing.setText(getString(R.string.hint_your_topic_is) + topic);
         }
 
     }
 
     @Override
     public void showPreviousPlayer(String previousPlayer) {
-        mTextPreviousPlayer.setText("Topic from: " + previousPlayer);
+        mTextPreviousPlayer.setText(getString(R.string.hint_topic_from) + previousPlayer);
     }
 
     @Override

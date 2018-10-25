@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="3dp"
-                        android:text="Play in Offline Mode?"
+                        android:text="@string/title_play_in_offline_mode"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/switch_button"
@@ -70,7 +70,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Note: Switching to offline mode requires players to pass physical phones to the next player"
+                    android:text="@string/description_offline_mode"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="123dp"/>
 
@@ -108,7 +108,7 @@
                         android:ems="10"
                         android:gravity="start|center_vertical"
                         android:inputType="textPersonName"
-                        android:paddingLeft="5dp"
+                        android:paddingStart="5dp"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp"/>
@@ -152,15 +152,15 @@
                             android:id="@+id/numPlayer_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4"
+                            android:text="@string/playerNum_4"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
                             android:id="@+id/numPlayer_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:text="5"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/playerNum_5"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -168,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="6"
+                            android:text="@string/playerNum_6"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -176,7 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="7"
+                            android:text="@string/playerNum_7"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -184,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="8"
+                            android:text="@string/playerNum_8"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -192,14 +192,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="9"
+                            android:text="@string/playerNum_9"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
                             android:id="@+id/numPlayer_10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
+                            android:text="@string/playerNum_10"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -207,7 +207,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="11"
+                            android:text="@string/playerNum_11"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -215,11 +215,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
-                            android:text="12"
+                            android:text="@string/playerNum_12"
                             app:tbgMarkerColor="@color/colorPrimary"/>
-
                     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -227,7 +225,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/box_items_create_room"
@@ -260,7 +257,7 @@
                             android:id="@+id/min_05"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0.5"
+                            android:text="@string/maxTime_05"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -268,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="1.0"
+                            android:text="@string/maxTime_10"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -276,7 +273,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="1.5"
+                            android:text="@string/maxTime_15"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -284,7 +281,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="2.0"
+                            android:text="@string/maxTime_20"
                             app:tbgMarkerColor="@color/colorPrimary"/>
 
                     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
@@ -297,7 +294,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Note: The amount of time defined here is for drawing. Guessing time will be 1/2 of the time defined."
+                    android:text="@string/description_maxTime"
                     tools:layout_editor_absoluteX="107dp"
                     tools:layout_editor_absoluteY="123dp"/>
             </LinearLayout>
