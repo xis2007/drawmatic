@@ -5,7 +5,7 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -70,7 +70,7 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
 
     @Override
     public void setGameStatusToInGame() {
-        if(mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
+        if (mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
             mOnlineWaitingView.showNotEnoughPlayersMessage((MainActivity) mMainView);
         } else {
             new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);

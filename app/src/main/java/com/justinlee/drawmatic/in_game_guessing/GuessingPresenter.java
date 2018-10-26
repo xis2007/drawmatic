@@ -9,9 +9,9 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineExpiredDataManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -110,7 +110,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
     public void updateGuessingStepProgressAndUploadGuessing() {
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         String inputGuessing = mGuessingView.getGuessingInput();
-        if(inputGuessing == null) inputGuessing = Constants.NO_STRING;
+        if (inputGuessing == null) inputGuessing = Constants.NO_STRING;
 
         new OnlineInGameManager((MainActivity) mMainView).updateGuessingStepProgressAndUploadGuessing(GuessingPresenter.this, mOnlineGame, inputGuessing);
     }
@@ -138,12 +138,12 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void stopCountDownTimer() {
-        if(mCountDownTimer != null) mCountDownTimer.cancel();
+        if (mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
     @Override
     public void stopTimeOutTimer() {
-        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
+        if (mTimeOutTimer != null) mTimeOutTimer.cancel();
     }
 
     @Override
@@ -153,7 +153,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void setWordCountHint(String theWord) {
-        if(StringUtil.isEmptyString(theWord)) {
+        if (StringUtil.isEmptyString(theWord)) {
             mGuessingView.showWordCountHint(0);
         } else {
             mGuessingView.showWordCountHint(theWord.length());
@@ -180,7 +180,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void start() {
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             mMainPresenter.informToShowTapToNextStepUi();
             mGuessingView.hideViews();
             mGuessingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
@@ -200,7 +200,7 @@ public class GuessingPresenter implements GuessingContract.Presenter {
      */
     @Override
     public void transToNextPage() {
-        if(mOfflineGame.getCurrentStep() == mOfflineGame.getTotalSteps()) {
+        if (mOfflineGame.getCurrentStep() == mOfflineGame.getTotalSteps()) {
             finishGame(mOfflineGame);
         } else {
             mOfflineGame.increamentCurrentStep();

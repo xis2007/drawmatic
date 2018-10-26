@@ -8,9 +8,9 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineExpiredDataManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -76,7 +76,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     public void updateSetTopicStepProgressAndUploadTopic() {
         mMainView.showLoadingUi(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_loading_data));
         String inputTopic = mSetTopicView.getEditTextTopicInput();
-        if(inputTopic == null) inputTopic = Constants.NO_STRING;
+        if (inputTopic == null) inputTopic = Constants.NO_STRING;
 
         new OnlineInGameManager((MainActivity) mMainView).updateSetTopicStepProgressAndUploadTopic(mOnlineGame, inputTopic);
     }
@@ -100,12 +100,12 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void stopCountDownTimer() {
-        if(mCountDownTimer != null) mCountDownTimer.cancel();
+        if (mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
     @Override
     public void stopTimeOutTimer() {
-        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
+        if (mTimeOutTimer != null) mTimeOutTimer.cancel();
     }
 
     @Override
@@ -139,7 +139,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void start() {
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             mSetTopicView.hideTimer();
             mSetTopicView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());
         } else {

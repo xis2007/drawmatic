@@ -9,9 +9,9 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineExpiredDataManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -161,13 +161,13 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void stopCountDownTimer() {
-        if(mCountDownTimer != null) mCountDownTimer.cancel();
+        if (mCountDownTimer != null) mCountDownTimer.cancel();
     }
 
 
     @Override
     public void stopTimeOutTimer() {
-        if(mTimeOutTimer != null) mTimeOutTimer.cancel();
+        if (mTimeOutTimer != null) mTimeOutTimer.cancel();
     }
 
 
@@ -196,7 +196,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void start() {
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             mMainPresenter.informToShowTapToNextStepUi();
             mDrawingView.hideViews();
             mDrawingView.initiateNextStepButton(mOfflineGame.getCurrentStep(), mOfflineGame.getTotalSteps());

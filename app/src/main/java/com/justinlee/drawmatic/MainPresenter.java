@@ -3,7 +3,7 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.user.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.in_game_drawing.DrawingFragment;
 import com.justinlee.drawmatic.in_game_drawing.DrawingPresenter;
@@ -162,7 +162,7 @@ public class MainPresenter implements MainContract.Presenter {
         transaction.commit();
 
 
-        if(mPlayFragment.getSearchedResultContainer() != null) {
+        if (mPlayFragment.getSearchedResultContainer() != null) {
             mPlayFragment.showGameSelectionPageUi();
         }
 
@@ -437,21 +437,21 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void determineOnBackPressedActions() {
         // if main menu-related fragments are shown, it means a dialog should show to users to confirm they want to leave the app
-        if(mPlayFragment != null && !mPlayFragment.isHidden()) mMainView.showLeaveAppDialog();
-        if(mInstructionsFragment != null && !mInstructionsFragment.isHidden()) mMainView.showLeaveAppDialog();
-        if(mSettingsFragment != null && !mSettingsFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if (mPlayFragment != null && !mPlayFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if (mInstructionsFragment != null && !mInstructionsFragment.isHidden()) mMainView.showLeaveAppDialog();
+        if (mSettingsFragment != null && !mSettingsFragment.isHidden()) mMainView.showLeaveAppDialog();
 
         // if user is in room creation page, user should return to main menu when back is pressed
-        if(mCreateRoomFragment != null && !mCreateRoomFragment.isHidden()) transToPlayPage();
+        if (mCreateRoomFragment != null && !mCreateRoomFragment.isHidden()) transToPlayPage();
 
         // if user is in room waiting page, user should return to main menu when back is pressed
-        if(mOnlineWaitingFragment != null && !mOnlineWaitingFragment.isHidden()) mOnlineWaitingPresenter.leaveRoom(mOnlineWaitingFragment);
+        if (mOnlineWaitingFragment != null && !mOnlineWaitingFragment.isHidden()) mOnlineWaitingPresenter.leaveRoom(mOnlineWaitingFragment);
 
         // if user is in game or results page, user should be prompt with leave game confirmation dialog
-        if(mSetTopicFragment != null && !mSetTopicFragment.isHidden()) mSetTopicPresenter.informActivityToPromptLeaveGameAlert();
-        if(mDrawingFragment != null && !mDrawingFragment.isHidden()) mDrawingPresenter.informActivityToPromptLeaveGameAlert();
-        if(mGuessingFragment != null && !mGuessingFragment.isHidden()) mGuessingPresenter.informActivityToPromptLeaveGameAlert();
-        if(mGameResultFragment != null && !mGameResultFragment.isHidden()) mGameResultPresenter.informActivityToPromptLeaveGameAlert();
+        if (mSetTopicFragment != null && !mSetTopicFragment.isHidden()) mSetTopicPresenter.informActivityToPromptLeaveGameAlert();
+        if (mDrawingFragment != null && !mDrawingFragment.isHidden()) mDrawingPresenter.informActivityToPromptLeaveGameAlert();
+        if (mGuessingFragment != null && !mGuessingFragment.isHidden()) mGuessingPresenter.informActivityToPromptLeaveGameAlert();
+        if (mGameResultFragment != null && !mGameResultFragment.isHidden()) mGameResultPresenter.informActivityToPromptLeaveGameAlert();
 
     }
 
@@ -462,7 +462,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void resetCurrentPlayerToParticipant() {
-        if(mCurrentPlayer != null) mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
+        if (mCurrentPlayer != null) mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
     }
 
     @Override

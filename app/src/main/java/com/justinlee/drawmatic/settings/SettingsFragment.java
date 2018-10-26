@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
         mButtonEditName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((Integer) v.getTag()).equals(((Integer) R.drawable.ic_edit))) {
+                if (((Integer) v.getTag()).equals(((Integer) R.drawable.ic_edit))) {
                     mButtonEditName.setImageDrawable(getResources().getDrawable(R.drawable.ic_confirm));
                     mButtonEditName.setTag(R.drawable.ic_confirm);
                     mEdittextUserName.setBackground(getResources().getDrawable(R.drawable.box_edit_name_settings));

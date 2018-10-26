@@ -122,8 +122,8 @@ public class OnlineSettings extends GameSettings {
     public ArrayList<Player> generateSortedPlayersListById() {
         ArrayList<Player> sortedPlayersList = new ArrayList<>(mPlayers);
         Collections.sort(sortedPlayersList, new PlayerIdComparator());
-        if(sortedPlayersList != null) {
-            for(int i = 0; i < sortedPlayersList.size(); i++) {
+        if (sortedPlayersList != null) {
+            for (int i = 0; i < sortedPlayersList.size(); i++) {
                 Log.d(TAG, "generateSortedPlayersListById: player " + i + " = " + sortedPlayersList.get(i).getPlayerName());
             }
         }

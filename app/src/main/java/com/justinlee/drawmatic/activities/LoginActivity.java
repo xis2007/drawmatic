@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -71,6 +72,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("ApplySharedPref")
     private void saveUserInfo(Task<AuthResult> task) {
         EditText nameInputEdittext = findViewById(R.id.edittext_user_name_input);
         Drawmatic.getAppContext().getSharedPreferences(Constants.UserData.SHAREPREF_USER_DATA_KEY, Context.MODE_PRIVATE).edit()
@@ -78,6 +80,4 @@ public class LoginActivity extends BaseActivity {
                 .putString(Constants.UserData.SHAREPREF_USER_ID_KEY, task.getResult().getUser().getUid())
                 .commit();
     }
-
-
 }

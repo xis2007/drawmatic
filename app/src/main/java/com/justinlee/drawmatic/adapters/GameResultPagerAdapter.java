@@ -56,7 +56,7 @@ public class GameResultPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             return mResultObjects.size();
         } else {
             return mResultStrings.size() + 1;
@@ -77,10 +77,10 @@ public class GameResultPagerAdapter extends PagerAdapter {
         TextView resultText = view.findViewById(R.id.text_game_result);
         TextView authorText = view.findViewById(R.id.text_author_game_result);
 
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             authorText.setVisibility(View.GONE);
 
-            if(position % 2 == 0) {
+            if (position % 2 == 0) {
                 resultImage.setVisibility(View.GONE);
                 resultText.setText((String) mResultObjects.get(position));
 
@@ -92,14 +92,14 @@ public class GameResultPagerAdapter extends PagerAdapter {
         } else {
 
             // Online Mode
-            if(position == 2) {
+            if (position == 2) {
                 // for ad
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_banner_ad, container, false);
                 insertAdToView(view);
 
-            } else if (position < 2){
+            } else if (position < 2) {
                 // for results before ad
-                if(position % 2 == 0) {
+                if (position % 2 == 0) {
                     resultImage.setVisibility(View.GONE);
                     resultText.setText(mResultStrings.get(position));
                     authorText.setText("by " + mAuthorStrings.get(position));
@@ -111,7 +111,7 @@ public class GameResultPagerAdapter extends PagerAdapter {
                 }
             } else {
                 // for results after ad
-                if(position % 2 == 0) {
+                if (position % 2 == 0) {
                     resultText.setVisibility(View.GONE);
                     Glide.with(mContext).load(mResultStrings.get(position - 1)).into(resultImage);
                     authorText.setText("by " + mAuthorStrings.get(position - 1));

@@ -46,7 +46,7 @@ public class ResultAsBitmapsUtil {
         }
 
         for (int i = 0; i < resultStrings.size(); i++) {
-            if(i % 2 == 0) { // even numbered items in the list means it is guessing strings
+            if (i % 2 == 0) { // even numbered items in the list means it is guessing strings
                 textToResId(i, resultStrings.get(i), 36, R.color.colorGrey);
             } else {         // else, odd numbered items in the list means it is image url
                 urlToBitmap(i, resultStrings);
@@ -97,10 +97,10 @@ public class ResultAsBitmapsUtil {
         try {
             byte[] bitmapArray;
             bitmapArray = Base64.decode(text, Base64.DEFAULT);
-            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0,	bitmapArray.length);
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
 
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             Log.d(TAG, "textToResId: bitmap is: " + null);
             return null;
@@ -125,46 +125,37 @@ public class ResultAsBitmapsUtil {
                 .load(resultStrings.get(index))
                 .into(new Target<Bitmap>() {
                     @Override
-                    public void onLoadStarted(@Nullable Drawable placeholder) {
+                    public void onLoadStarted(@Nullable Drawable placeholder) { }
 
-                    }
                     @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) { }
 
-                    }
                     @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    public void onLoadCleared(@Nullable Drawable placeholder) { }
 
-                    }
                     @Override
-                    public void getSize(@NonNull SizeReadyCallback cb) {
+                    public void getSize(@NonNull SizeReadyCallback cb) { }
 
-                    }
                     @Override
-                    public void removeCallback(@NonNull SizeReadyCallback cb) {
+                    public void removeCallback(@NonNull SizeReadyCallback cb) { }
 
-                    }
                     @Override
-                    public void setRequest(@Nullable Request request) {
+                    public void setRequest(@Nullable Request request) { }
 
-                    }
                     @Nullable
                     @Override
                     public Request getRequest() {
                         return null;
                     }
-                    @Override
-                    public void onStart() {
 
-                    }
                     @Override
-                    public void onStop() {
+                    public void onStart() { }
 
-                    }
                     @Override
-                    public void onDestroy() {
+                    public void onStop() { }
 
-                    }
+                    @Override
+                    public void onDestroy() { }
 
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

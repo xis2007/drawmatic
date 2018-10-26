@@ -18,7 +18,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
         outRect.top = space * 2;
 
-        if(isLeftColumn) {
+        if (isLeftColumn) {
             outRect.left = space * 2;
             outRect.right = space;
         } else {

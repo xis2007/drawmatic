@@ -5,7 +5,7 @@ import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OfflineSettings;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -33,7 +33,7 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void createRoom(String roomName, int numPlayers, float attemptTime) {
-        if("".equals(roomName) || " ".equals(roomName) || roomName.isEmpty()) {
+        if (Constants.NO_STRING.equals(roomName) || roomName.isEmpty()) {
             mCreateRoomView.promptNameInputAlert();
 
         } else {

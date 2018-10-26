@@ -129,14 +129,15 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
                 case R.id.navigation_redo:
                     mDrawingPresenter.redoDrawing(mDrawView);
                     return true;
+                default:
+                    return false;
             }
-            return false;
         }
     };
 
     @Override
     public void showTopic(String topic) {
-        if(StringUtil.isEmptyString(topic)) {
+        if (StringUtil.isEmptyString(topic)) {
             mTextTopicDrawing.setText(R.string.hint_nothing_for_player);
         } else {
             mTextTopicDrawing.setText(getString(R.string.hint_your_topic_is) + topic);

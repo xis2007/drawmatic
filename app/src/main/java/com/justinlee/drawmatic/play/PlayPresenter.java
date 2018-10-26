@@ -6,10 +6,10 @@ import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.user.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
-import com.justinlee.drawmatic.firabase_operation.OnlineExpiredDataManager;
-import com.justinlee.drawmatic.firabase_operation.OnlineRoomManager;
+import com.justinlee.drawmatic.firabase.OnlineExpiredDataManager;
+import com.justinlee.drawmatic.firabase.OnlineRoomManager;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
 
@@ -47,7 +47,7 @@ public class PlayPresenter implements PlayContract.Presenter {
 
     @Override
     public void informToShowResultRooms(ArrayList<OnlineGame> onlineGamesList) {
-        if(onlineGamesList == null || onlineGamesList.size() == 0) {
+        if (onlineGamesList == null || onlineGamesList.size() == 0) {
             ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(new ArrayList<OnlineGame>());
         } else {
             ((PlayFragment) mOnlineView).getSearchedRoomsAdapter().swapList(onlineGamesList);

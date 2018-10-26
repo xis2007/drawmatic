@@ -87,7 +87,7 @@ public class InstructionsInnerAdapter extends InnerAdapter<InstructionsInnerAdap
             mTextTitle.setText(data.getInstructionTitle());
             mTextContent.setText(data.getInstructionContent());
 
-            if(data.getImageSource().equals(Constants.NO_STRING) || data.getImageSource().isEmpty()) {
+            if (data.getImageSource().equals(Constants.NO_STRING) || data.getImageSource().isEmpty()) {
                 mCardView.setVisibility(View.GONE);
             } else {
                 mCardView.setVisibility(View.VISIBLE);

@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.OnlineGame;
 
 public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
@@ -54,7 +54,7 @@ public class LeaveGameBottomSheetDialog extends BottomSheetDialogFragment {
 
                 case R.id.button_leave_game_bottom_dialog:
                     // TODO inform the server and other players that the game ends
-                    if(mOnlineGame != null) {
+                    if (mOnlineGame != null) {
                         new OnlineInGameManager(mMainActivity).leaveRoomAndDeleteDataWhileInGame(mOnlineGame);
                     } else {
                         mMainActivity.getMainPresenter().transToPlayPage();

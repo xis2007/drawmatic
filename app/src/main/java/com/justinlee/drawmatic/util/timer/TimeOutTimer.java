@@ -3,7 +3,7 @@ package com.justinlee.drawmatic.util.timer;
 import android.os.CountDownTimer;
 
 import com.justinlee.drawmatic.MainActivity;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.OnlineGame;
 
 public class TimeOutTimer extends CountDownTimer {

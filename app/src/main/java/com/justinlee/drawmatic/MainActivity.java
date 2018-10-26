@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             init();
         } else {
             promptForLogin();
@@ -210,8 +210,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
                 setNavigationItemBackground(2);
                 mMainPresenter.transToSettingsPage();
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     void setNavigationItemBackground(int itemNum) {

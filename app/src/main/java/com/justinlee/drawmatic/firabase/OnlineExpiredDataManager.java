@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.firabase_operation;
+package com.justinlee.drawmatic.firabase;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -58,7 +58,7 @@ public class OnlineExpiredDataManager {
     }
 
     public void deleteExpiredRoom(ArrayList<String> roomIdList) {
-        for(String roomId : roomIdList) {
+        for (String roomId : roomIdList) {
             Drawmatic.getmFirebaseDb()
                     .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                     .document(roomId)
@@ -82,7 +82,7 @@ public class OnlineExpiredDataManager {
             numberToStoreDataKey++;
         }
 
-        for(String dataString : dataStringsList) {
+        for (String dataString : dataStringsList) {
             editor.putString(String.valueOf(numberToStoreDataKey), dataString);
             numberToStoreDataKey++;
         }

@@ -2,9 +2,9 @@ package com.justinlee.drawmatic.settings;
 
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.User.UserManager;
+import com.justinlee.drawmatic.user.UserManager;
 
-public class SettingsPresenter implements SettingsContract.Presenter{
+public class SettingsPresenter implements SettingsContract.Presenter {
     private MainContract.View mMainView;
     private MainContract.Presenter mMainPresenter;
     private SettingsContract.View mSettingsView;

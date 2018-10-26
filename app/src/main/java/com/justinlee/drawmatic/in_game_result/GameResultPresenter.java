@@ -3,7 +3,7 @@ package com.justinlee.drawmatic.in_game_result;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
-import com.justinlee.drawmatic.firabase_operation.OnlineInGameManager;
+import com.justinlee.drawmatic.firabase.OnlineInGameManager;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OfflineGame;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -38,12 +38,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void informActivityToPromptLeaveGameAlert() {
-        if(mIsInOfflineMode) {
-
-        } else {
-            mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
-        }
-
+        mMainPresenter.informToShowLeaveGameDialog(mOnlineGame);
     }
 
     @Override
@@ -66,7 +61,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
     @Override
     public void doneViewingResult() {
         if (mIsInOfflineMode) {
-           mMainPresenter.transToPlayPage();
+            mMainPresenter.transToPlayPage();
         } else {
             new OnlineInGameManager((MainActivity) mMainView).deleteDataAfterResult(mOnlineGame);
             mMainPresenter.resetCurrentPlayerToParticipant();
@@ -77,7 +72,7 @@ public class GameResultPresenter implements GameResultContract.Presenter {
 
     @Override
     public void start() {
-        if(mIsInOfflineMode) {
+        if (mIsInOfflineMode) {
             mMainPresenter.informToShowTapToNextStepUi();
             mGameResultView.showOfflineGameResults(mOfflineGame.getOfflineSettings().getGuessingAndDrawingsList());
         } else {
@@ -90,7 +85,6 @@ public class GameResultPresenter implements GameResultContract.Presenter {
      * Offline Mode
      * ***********************************************************************************
      */
-
 
 
     /**

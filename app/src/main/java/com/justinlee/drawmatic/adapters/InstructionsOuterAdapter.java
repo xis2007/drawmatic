@@ -129,7 +129,7 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
             mHeaderTitle.setText(innerDataList.get(0).getInstructionTitle());
             mHeaderImage.setBackground(mHeaderImage.getResources().getDrawable(Integer.valueOf(innerDataList.get(0).getImageSource())));
 
-            if(position == 0) {
+            if (position == 0) {
                 mHeaderTitle.setTextColor(mHeaderTitle.getResources().getColor(R.color.colorGrey));
             }
         }

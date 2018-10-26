@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.firabase_operation;
+package com.justinlee.drawmatic.firabase;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -276,7 +276,7 @@ public class OnlineRoomManager {
 
 
                             OnlineGame onlineGame = null;
-                            try{
+                            try {
                                 onlineGame = transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
                             } catch (NullPointerException exception) {
                                 onlineWaitingPresenter.informToTransToOnlinePage();
@@ -284,7 +284,7 @@ public class OnlineRoomManager {
                             }
 
 
-                            if(onlineGame != null) {
+                            if (onlineGame != null) {
                                 if (onlineGame.getOnlineSettings().isInGame()) {
                                     onlineWaitingPresenter.startPlayingOnline();
                                 } else {
@@ -311,7 +311,7 @@ public class OnlineRoomManager {
                             return;
                         }
 
-                        try{
+                        try {
                             transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
                         } catch (NullPointerException exception) {
                             new OnlineInGameManager((MainActivity) mainView).leaveRoomAndDeleteDataWhileInGame(onlineGame);
@@ -351,11 +351,11 @@ public class OnlineRoomManager {
     private ArrayList<OnlineGame> transformQuerySnapshotToRoomsList(String inputQueryString, QuerySnapshot querySnapshot) {
         List<DocumentSnapshot> documentSnapshots = querySnapshot.getDocuments();
         ArrayList<OnlineGame> onlineGamesList = new ArrayList<>();
-        for(DocumentSnapshot documentSnapshot : documentSnapshots) {
+        for (DocumentSnapshot documentSnapshot : documentSnapshots) {
             OnlineSettings onlineSettings = documentSnapshot.toObject(OnlineSettings.class);
-            if(onlineSettings != null) {
+            if (onlineSettings != null) {
                 OnlineGame onlineGame = new OnlineGame(documentSnapshot.getId(), documentSnapshot.toObject(OnlineSettings.class));
-                if(onlineGame.getOnlineSettings().getRoomName().contains(inputQueryString)) {
+                if (onlineGame.getOnlineSettings().getRoomName().contains(inputQueryString)) {
                     onlineGamesList.add(onlineGame);
                 }
             }
@@ -366,7 +366,7 @@ public class OnlineRoomManager {
 
     private long getDateTimeWithinThreeHours() {
         long currentTime = Calendar.getInstance().getTimeInMillis();
-        long threeHours = 3* 60 * 1000;
+        long threeHours = 3 * 60 * 1000;
 
         return currentTime - threeHours;
     }

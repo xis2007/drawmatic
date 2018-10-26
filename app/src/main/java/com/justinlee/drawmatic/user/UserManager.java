@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.User;
+package com.justinlee.drawmatic.user;
 
 import android.content.Context;
 

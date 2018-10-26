@@ -92,7 +92,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
         mEdittextSearchForRooms.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(Constants.NO_STRING.equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
+                if (Constants.NO_STRING.equals(v.getText().toString()) || v.getText().toString().isEmpty()) {
                     exitSearch();
                     Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), R.string.hint_room_name_input, Snackbar.LENGTH_SHORT).show();
                 } else {
@@ -193,7 +193,7 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.button_new_game_play:
                 mOnlinePresenter.createRoomForOnlineNormalMode();
                 break;

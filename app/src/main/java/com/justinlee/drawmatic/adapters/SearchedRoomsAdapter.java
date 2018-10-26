@@ -59,7 +59,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             // TODO ordering may cause problem to positions of each player in the Arraylist
             ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
             ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
-            if(currentOnlineGame.getOnlineSettings().isInGame()) {
+            if (currentOnlineGame.getOnlineSettings().isInGame()) {
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(R.string.hint_playing_searchedRooms);
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
             } else {
@@ -70,7 +70,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             ((RoomViewHolder) holder).getRoomItemLayout().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(currentOnlineGame.getOnlineSettings().isInGame()) {
+                    if (currentOnlineGame.getOnlineSettings().isInGame()) {
                         mPlayFragment.getOnlinePresenter().informToShowRoomIsInGameMessage();
                     } else {
                         mPlayFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
@@ -84,8 +84,8 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(mOnlineGamesList == null) return Constants.RoomViewType.INITIAL_SEARCH;
-        if(mOnlineGamesList.isEmpty()) return  Constants.RoomViewType.NO_RESULTS;
+        if (mOnlineGamesList == null) return Constants.RoomViewType.INITIAL_SEARCH;
+        if (mOnlineGamesList.isEmpty()) return  Constants.RoomViewType.NO_RESULTS;
         return Constants.RoomViewType.ROOM_RESULTS;
     }
 

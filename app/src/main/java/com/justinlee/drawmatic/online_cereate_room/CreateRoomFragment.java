@@ -151,7 +151,7 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
         mGameModeSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     switchToOfflineUi(rootView);
                 } else {
                     switchToOnlineUi(rootView);
@@ -204,10 +204,10 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
                     break;
 
                 case R.id.button_next_create_room:
-                    if(mGameModeSwitchButton.isChecked()) {
+                    if (mGameModeSwitchButton.isChecked()) {
                         mCreateRoomPresenter.startOfflineGame(mNumPlayerProgress);
                     } else {
-                        mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString(), mNumPlayerProgress, mAttemptTimeProgress);
+                        mCreateRoomPresenter.createRoom(mEditTextRoomName.getText().toString().replaceAll(" ", ""), mNumPlayerProgress, mAttemptTimeProgress);
                     }
                     break;
 
