@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.instructions;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -74,7 +73,6 @@ public class InstructionsFragment extends Fragment implements InstructionsContra
         instructionsDataList1.add(list1Data0);
         instructionsDataList1.add(list1Data1);
         instructionsDataList1.add(list1Data2);
-
 
         // 2nd datalist
         InnerInstructionsData list2Data0 = new InnerInstructionsData(getString(R.string.title_header_1of2), null, String.valueOf(R.drawable.bg_instructions2));

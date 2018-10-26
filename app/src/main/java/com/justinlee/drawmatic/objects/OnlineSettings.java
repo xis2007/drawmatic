@@ -1,7 +1,5 @@
 package com.justinlee.drawmatic.objects;
 
-import android.util.Log;
-
 import com.google.firebase.firestore.ServerTimestamp;
 import com.justinlee.drawmatic.util.PlayerIdComparator;
 
@@ -10,15 +8,12 @@ import java.util.Collections;
 import java.util.Date;
 
 public class OnlineSettings extends GameSettings {
-    private static final String TAG = "playerssssss";
 
     private String mRoomName;
     private String mCreator;
     private int mGameMode;
     private int mMaxPlayers;
-//    private int mCurrentNumPlayers;
     private float mAttemptTime;
-//    private int mCurrentStep;
     private boolean mIsInGame;
     private ArrayList<Player> mPlayers;
 
@@ -32,9 +27,7 @@ public class OnlineSettings extends GameSettings {
         mRoomName = roomName;
         mCreator = creator;
         mMaxPlayers = maxPlayers;
-//        mCurrentNumPlayers = 1;
         mAttemptTime = attemptTime;
-//        mCurrentStep = 1;
         mIsInGame = false;
         mPlayers = players;
     }
@@ -67,14 +60,6 @@ public class OnlineSettings extends GameSettings {
         mMaxPlayers = maxPlayers;
     }
 
-//    public int getCurrentNumPlayers() {
-//        return mCurrentNumPlayers;
-//    }
-
-//    public void setCurrentNumPlayers(int currentNumPlayers) {
-//        mCurrentNumPlayers = currentNumPlayers;
-//    }
-
     public float getAttemptTime() {
         return mAttemptTime;
     }
@@ -82,14 +67,6 @@ public class OnlineSettings extends GameSettings {
     public void setAttemptTime(float attemptTime) {
         mAttemptTime = attemptTime;
     }
-
-//    public int getCurrentStep() {
-//        return mCurrentStep;
-//    }
-
-//    public void setCurrentStep(int currentStep) {
-//        mCurrentStep = currentStep;
-//    }
 
     public ArrayList<Player> getPlayers() {
         return mPlayers;
@@ -122,11 +99,6 @@ public class OnlineSettings extends GameSettings {
     public ArrayList<Player> generateSortedPlayersListById() {
         ArrayList<Player> sortedPlayersList = new ArrayList<>(mPlayers);
         Collections.sort(sortedPlayersList, new PlayerIdComparator());
-        if (sortedPlayersList != null) {
-            for (int i = 0; i < sortedPlayersList.size(); i++) {
-                Log.d(TAG, "generateSortedPlayersListById: player " + i + " = " + sortedPlayersList.get(i).getPlayerName());
-            }
-        }
 
         return sortedPlayersList;
     }

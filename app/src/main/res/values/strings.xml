@@ -125,9 +125,9 @@
     <string name="hint_topic_from">Topic from: </string>
 
     <!--Guessing Fragment-->
-    <string name="hint_drawing_from">Drawing from: </string>
-    <string name="hint_title_guess_1">Guess - </string>
-    <string name="hint_title_guess_2"> words</string>
+    <string name="hint_drawing_from">Drawing from: &#160;</string>
+    <string name="hint_title_guess_1">Guess - &#160;</string>
+    <string name="hint_title_guess_2">&#160; words</string>
     <string name="hint_tap_to_next">, Tap to Next</string>
 
     <!--Create Room Fragment-->

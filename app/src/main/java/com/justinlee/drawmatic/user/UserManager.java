@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.justinlee.drawmatic.Drawmatic;
@@ -38,6 +39,7 @@ public class UserManager {
         return mUserToken;
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setUserName(String userName) {
         mUserName = userName;
 

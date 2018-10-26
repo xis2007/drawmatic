@@ -64,7 +64,7 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
         private InnerLayoutManager mInnerLayoutManager;
         private boolean mIsScrolling;
 
-        public InstructionsOuterItem(View itemView) {
+        InstructionsOuterItem(View itemView) {
             super(itemView);
 
             initHeader(itemView);
@@ -92,14 +92,7 @@ public class InstructionsOuterAdapter extends TailAdapter<InstructionsOuterAdapt
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     mIsScrolling = newState != RecyclerView.SCROLL_STATE_IDLE;
                 }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                onItemScrolled(recyclerView, dx, dy);
-                }
             });
-
-//        mInnerRecyclerView.addItemDecoration(new HeaderDecorator(5, 20));
         }
 
 

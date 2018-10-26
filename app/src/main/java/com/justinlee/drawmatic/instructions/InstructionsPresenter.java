@@ -1,7 +1,6 @@
 package com.justinlee.drawmatic.instructions;
 
 import com.justinlee.drawmatic.MainContract;
-import com.justinlee.drawmatic.MainPresenter;
 
 public class InstructionsPresenter implements InstructionsContract.Presenter {
     private MainContract.View mMainView;
@@ -20,7 +19,6 @@ public class InstructionsPresenter implements InstructionsContract.Presenter {
     }
 
 
-
     /**
      * ***********************************************************************************
      * Set MainView and MainPresenters to get reference to them
@@ -30,10 +28,6 @@ public class InstructionsPresenter implements InstructionsContract.Presenter {
         mMainView = mainView;
     }
 
-
-    public void setMainPresenter(MainPresenter mainPresenter) {
-        mMainPresenter = mainPresenter;
-    }
 
     /**
      * ***********************************************************************************

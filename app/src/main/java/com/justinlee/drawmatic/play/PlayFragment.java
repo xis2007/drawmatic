@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.play;
 
-
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -160,25 +159,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
         mSearchedResultContainer.setVisibility(View.VISIBLE);
     }
 
-
-    @Override
-    public void hideOnlineSearchPageUi() {
-        mSearchedResultContainer.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public void showOnlineRoomCreationPageUi(int roomType) {
-
-    }
-
-
-    @Override
-    public void showOnlineGameSettingsPageUi() {
-
-    }
-
-
     @Override
     public void showRoomIsInGameMessage() {
         Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), R.string.hint_selected_room_is_in_game, Snackbar.LENGTH_SHORT).show();
@@ -221,10 +201,6 @@ public class PlayFragment extends Fragment implements PlayContract.View, View.On
      */
     public PlayContract.Presenter getOnlinePresenter() {
         return mOnlinePresenter;
-    }
-
-    public RecyclerView getSearchResultRecyclerView() {
-        return mSearchResultRecyclerView;
     }
 
     public SearchedRoomsAdapter getSearchedRoomsAdapter() {

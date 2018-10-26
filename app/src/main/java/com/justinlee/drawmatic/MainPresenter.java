@@ -88,8 +88,6 @@ public class MainPresenter implements MainContract.Presenter {
             mSetTopicPresenter = null;
         }
 
-        // TODO add all others
-
         if (!mInstructionsFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mInstructionsFragment, Constants.FragmentFlag.FLAG_INSTRUCTIONS);
         } else {
@@ -146,7 +144,6 @@ public class MainPresenter implements MainContract.Presenter {
             mGameResultFragment = null;
             mGameResultPresenter = null;
         }
-        // TODO add all others
 
         if (!mPlayFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mPlayFragment, Constants.FragmentFlag.FLAG_PLAY);
@@ -193,7 +190,6 @@ public class MainPresenter implements MainContract.Presenter {
             mOnlineWaitingFragment = null;
             mOnlineWaitingPresenter = null;
         }
-        // TODO add all others
 
         if (!mCreateRoomFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mCreateRoomFragment, Constants.FragmentFlag.FLAG_CREATE_ROOM);
@@ -226,7 +222,6 @@ public class MainPresenter implements MainContract.Presenter {
             mCreateRoomFragment = null;
             mCreateRoomPresenter = null;
         }
-        // TODO add all others
 
         if (!mOnlineWaitingFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mOnlineWaitingFragment, Constants.FragmentFlag.FLAG_WAITING);
@@ -246,7 +241,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void transToSetTopicPage(Game game) {
-        // TODO go to set topic page
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         if (mSetTopicFragment == null) mSetTopicFragment = SetTopicFragment.newInstance();
@@ -262,7 +256,6 @@ public class MainPresenter implements MainContract.Presenter {
             mOnlineWaitingFragment = null;
             mOnlineWaitingPresenter = null;
         }
-        // TODO add all others
 
         if (!mSetTopicFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mSetTopicFragment, Constants.FragmentFlag.FLAG_SET_TOPIC);
@@ -296,7 +289,6 @@ public class MainPresenter implements MainContract.Presenter {
             mGuessingFragment = null;
             mGuessingPresenter = null;
         }
-        // TODO add all others
 
         if (!mDrawingFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mDrawingFragment, Constants.FragmentFlag.FLAG_DRAWING);
@@ -325,7 +317,6 @@ public class MainPresenter implements MainContract.Presenter {
             mDrawingFragment = null;
             mDrawingPresenter = null;
         }
-        // TODO add all others
 
         if (!mGuessingFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mGuessingFragment, Constants.FragmentFlag.FLAG_GUESSING);
@@ -401,7 +392,6 @@ public class MainPresenter implements MainContract.Presenter {
             mSetTopicFragment = null;
             mSetTopicPresenter = null;
         }
-        // TODO add all others
 
         if (!mSettingsFragment.isAdded()) {
             transaction.add(R.id.fragment_container_main, mSettingsFragment, Constants.FragmentFlag.FLAG_SETTINGS);
@@ -467,7 +457,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void start() {
-        // TODO change to transToOffline
         transToPlayPage();
         initializeCurrentPlayer();
     }

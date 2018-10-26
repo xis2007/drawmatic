@@ -15,14 +15,8 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     }
 
     @Override
-    public void loadUserProfile() {
-
-    }
-
-    @Override
     public void updatePlayerName(String newPlayerName) {
         UserManager.getInstance().setUserName(newPlayerName);
-//        ((MainPresenter) mMainPresenter).getCurrentPlayer().setPlayerName(newPlayerName);
     }
 
     @Override

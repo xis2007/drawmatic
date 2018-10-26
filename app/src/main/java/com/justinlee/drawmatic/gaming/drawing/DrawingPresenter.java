@@ -241,14 +241,6 @@ public class DrawingPresenter implements DrawingContract.Presenter {
      * Getters and Setters
      * ***********************************************************************************
      */
-    public CountDownTimer getCountDownTimer() {
-        return mCountDownTimer;
-    }
-
-    public ListenerRegistration getRoomListenerRegistration() {
-        return mRoomListenerRegistration;
-    }
-
     public boolean isInOfflineMode() {
         return mIsInOfflineMode;
     }

@@ -147,10 +147,6 @@ public class OnlineWaitingFragment extends Fragment implements OnlineWaitingCont
      * Getters and Setters
      * ***********************************************************************************
      */
-    public RecyclerView getPlayersRecyclerView() {
-        return mPlayersRecyclerView;
-    }
-
     public RoomWaitingAdapter getAdapter() {
         return mAdapter;
     }

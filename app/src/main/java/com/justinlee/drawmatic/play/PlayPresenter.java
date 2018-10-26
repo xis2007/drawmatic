@@ -16,8 +16,6 @@ import com.justinlee.drawmatic.objects.Player;
 import java.util.ArrayList;
 
 public class PlayPresenter implements PlayContract.Presenter {
-    private static final String TAG = "justin";
-
     private PlayContract.View mOnlineView;
 
     private MainContract.View mMainView;

@@ -65,16 +65,6 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
     }
 
     @Override
-    public void informToHideLoadingUi() {
-        mMainView.hideLoadingUi();
-    }
-
-    @Override
-    public void informToShowLoadingUi() {
-        mMainView.showLoadingUi("Nottttttttttttt useddddddddddddddddddd");
-    }
-
-    @Override
     public void start() {
 
     }

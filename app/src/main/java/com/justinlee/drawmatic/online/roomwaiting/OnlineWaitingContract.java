@@ -19,8 +19,6 @@ public interface OnlineWaitingContract {
     interface Presenter extends BasePresenter {
         void leaveRoom(OnlineWaitingFragment fragment);
 
-//        void deleteRoom();
-
         void informToTransToOnlinePage();
 
         void startPlayingOnline();

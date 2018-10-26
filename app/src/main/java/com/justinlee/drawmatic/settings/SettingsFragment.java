@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.settings;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -125,11 +124,6 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSettingsPresenter.start();
-    }
-
-    @Override
-    public void updateProfile() {
-
     }
 
     @Override

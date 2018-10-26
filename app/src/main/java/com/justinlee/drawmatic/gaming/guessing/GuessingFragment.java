@@ -18,9 +18,6 @@ import com.justinlee.drawmatic.R;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GuessingFragment extends Fragment implements GuessingContract.View {
     private GuessingContract.Presenter mGuessingPresenter;
 
@@ -85,7 +82,6 @@ public class GuessingFragment extends Fragment implements GuessingContract.View 
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_steps_remaining_guessing:
-                    // TODO cancel this function in production
                     mGuessingPresenter.updateGuessingStepProgressAndUploadGuessing();
                     break;
 

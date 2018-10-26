@@ -5,12 +5,10 @@ import com.justinlee.drawmatic.bases.BaseView;
 
 public interface SettingsContract {
     interface View extends BaseView<Presenter> {
-        void updateProfile();
+
     }
 
     interface Presenter extends BasePresenter {
-        void loadUserProfile();
-
         void updatePlayerName(String newPlayerName);
     }
 }

@@ -56,9 +56,9 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
         if (holder instanceof RoomViewHolder) {
             final OnlineGame currentOnlineGame = mOnlineGamesList.get(position);
 
-            // TODO ordering may cause problem to positions of each player in the Arraylist
             ((RoomViewHolder) holder).getTextRoomName().setText(currentOnlineGame.getOnlineSettings().getRoomName());
-            ((RoomViewHolder) holder).getTextRoomCreater().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
+            ((RoomViewHolder) holder).getTextRoomCreator().setText(currentOnlineGame.getOnlineSettings().getPlayers().get(0).getPlayerName());
+
             if (currentOnlineGame.getOnlineSettings().isInGame()) {
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setText(R.string.hint_playing_searchedRooms);
                 ((RoomViewHolder) holder).getTextNumPlayersInRoom().setTextColor(mContext.getResources().getColor(R.color.colorAlertRed));
@@ -76,7 +76,6 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
                         mPlayFragment.getOnlinePresenter().joinSelectedRoom(currentOnlineGame);
                         ((MainContract.View) mPlayFragment.getActivity()).showLoadingUi(mContext.getString(R.string.hint_loading_joining_room));
                     }
-
                 }
             });
         }
@@ -103,7 +102,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
 
     public class RoomViewHolder extends RecyclerView.ViewHolder {
         private TextView mTextRoomName;
-        private TextView mTextRoomCreater;
+        private TextView mTextRoomCreator;
         private TextView mTextNumPlayersInRoom;
 
         private ConstraintLayout roomItemLayout;
@@ -113,7 +112,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             super(itemView);
 
             mTextRoomName = itemView.findViewById(R.id.text_room_name_searched);
-            mTextRoomCreater = itemView.findViewById(R.id.text_creator);
+            mTextRoomCreator = itemView.findViewById(R.id.text_creator);
             mTextNumPlayersInRoom = itemView.findViewById(R.id.text_max_player);
 
             roomItemLayout = itemView.findViewById(R.id.layout_item_room);
@@ -123,8 +122,8 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
             return mTextRoomName;
         }
 
-        TextView getTextRoomCreater() {
-            return mTextRoomCreater;
+        TextView getTextRoomCreator() {
+            return mTextRoomCreator;
         }
 
         TextView getTextNumPlayersInRoom() {
@@ -137,7 +136,7 @@ public class SearchedRoomsAdapter extends RecyclerView.Adapter {
     }
 
     public class NoRoomViewHolder extends RecyclerView.ViewHolder {
-        public NoRoomViewHolder(View itemView) {
+        NoRoomViewHolder(View itemView) {
             super(itemView);
         }
     }

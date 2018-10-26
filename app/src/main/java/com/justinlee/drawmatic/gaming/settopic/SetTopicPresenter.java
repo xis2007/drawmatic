@@ -170,14 +170,6 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         return mOnlineGame;
     }
 
-    public OfflineGame getOfflineGame() {
-        return mOfflineGame;
-    }
-
-    public CountDownTimer getCountDownTimer() {
-        return mCountDownTimer;
-    }
-
     public boolean isInOfflineMode() {
         return mIsInOfflineMode;
     }

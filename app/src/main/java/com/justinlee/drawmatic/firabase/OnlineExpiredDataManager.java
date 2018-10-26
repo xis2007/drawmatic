@@ -70,7 +70,6 @@ public class OnlineExpiredDataManager {
     /**
      * Online data related operations (Firebase Storage)
      */
-
     public void saveDataToPref(ArrayList<String> dataStringsList) {
         SharedPreferences roomSharedPreferences = mContext.getSharedPreferences(FirebaseConstants.SharedPreferences.GAME_DATA, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = roomSharedPreferences.edit();
@@ -86,8 +85,8 @@ public class OnlineExpiredDataManager {
             editor.putString(String.valueOf(numberToStoreDataKey), dataString);
             numberToStoreDataKey++;
         }
-        editor.apply();
 
+        editor.apply();
     }
 
     public ArrayList<String> deleteDataFromPref() {
@@ -103,7 +102,6 @@ public class OnlineExpiredDataManager {
             dataStringsList.add(roomSharedPreferences.getString(String.valueOf(totalDataStoredCount), String.valueOf(-1)));
             totalDataStoredCount++;
         }
-
         editor.apply();
 
         return dataStringsList;

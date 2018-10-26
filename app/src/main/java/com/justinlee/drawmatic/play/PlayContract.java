@@ -15,12 +15,6 @@ public interface PlayContract {
 
         void showSearchGamesPageUi();
 
-        void hideOnlineSearchPageUi();
-
-        void showOnlineRoomCreationPageUi(int roomType);
-
-        void showOnlineGameSettingsPageUi();
-
         void showRoomIsInGameMessage();
     }
 

@@ -6,8 +6,6 @@ import com.justinlee.drawmatic.objects.OnlineSettings;
 
 public interface CreateRoomContract {
     interface View extends BaseView<Presenter> {
-        void showCreatedRoomUi();
-
         void promptNameInputAlert();
     }
 
@@ -18,9 +16,6 @@ public interface CreateRoomContract {
 
         void transToRoomWaitingPage(String roomId, OnlineSettings onlineSettings);
 
-        void informToHideLoadingUi();
-
-        void informToShowLoadingUi();
 
         /**
          * Offline methods

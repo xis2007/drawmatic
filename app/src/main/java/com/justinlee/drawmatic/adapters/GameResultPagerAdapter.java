@@ -29,8 +29,6 @@ public class GameResultPagerAdapter extends PagerAdapter {
     private ArrayList<Object> mResultObjects;
     private AdView mAdView;
 
-//    private ArrayList<View> mViewList;
-
 
     /**
      * Constructor for Online Mode
@@ -41,7 +39,6 @@ public class GameResultPagerAdapter extends PagerAdapter {
 
         mResultStrings = resultStrings;
         mAuthorStrings = authorStrings;
-//        mViewList = new ArrayList<>();
     }
 
     /**
@@ -136,10 +133,6 @@ public class GameResultPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-//        container.removeView(mViewList.get(position));
-    }
 
-    public AdView getAdView() {
-        return mAdView;
     }
 }

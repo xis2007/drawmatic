@@ -61,11 +61,6 @@ public class CreateRoomFragment extends Fragment implements CreateRoomContract.V
     }
 
     @Override
-    public void showCreatedRoomUi() {
-
-    }
-
-    @Override
     public void promptNameInputAlert() {
         Snackbar.make(getActivity().findViewById(R.id.fragment_container_main), R.string.hint_room_name_empty, Snackbar.LENGTH_SHORT).show();
     }

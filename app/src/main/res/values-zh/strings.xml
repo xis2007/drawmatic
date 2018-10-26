@@ -126,9 +126,9 @@
     <string name="hint_topic_from">題目來自: </string>
 
     <!--Guessing Fragment-->
-    <string name="hint_drawing_from">圖畫來自: </string>
-    <string name="hint_title_guess_1">猜一猜 - </string>
-    <string name="hint_title_guess_2"> 個字</string>
+    <string name="hint_drawing_from">圖畫來自: &#160;</string>
+    <string name="hint_title_guess_1">猜一猜 - &#160;</string>
+    <string name="hint_title_guess_2">&#160; 個字</string>
     <string name="hint_tap_to_next">, 點擊繼續</string>
 
     <!--Create Room Fragment-->

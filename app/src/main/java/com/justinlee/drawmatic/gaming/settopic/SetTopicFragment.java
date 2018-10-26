@@ -124,6 +124,7 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
                 });
     }
 
+
     /**
      * *********************************************************************************
      * Fragment Lifecycle
@@ -148,14 +149,10 @@ public class SetTopicFragment extends Fragment implements SetTopicContract.View 
         super.onStop();
     }
 
+
     /**
      * *********************************************************************************
      * Getters and Setters
      * **********************************************************************************
      */
-    public TextView getTextTimeRemaining() {
-        return mTextTimeRemaining;
-    }
-
-
 }

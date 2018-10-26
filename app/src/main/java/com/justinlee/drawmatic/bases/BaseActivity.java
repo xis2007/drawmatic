@@ -18,8 +18,6 @@ import com.justinlee.drawmatic.constants.FirebaseConstants;
 import io.fabric.sdk.android.Fabric;
 
 public class BaseActivity extends AppCompatActivity {
-    private static final String TAG = "justin";
-    
     protected Context mContext;
 
     @Override

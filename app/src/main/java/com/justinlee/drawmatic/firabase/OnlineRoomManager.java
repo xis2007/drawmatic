@@ -61,7 +61,7 @@ public class OnlineRoomManager {
 
     /**
      * *********************************************************************************
-     * RoomMaster opertaions
+     * RoomMaster operations
      * **********************************************************************************
      */
     public void createOnlineRoom(final CreateRoomPresenter createRoomPresenter, final OnlineSettings onlineSettings, final CreateRoomContract.View createRoomView) {
@@ -103,9 +103,6 @@ public class OnlineRoomManager {
                         if (!qurySnapshot.isEmpty()) {
                             playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
                         }
-//                        else {
-//                            playPresenter.informToShowNoRoomsResultFoundMessage();
-//                        }
                     } else {
                         Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
@@ -244,8 +241,7 @@ public class OnlineRoomManager {
                     .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                     .document(onlineGame.getRoomId());
 
-            docRef
-                    .get()
+            docRef.get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -364,6 +360,7 @@ public class OnlineRoomManager {
         return onlineGamesList;
     }
 
+    // may be used in future
     private long getDateTimeWithinThreeHours() {
         long currentTime = Calendar.getInstance().getTimeInMillis();
         long threeHours = 3 * 60 * 1000;

@@ -84,7 +84,6 @@ public class OnlineInGameManager {
                 progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, 0);
                 batch.set(progressRef, progressMap);
             }
-
             batch.commit();
         }
 
@@ -123,7 +122,7 @@ public class OnlineInGameManager {
                 .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(mCurrentPlayer.getPlayerId());
 
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         map.put(String.valueOf(onlineGame.getCurrentStep()), inputTopic);
 
         currentUserDrawingsRef
