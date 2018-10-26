@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
+import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingPresenter;
 
 import java.util.ArrayList;
 

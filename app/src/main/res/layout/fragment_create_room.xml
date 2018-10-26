@@ -4,7 +4,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".online_cereate_room.CreateRoomFragment">
+             tools:context=".online.createroom.CreateRoomFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_drawing;
+package com.justinlee.drawmatic.gaming.drawing;
 
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;

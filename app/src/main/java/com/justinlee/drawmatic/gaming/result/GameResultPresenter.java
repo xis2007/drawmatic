@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_result;
+package com.justinlee.drawmatic.gaming.result;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;

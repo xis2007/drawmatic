@@ -18,7 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.R;
-import com.justinlee.drawmatic.in_game_result.GameResultPresenter;
+import com.justinlee.drawmatic.gaming.result.GameResultPresenter;
 
 import java.util.ArrayList;
 

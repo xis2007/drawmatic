@@ -4,7 +4,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".in_game_set_topic.SetTopicFragment">
+             tools:context=".gaming.settopic.SetTopicFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

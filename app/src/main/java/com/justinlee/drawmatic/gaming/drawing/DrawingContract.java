@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_drawing;
+package com.justinlee.drawmatic.gaming.drawing;
 
 import com.divyanshu.draw.widget.DrawView;
 import com.justinlee.drawmatic.bases.BasePresenter;

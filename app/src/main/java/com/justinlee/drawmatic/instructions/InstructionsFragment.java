@@ -116,6 +116,4 @@ public class InstructionsFragment extends Fragment implements InstructionsContra
 
         return instructionsList;
     }
-
-
 }

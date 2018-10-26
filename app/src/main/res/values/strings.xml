@@ -136,8 +136,8 @@
     <string name="item_title_max_players">Maximum Players</string>
 
     <!--ONline Waiting Fragment-->
-    <string name="hint_room_name">Room name: </string>
-    <string name="hint_player_in_room"> | Player in Room: </string>
+    <string name="hint_room_name">Room name: &#160;</string>
+    <string name="hint_player_in_room">&#160; | Player in Room: &#160;</string>
     <string name="hint_min_players_requirements">Need at least 4 players to begin</string>
 
     <!--Play Fragment-->

@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_set_topic;
+package com.justinlee.drawmatic.gaming.settopic;
 
 import com.justinlee.drawmatic.bases.BasePresenter;
 import com.justinlee.drawmatic.bases.BaseView;

@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_set_topic;
+package com.justinlee.drawmatic.gaming.settopic;
 
 
 import android.app.Fragment;

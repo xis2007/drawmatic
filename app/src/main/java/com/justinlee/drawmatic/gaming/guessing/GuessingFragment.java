@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_guessing;
+package com.justinlee.drawmatic.gaming.guessing;
 
 
 import android.app.Fragment;

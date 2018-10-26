@@ -137,8 +137,8 @@
     <string name="item_title_max_players">最多玩家人數</string>
 
     <!--ONline Waiting Fragment-->
-    <string name="hint_room_name">遊戲房間名稱: </string>
-    <string name="hint_player_in_room"> | 玩家人數: </string>
+    <string name="hint_room_name">遊戲房間名稱: &#160;</string>
+    <string name="hint_player_in_room">&#160; | 玩家人數: &#160;</string>
     <string name="hint_min_players_requirements">至少需要4位玩家</string>
 
     <!--Play Fragment-->

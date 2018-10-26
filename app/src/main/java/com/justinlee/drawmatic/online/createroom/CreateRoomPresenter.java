@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.online_cereate_room;
+package com.justinlee.drawmatic.online.createroom;
 
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;

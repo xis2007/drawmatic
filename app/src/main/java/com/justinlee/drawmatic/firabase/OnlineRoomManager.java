@@ -35,11 +35,11 @@ import com.justinlee.drawmatic.objects.Player;
 import com.justinlee.drawmatic.play.PlayContract;
 import com.justinlee.drawmatic.play.PlayFragment;
 import com.justinlee.drawmatic.play.PlayPresenter;
-import com.justinlee.drawmatic.online_cereate_room.CreateRoomContract;
-import com.justinlee.drawmatic.online_cereate_room.CreateRoomPresenter;
-import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingContract;
-import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingFragment;
-import com.justinlee.drawmatic.online_room_waiting.OnlineWaitingPresenter;
+import com.justinlee.drawmatic.online.createroom.CreateRoomContract;
+import com.justinlee.drawmatic.online.createroom.CreateRoomPresenter;
+import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingContract;
+import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingFragment;
+import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;

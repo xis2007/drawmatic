@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.in_game_result;
+package com.justinlee.drawmatic.gaming.result;
 
 
 import android.app.Fragment;

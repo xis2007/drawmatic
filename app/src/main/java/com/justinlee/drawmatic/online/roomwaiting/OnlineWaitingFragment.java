@@ -1,4 +1,4 @@
-package com.justinlee.drawmatic.online_room_waiting;
+package com.justinlee.drawmatic.online.roomwaiting;
 
 import android.app.Fragment;
 import android.os.Bundle;
