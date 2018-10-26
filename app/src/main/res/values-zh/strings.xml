@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">drawmatic</string>
+
+    <!--================================================================-->
+    <!--==========================xml===================================-->
+    <!--================================================================-->
+
+    <!--activity_login-->
+    <string name="title_pick_a_name">挑個名稱吧</string>
+    <string name="button_get_started">進入遊戲</string>
+
+    <!--acticity_main-->
+    <string name="title_offline_mode">如何玩?</string>
+    <string name="title_online_mode">玩遊戲</string>
+    <string name="title_settings">設定</string>
+
+    <!--fragment_instructions-->
+    <string name="text_hint_instructions">如何玩drawmatic?</string>
+
+    <!--fragment_play-->
+    <string name="text_hint_play">選擇開始遊戲的方式</string>
+    <string name="text_hint_input_play">搜尋遊戲房間名稱</string>
+    <string name="text_new_game_play">New\n \t\t\t\t\t Game</string>
+    <string name="text_search_games_play">Search\n \t\t\t\t\t\t\t Game</string>
+    <string name="hint_choose_room">點擊進入遊戲房間</string>
+
+    <!--fragment_settings-->
+    <string name="player_name_settings">玩家名稱</string>
+
+    <!--fragment_create_room-->
+    <string name="text_hint_create_room">遊戲房間設定</string>
+    <string name="text_room_name">遊戲房間名稱</string>
+    <string name="text_maximum_players">玩家上限</string>
+    <string name="text_time_for_each_attempt">每回合時間 (min)</string>
+    <string name="text_button_next_create_room">下一步</string>
+    <string name="text_button_cancel_create_room">取消</string>
+    <string name="title_play_in_offline_mode">切換到離線模式?</string>
+    <string name="description_offline_mode">Note: 以離線模式遊玩需要玩家將實體手機傳給下一位玩家</string>
+    <string name="playerNum_4">4</string>
+    <string name="playerNum_5">5</string>
+    <string name="playerNum_6">6</string>
+    <string name="playerNum_7">7</string>
+    <string name="playerNum_8">8</string>
+    <string name="playerNum_9">9</string>
+    <string name="playerNum_10">10</string>
+    <string name="playerNum_11">11</string>
+    <string name="playerNum_12">12</string>
+    <string name="maxTime_05">0.5</string>
+    <string name="maxTime_10">1.0</string>
+    <string name="maxTime_15">1.5</string>
+    <string name="maxTime_20">2.0</string>
+    <string name="description_maxTime">Note: 這裡定義的時間是畫圖的時間. 第一步出題時間固定為30秒; 猜測的時間為設定的時間的1/2.</string>
+
+    <!--fragment_online_waiting-->
+    <string name="text_hint_room_waiting">遊戲房間設定</string>
+    <string name="text_button_start_waiting">開始</string>
+    <string name="text_button_cancel_waiting">離開房間</string>
+
+    <!--fragment_set_set_topic-->
+    <string name="button_quit_set_topic">離開</string>
+    <string name="title_set_topic">設定一個題目吧</string>
+    <string name="hint_game_set_topic">等待時間結束</string>
+
+    <!--fragment_drawing-->
+    <string name="button_quit_drawing">離開</string>
+    <string name="hint_game_drawing">將看到的題目畫在黃色方格裡</string>
+
+    <!--fragment_guessing-->
+    <string name="button_quit_duessing">離開</string>
+    <string name="hint_game_guessing">猜出看到的圖</string>
+
+    <!--fragment_game_result-->
+    <string name="hint_result_ready">結果如下!!</string>
+    <string name="button_done_result">完成</string>
+
+    <!--navigation_in_game-->
+    <string name="title_clear">清楚</string>
+    <string name="title_undo">上一步</string>
+    <string name="title_redo">下一步</string>
+
+    <!--loading hints-->
+    <string name="hint_loading_search_rooms">搜尋房間</string>
+    <string name="hint_loading_creating_room">建立房間</string>
+    <string name="hint_loading_cancel_room_creation">取消房間建立</string>
+    <string name="hint_loading_prepare_room">準備房間</string>
+    <string name="hint_loading_leaving_room">離開房間</string>
+    <string name="hint_loading_starting_game">準備開始遊戲!</string>
+    <string name="hint_loading_loading_data">Loading Data</string>
+    <string name="hint_loading_joining_room">加入中...</string>
+
+    <!--bottom_sheet_dialog_leave_app_back-->
+    <string name="title_leave_app">離開遊戲?</string>
+    <string name="description_leave_the_application">確定離開程式?</string>
+    <string name="button_leave_app">離開</string>
+    <string name="button_stay_in_app">留下來</string>
+
+    <!--bottom_sheet_dialog_leave_game-->
+    <string name="title_leave_game">離開遊戲?</string>
+    <string name="description_leave_game">離開遊戲會造成遊戲結束</string>
+    <string name="button_leave_game">離開遊戲</string>
+    <string name="button_stay_in_game">留在遊戲中</string>
+
+    <!--item_room_no_result-->
+    <string name="hint_no_results">查不到結果</string>
+
+
+    <!--================================================================-->
+    <!--==========================java==================================-->
+    <!--================================================================-->
+
+    <!--Login_activity-->
+    <string name="snackbar_hint_name_input">必須輸入名稱</string>
+    <string name="snackbar_hint_something_went_wrong">失敗了...請再試一次</string>
+
+    <!--RoomWaitingAdapter-->
+    <string name="text_room_master">Room Master</string>
+    <string name="type_participant">Participant</string>
+
+    <!--SearchedRoomsAdapter-->
+    <string name="hint_playing_searchedRooms">遊戲中</string>
+
+    <!--Drawing Fragment-->
+    <string name="hint_nothing_for_player">糟了，上一位玩家沒有給提示</string>
+    <string name="hint_your_topic_is">題目: </string>
+    <string name="hint_topic_from">題目來自: </string>
+
+    <!--Guessing Fragment-->
+    <string name="hint_drawing_from">圖畫來自: </string>
+    <string name="hint_title_guess_1">猜一猜 - </string>
+    <string name="hint_title_guess_2"> 個字</string>
+    <string name="hint_tap_to_next">, 點擊繼續</string>
+
+    <!--Create Room Fragment-->
+    <string name="hint_room_name_empty">遊戲房間名稱是空的</string>
+    <string name="item_title_num_players">玩家人數</string>
+    <string name="item_title_max_players">最多玩家人數</string>
+
+    <!--ONline Waiting Fragment-->
+    <string name="hint_room_name">遊戲房間名稱: </string>
+    <string name="hint_player_in_room"> | 玩家人數: </string>
+    <string name="hint_min_players_requirements">至少需要4位玩家</string>
+
+    <!--Play Fragment-->
+    <string name="hint_room_name_input">需要輸入房間名稱</string>
+    <string name="hint_selected_room_is_in_game">這個房間在遊戲中</string>
+
+    <!--Settings Fragment-->
+    <string name="title_about">關於</string>
+    <string name="title_privacy_policy">隱私權政策</string>
+    <string name="des_this_app">This app is......</string>
+    <string name="des_privacy_policy">Please go to the link for more information</string>
+
+    <!--Main Activity-->
+    <string name="hint_tap_to_next_step">點開始擊下一步</string>
+
+
+
+    <!--===================================================================================-->
+    <!--Instructions Fragment-->
+
+    <!--1st datalist-->
+    <string name="title_header_1of1">關於drawmatic</string>
+    <string name="title_item_1of1">What is this game?</string>
+    <string name="title_item_2of1">遊戲要求?</string>
+    <string name="des_item_1of1">這是個適合所有人的Party Game!\n\n在這個遊戲中，玩家需要輪流畫圖及猜測\n\n每位玩家都輪完後，看看誰的圖畫或猜測最破天荒!!\n\n學會玩這個遊戲只需要30秒\n\n這個遊戲的目的? 不是贏，是要享受歡樂!!!</string>
+    <string name="des_item_2of1">最少玩家數: 4\n\n最多玩家數: 12\n\n所需道具: 你的手持裝置</string>
+
+    <!--2nd datalist-->
+    <string name="title_header_1of2">如何玩?</string>
+    <string name="title_item_1of2">Step 1</string>
+    <string name="title_item_2of2">Step 2</string>
+    <string name="title_item_3of2">Step 3</string>
+    <string name="title_item_4of2">Step 4</string>
+    <string name="title_item_5of2">Step 5</string>
+    <string name="title_item_6of2">Step 6</string>
+
+    <string name="des_item_1of2">有2種方式可以開始遊戲: 透過主畫面，可以按上方的按鈕來建立遊戲房間，讓其他玩家加入，或由其他玩家建立遊戲房間，透過主畫面下方按鈕搜尋遊戲房間並加入</string>
+    <string name="des_item_2of2">等所有玩家加入遊戲後，房主即可開始遊戲</string>
+    <string name="des_item_3of2">在第一回合，所有玩家需要想一個題目並輸入題目框中 (時間可透過建立房間頁面進行設定)</string>
+    <string name="des_item_4of2">在第二回合中，玩家會自動收到另一位玩家所出的題目，在看到題目後，玩家需要將該題目以繪圖的形式畫出來
+                \n\nNote:
+                \n\n單數玩家及雙數玩家的遊戲規則會略有不同
+                \n\n單數玩家: 所有玩家在第一回合出完題目之後，題目會自動傳給下一位玩家
+                \n\n雙數玩家: 所有玩家在第一回合出完題目之後，必須在第二回合畫出自己所出的題目，該圖畫會在下一回合傳給下一位玩家
+                \n\n之後的遊戲規則不管單數還是雙數都是一樣的</string>
+    <string name="des_item_5of2">在第三回合, 所有玩家會收到某個玩家所畫的圖，玩家的任務就是要猜出那副圖是什麼(會有字數提示)，把猜測的字輸入進輸入框，以讓下一位玩家將這一回合的猜測在下一回合畫出來
+                \n\nHint: 會有字數提示</string>
+    <string name="des_item_6of2">遊戲會持續重複第二及第三回合，直到所有玩家都輪完
+                \n\n在所有玩家都輪完之後，每一位玩家都會取得自己出的題目，以及針對該題目，所有玩家進行的繪圖及猜測，最後就是要將結果分享給其他玩家
+                \n\n往左滑一下，看看建議如何展示結果吧!!</string>
+
+
+    <!--3rd datalist-->
+    <string name="title_header_1of3">展示結果</string>
+    <string name="title_item_1of3">Step 1</string>
+    <string name="title_item_2of3">Step 2</string>
+    <string name="title_item_3of3">Step 3</string>
+    <string name="title_item_4of3">Step 4</string>
+    <string name="des_item_1of3">遊戲結束後面，每位玩家都會受到與自己題目有關的繪圖及猜測
+                \n\n請滑動到第一張圖畫，不要讓大家知道原本的題目是什麼</string>
+    <string name="des_item_2of3">在第一張圖之後，接續展示猜測及圖畫，讓大家知道誰的猜測或繪圖最歪!!!</string>
+    <string name="des_item_3of3">最後, 再把答案展示給大家</string>
+    <string name="des_item_4of3">上述的方法是推薦的方法
+                \n\n但你可以以任何方式展示最後的結果!
+                \n\n重點是...... 享受蓋歪樓的樂趣!</string>
+</resources>

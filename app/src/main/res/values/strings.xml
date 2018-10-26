@@ -11,7 +11,7 @@
 
     <!--acticity_main-->
     <string name="title_offline_mode">How To?</string>
-    <string name="title_online_mode">Play!!</string>
+    <string name="title_online_mode">Play</string>
     <string name="title_settings">Settings</string>
 
     <!--fragment_instructions-->
@@ -49,7 +49,7 @@
     <string name="maxTime_10">1.0</string>
     <string name="maxTime_15">1.5</string>
     <string name="maxTime_20">2.0</string>
-    <string name="description_maxTime">Note: The amount of time defined here is for drawing. Guessing time will be 1/2 of the time defined.</string>
+    <string name="description_maxTime">Note: The amount of time defined here is for drawing. Set topic time is 30 seconds; guessing time will be 1/2 of the time defined.</string>
 
     <!--fragment_online_waiting-->
     <string name="text_hint_room_waiting">Setup Your Room</string>
@@ -146,7 +146,7 @@
 
     <!--Settings Fragment-->
     <string name="title_about">About</string>
-    <string name="title_privacy_policy"><![CDATA[Privacy & Policy]]></string>
+    <string name="title_privacy_policy">Privacy &amp; Policy</string>
     <string name="des_this_app">This app is......</string>
     <string name="des_privacy_policy">Please go to the link for more information</string>
 
@@ -184,8 +184,8 @@
                 \n\nEven-Numbered pLayers: All players will set a topic, but the players will have to turn the topic they set in the 1st round into a drawing in this 2nd round
                 \n\nThe rest of the game is the same for both odd-numbered players and even-numbered players</string>s
     <string name="des_item_5of2">In the 3rd round, all players will receive a drawing from some one in the game, and your goal is to guess what the drawing is about
-                \n\nHint: word counts is shown in the input section</string>
-    <string name="des_item_6of2">The game will continue with steps 4 and 5 one after the other until each topic goes through all players in the game
+                \n\nHint: There will be word count as hint</string>
+    <string name="des_item_6of2">The game will continue with rounds 2 and 3 one after the other until each topic goes through all players in the game
                 \n\nAfter every one finishes, each player will have all the drawings and guessings related to the topic they set in the 1st round.
                 \n\nPlease swipe left to see how to use the results to enjoy the best part of this game!!</string>
 
