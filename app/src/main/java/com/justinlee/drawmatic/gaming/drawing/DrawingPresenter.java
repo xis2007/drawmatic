@@ -67,6 +67,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOfflineGame);
         } else {
+            mOnlineGame.increamentCurrentStep();
             stopTimeOutTimer();
             ((MainActivity) mMainView).getMainPresenter().transToGuessingPage(mOnlineGame);
         }
@@ -85,6 +86,14 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void redoDrawing(DrawView drawView) {
         drawView.redo();
+    }
+
+    @Override
+    public void prepareToDraw(String topicString) {
+        setTopic(topicString);
+        setCurrentStep();
+        setPreviousPlayer();
+        startMonitoringPlayerProgress();
     }
 
     @Override
@@ -145,6 +154,12 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     }
 
     @Override
+    public void updateAndSaveImageUrl(String downloadUrl) {
+        updateDrawingStepProgressAndUploadImageUrl(downloadUrl);
+        saveUrlToOnlineGameObject(downloadUrl);
+    }
+
+    @Override
     public void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl) {
         new OnlineInGameManager((MainActivity) mMainView).updateDrawingStepProgressAndUploadImageUrl(DrawingPresenter.this, mOnlineGame, downloadUrl);
     }
@@ -152,6 +167,12 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     @Override
     public void saveUrlToOnlineGameObject(String downloadUrl) {
         mOnlineGame.getImageUrlStrings().add(downloadUrl);
+    }
+
+    @Override
+    public void completedDrawing() {
+        transToGuessingPage();
+        unregisterListener();
     }
 
     @Override

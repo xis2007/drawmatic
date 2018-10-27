@@ -61,13 +61,22 @@ public class GuessingPresenter implements GuessingContract.Presenter {
 
     @Override
     public void transToDrawingPage() {
-        if (mOnlineGame != null) {
-            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
+        if (mIsInOfflineMode) {
+            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         } else {
             stopTimeOutTimer();
-            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
-        }
+            ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
 
+        }
+    }
+
+    @Override
+    public void prepareToGuess(String previousTopic, String imageUrl) {
+        setWordCountHint(previousTopic);
+        setOnlineDrawing(imageUrl);
+        setPreviousPlayer();
+        setCurrentStep();
+        startMonitoringPlayerGuessingProgress();
     }
 
     @Override
@@ -158,6 +167,19 @@ public class GuessingPresenter implements GuessingContract.Presenter {
         } else {
             mGuessingView.showWordCountHint(theWord.length());
         }
+    }
+
+    @Override
+    public void completedGame(Game game) {
+        finishGame(game);
+        unregisterListener();
+    }
+
+    @Override
+    public void completedGuessing() {
+        mOnlineGame.increamentCurrentStep();
+        transToDrawingPage();
+        unregisterListener();
     }
 
     @Override

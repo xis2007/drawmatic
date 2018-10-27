@@ -1,11 +1,9 @@
 package com.justinlee.drawmatic.firabase;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -16,7 +14,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,14 +29,14 @@ import com.justinlee.drawmatic.constants.FirebaseConstants;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.OnlineSettings;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.play.PlayContract;
-import com.justinlee.drawmatic.play.PlayFragment;
-import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.online.createroom.CreateRoomContract;
 import com.justinlee.drawmatic.online.createroom.CreateRoomPresenter;
 import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingContract;
 import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingFragment;
 import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingPresenter;
+import com.justinlee.drawmatic.play.PlayContract;
+import com.justinlee.drawmatic.play.PlayFragment;
+import com.justinlee.drawmatic.play.PlayPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,15 +44,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class OnlineRoomManager {
-    private static final String TAG = "onlineRoomManagerrrrrr";
-
     private Context mContext;
-    private FirebaseFirestore mFirebaseDb;
     private Player mCurrentPlayer;
 
     public OnlineRoomManager(Context context) {
         mContext = context;
-        mFirebaseDb = Drawmatic.getmFirebaseDb();
         mCurrentPlayer = ((MainPresenter) (((MainActivity) mContext).getMainPresenter())).getCurrentPlayer();
     }
 
@@ -80,7 +73,7 @@ public class OnlineRoomManager {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ((MainContract.View) ((Fragment) createRoomView).getActivity()).hideLoadingUi();
+                        ((MainContract.View) mContext).hideLoadingUi();
                     }
                 });
     }
@@ -91,35 +84,35 @@ public class OnlineRoomManager {
      * **********************************************************************************
      */
     public void searchForRoom(final PlayFragment playFragment, final PlayContract.Presenter playPresenter, final String inputString) {
-        CollectionReference collecRef = Drawmatic.getmFirebaseDb().collection(FirebaseConstants.Firestore.COLLECTION_ROOMS);
+        CollectionReference collecRef = Drawmatic.getmFirebaseDb()
+                .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS);
 
         collecRef
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot qurySnapshot = task.getResult();
-                        if (!qurySnapshot.isEmpty()) {
-                            playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot qurySnapshot = task.getResult();
+                            if (!qurySnapshot.isEmpty()) {
+                                playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, qurySnapshot));
+                            }
+                        } else {
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Snackbar.make(playFragment.getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
-                }
-            });
+                });
 
         collecRef
-            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e);
-                        return;
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            return;
+                        }
+                        playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, queryDocumentSnapshots));
                     }
-                    playPresenter.informToShowResultRooms(transformQuerySnapshotToRoomsList(inputString, queryDocumentSnapshots));
-                }
-            });
+                });
     }
 
 
@@ -159,8 +152,7 @@ public class OnlineRoomManager {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ((MainContract.View) playFragment.getActivity()).hideLoadingUi();
-                        Log.w(TAG, "Transaction failure.", e);
+                        ((MainContract.View) mContext).hideLoadingUi();
                     }
                 });
     }
@@ -170,7 +162,7 @@ public class OnlineRoomManager {
         if (leavingPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             deleteRoomWhenRoomMasterLeaves(onlineWaitingFragment, onlineGame.getRoomId(), onlineGame.getOnlineSettings(), leavingPlayer);
         } else {
-            playerLeavesGame(onlineWaitingFragment, onlineGame.getRoomId(), onlineGame.getOnlineSettings(), leavingPlayer);
+            playerLeavesGame(onlineGame.getRoomId(), onlineGame.getOnlineSettings(), leavingPlayer);
         }
     }
 
@@ -194,7 +186,7 @@ public class OnlineRoomManager {
                 });
     }
 
-    private void playerLeavesGame(final OnlineWaitingFragment onlineWaitingFragment, String roomId, OnlineSettings onlineSettings, final Player leavingPlayer) {
+    private void playerLeavesGame(String roomId, OnlineSettings onlineSettings, final Player leavingPlayer) {
         final DocumentReference roomToLeaveRef =
                 Drawmatic.getmFirebaseDb()
                 .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
@@ -217,15 +209,14 @@ public class OnlineRoomManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ((MainActivity) onlineWaitingFragment.getActivity()).getMainPresenter().transToPlayPage();
-                        ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
+                        ((MainActivity) mContext).getMainPresenter().transToPlayPage();
+                        ((MainContract.View) mContext).hideLoadingUi();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ((MainContract.View) onlineWaitingFragment.getActivity()).hideLoadingUi();
-                        Log.w(TAG, "Transaction failure.", e);
+                        ((MainContract.View) mContext).hideLoadingUi();
                     }
                 });
     }
@@ -251,12 +242,11 @@ public class OnlineRoomManager {
                                     onlineWaitingPresenter.updateOnlineRoomStatus(transformDocumentSnapshotToOnlineGameObject(document));
 
                                 } else {
-                                    Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
-                                    // TODO room was deleted by room master, player needs to leave the room
+                                    Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                                 }
 
                             } else {
-                                Snackbar.make(((OnlineWaitingFragment) (onlineWaitingPresenter.getOnlineWaitingView())).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -266,17 +256,15 @@ public class OnlineRoomManager {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                             if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
                                 return;
                             }
-
 
                             OnlineGame onlineGame = null;
                             try {
                                 onlineGame = transformDocumentSnapshotToOnlineGameObject(documentSnapshot).get(0);
                             } catch (NullPointerException exception) {
-                                onlineWaitingPresenter.informToTransToOnlinePage();
-                                onlineWaitingPresenter.informToShowRoomClosedMessage();
+                                // if room data cannot be retrieved and an error occurred, it means room is deleted
+                                onlineWaitingPresenter.leftRoomOnRoomDeleted();
                             }
 
 
@@ -303,7 +291,6 @@ public class OnlineRoomManager {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
                             return;
                         }
 
@@ -318,7 +305,7 @@ public class OnlineRoomManager {
         return listenerRegistration;
     }
 
-    public void setGameStatusToInGame(final OnlineWaitingPresenter onlineWaitingPresenter, final OnlineGame onlineGame) {
+    public void setGameStatusToInGame(final OnlineGame onlineGame) {
         if (mCurrentPlayer.getPlayerType() == Constants.PlayerType.ROOM_MASTER) {
             WriteBatch batch = Drawmatic.getmFirebaseDb().batch();
             DocumentReference roomRef = Drawmatic.getmFirebaseDb()

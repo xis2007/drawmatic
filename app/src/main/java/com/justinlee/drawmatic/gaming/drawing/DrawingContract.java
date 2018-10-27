@@ -35,6 +35,8 @@ public interface DrawingContract {
 
         void redoDrawing(DrawView drawView);
 
+        void prepareToDraw(String topicString);
+
         void setTopic(String topicString);
 
         void setPreviousPlayer();
@@ -47,9 +49,13 @@ public interface DrawingContract {
 
         void startMonitoringPlayerProgress();
 
+        void updateAndSaveImageUrl(String downloadUrl);
+
         void updateDrawingStepProgressAndUploadImageUrl(String downloadUrl);
 
         void saveUrlToOnlineGameObject(String downloadUrl);
+
+        void completedDrawing();
 
         void unregisterListener();
 

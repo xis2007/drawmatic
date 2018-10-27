@@ -73,8 +73,14 @@ public class OnlineWaitingPresenter implements OnlineWaitingContract.Presenter {
         if (mOnlineGame.getOnlineSettings().getPlayers().size() < 4) {
             mOnlineWaitingView.showNotEnoughPlayersMessage((MainActivity) mMainView);
         } else {
-            new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(this, mOnlineGame);
+            new OnlineRoomManager((MainActivity) mMainView).setGameStatusToInGame(mOnlineGame);
         }
+    }
+
+    @Override
+    public void leftRoomOnRoomDeleted() {
+        informToTransToOnlinePage();
+        informToShowRoomClosedMessage();
     }
 
     @Override

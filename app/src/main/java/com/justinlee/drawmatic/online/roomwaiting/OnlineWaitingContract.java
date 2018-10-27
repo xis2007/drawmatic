@@ -27,6 +27,8 @@ public interface OnlineWaitingContract {
 
         void setGameStatusToInGame();
 
+        void leftRoomOnRoomDeleted();
+
         void informToShowRoomClosedMessage();
     }
 

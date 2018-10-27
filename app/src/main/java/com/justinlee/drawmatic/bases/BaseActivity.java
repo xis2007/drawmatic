@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Initialize Admob
-        MobileAds.initialize(this, FirebaseConstants.TEST_APP_ID_ADMOB);
+        MobileAds.initialize(this, FirebaseConstants.APP_ID_ADMOB);
 
         // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());

@@ -37,6 +37,8 @@ public interface GuessingContract {
 
         void transToDrawingPage();
 
+        void prepareToGuess(String previousTopic, String imageUrl);
+
         void setOnlineDrawing(String imageUrl);
 
         void setPreviousPlayer();
@@ -63,12 +65,19 @@ public interface GuessingContract {
 
         void updateGuessingStepProgressAndUploadGuessing();
 
+        void completedGame(Game game);
+
+        void completedGuessing();
+
         void finishGame(Game game);
 
         void removeRoomListenerRegistration();
 
         void saveUnproperlyProcessedData();
 
+        /**
+         * Offline Mode
+         */
         void transToNextPage();
 
         void saveGuessingAndTransToNextPage(String guessing);

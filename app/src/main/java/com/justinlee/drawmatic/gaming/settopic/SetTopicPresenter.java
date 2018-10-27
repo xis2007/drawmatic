@@ -131,6 +131,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             mOfflineGame.increamentCurrentStep();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOfflineGame);
         } else {
+            mOnlineGame.increamentCurrentStep();
             stopTimeOutTimer();
             ((MainActivity) mMainView).getMainPresenter().transToDrawingPage(mOnlineGame);
         }
@@ -146,7 +147,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             setAndStartTimer();
             setCurrentStep();
             mRoomListenerRegistration = new OnlineRoomManager((MainActivity) mMainView).syncRoomStatusWhileInGame(mMainView, mMainPresenter, mOnlineGame);
-            new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(mMainView, this, mOnlineGame);
+            new OnlineInGameManager((MainActivity) mMainView).monitorSetTopicProgress(this, mOnlineGame);
         }
     }
 

@@ -25,9 +25,6 @@ import com.justinlee.drawmatic.util.GridItemDecoration;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class OnlineWaitingFragment extends Fragment implements OnlineWaitingContract.View {
     private OnlineWaitingContract.Presenter mOnlineWaitingPresenter;
     private RecyclerView mPlayersRecyclerView;

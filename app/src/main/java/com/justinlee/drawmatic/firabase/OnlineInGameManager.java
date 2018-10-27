@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,7 +24,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
-import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
 import com.justinlee.drawmatic.R;
 import com.justinlee.drawmatic.constants.Constants;
@@ -34,10 +32,8 @@ import com.justinlee.drawmatic.gaming.drawing.DrawingContract;
 import com.justinlee.drawmatic.gaming.drawing.DrawingFragment;
 import com.justinlee.drawmatic.gaming.drawing.DrawingPresenter;
 import com.justinlee.drawmatic.gaming.guessing.GuessingContract;
-import com.justinlee.drawmatic.gaming.guessing.GuessingFragment;
 import com.justinlee.drawmatic.gaming.guessing.GuessingPresenter;
 import com.justinlee.drawmatic.gaming.result.GameResultContract;
-import com.justinlee.drawmatic.gaming.result.GameResultFragment;
 import com.justinlee.drawmatic.gaming.result.GameResultPresenter;
 import com.justinlee.drawmatic.gaming.settopic.SetTopicPresenter;
 import com.justinlee.drawmatic.objects.OnlineGame;
@@ -53,12 +49,10 @@ import javax.annotation.Nullable;
 
 public class OnlineInGameManager {
     private Context mContext;
-    private FirebaseFirestore mFirebaseDb;
     private Player mCurrentPlayer;
 
     public OnlineInGameManager(Context context) {
         mContext = context;
-        mFirebaseDb = Drawmatic.getmFirebaseDb();
         mCurrentPlayer = ((MainPresenter) ((MainActivity) mContext).getMainPresenter()).getCurrentPlayer();
     }
 
@@ -67,7 +61,7 @@ public class OnlineInGameManager {
      * In game monitoring and progress updates (Set Topic Fragment)
      * **********************************************************************************
      */
-    public void monitorSetTopicProgress(final MainContract.View mainView, final SetTopicPresenter setTopicPresenter, final OnlineGame onlineGame) {
+    public void monitorSetTopicProgress(final SetTopicPresenter setTopicPresenter, final OnlineGame onlineGame) {
         final DocumentReference docRef = Drawmatic.getmFirebaseDb()
                 .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
@@ -106,9 +100,8 @@ public class OnlineInGameManager {
                         }
                     }
 
-                    // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
+                    // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move to the next step
                     if (totalProgressOfThisStep == targetProgress) {
-                        onlineGame.increamentCurrentStep();
                         setTopicPresenter.transToDrawingPage();
                     }
                 }
@@ -135,6 +128,7 @@ public class OnlineInGameManager {
                                 .document(onlineGame.getRoomId())
                                 .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
                                 .document(mCurrentPlayer.getPlayerId());
+
                         Map progressMap = new HashMap();
                         progressMap.put(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP, onlineGame.getCurrentStep());
                         currentUserProgressRef.update(progressMap);
@@ -159,31 +153,27 @@ public class OnlineInGameManager {
                 .collection(FirebaseConstants.Firestore.COLLECTION_DRAWINGS)
                 .document(playerIdToGetTopicOrDrawing);
 
-        docRef
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        Map documentMap = document.getData();
-                        if (document.exists()) {
-                            // setup the retrieved info to the page, and allow players to begin monitoring the progress of this step
-                            // room master needs to reset all players' progress to 0
-                            drawingPresenter.setTopic((String) documentMap.get(dataNumber));
-                            drawingPresenter.setCurrentStep();
-                            drawingPresenter.setPreviousPlayer();
-                            drawingPresenter.startMonitoringPlayerProgress();
+        docRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            Map documentMap = document.getData();
+                            if (document.exists()) {
+                                // setup the retrieved info to the page, and allow players to begin monitoring the progress of this step
+                                // room master needs to reset all players' progress to 0
+                                drawingPresenter.prepareToDraw((String) documentMap.get(dataNumber));
+
+                            } else {
+                                Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            }
 
                         } else {
-                            Snackbar.make(((DrawingFragment) drawingView).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                         }
-
-                    } else {
-                        Snackbar.make(((DrawingFragment) drawingView).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
-                }
-            });
+                });
     }
 
     public ListenerRegistration monitorDrawingProgress(final DrawingContract.View drawingView, final DrawingPresenter drawingPresenter, final OnlineGame onlineGame) {
@@ -191,33 +181,32 @@ public class OnlineInGameManager {
                 .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
-        docRef
-            .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
-            .document(mCurrentPlayer.getPlayerId())
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map finishedCurrentStepMap = document.getData();
-                            long retrievedValue = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
-                            int finishedCurrentStep = (int) retrievedValue;
+        docRef.collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
+                .document(mCurrentPlayer.getPlayerId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Map finishedCurrentStepMap = document.getData();
+                                long retrievedValue = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
+                                int finishedCurrentStep = (int) retrievedValue;
 
-                            if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
-                                drawingPresenter.startDrawing();
+                                if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
+                                    drawingPresenter.startDrawing();
+                                }
+
+                            } else {
+                                Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                         }
-
-                    } else {
-                        Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
-                }
-            });
+                });
 
         final ListenerRegistration listenerRegistration = docRef
                 .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
@@ -241,12 +230,8 @@ public class OnlineInGameManager {
                         // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
                         // else, it means this step has just begun, so start drawing
                         if (targetProgress == totalProgressOfThisStep) {
-                            onlineGame.increamentCurrentStep();
-                            drawingPresenter.transToGuessingPage();
-                            drawingPresenter.unregisterListener();
-
+                            drawingPresenter.completedDrawing();
                         }
-                        //TODO add condition for when -1
                     }
                 });
 
@@ -279,10 +264,8 @@ public class OnlineInGameManager {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downloadUrl = task.getResult();
-                            drawingPresenter.updateDrawingStepProgressAndUploadImageUrl(downloadUrl.toString());
-                            drawingPresenter.saveUrlToOnlineGameObject(downloadUrl.toString());
+                            drawingPresenter.updateAndSaveImageUrl(downloadUrl.toString());
                         }
-                        // TODO handle error
                     }
                 });
     }
@@ -343,18 +326,14 @@ public class OnlineInGameManager {
                         Map documentMap = document.getData();
 
                         if (document.exists()) {
-                            guessingPresenter.setWordCountHint(((String) documentMap.get(topicDataNumber)));
-                            guessingPresenter.setOnlineDrawing((String) documentMap.get(imageUrlDataNumber));
-                            guessingPresenter.setPreviousPlayer();
-                            guessingPresenter.setCurrentStep();
-                            guessingPresenter.startMonitoringPlayerGuessingProgress();
+                            guessingPresenter.prepareToGuess(((String) documentMap.get(topicDataNumber)), (String) documentMap.get(imageUrlDataNumber));
 
                         } else {
-                            Snackbar.make(((GuessingFragment) guessingView).getActivity().findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                         }
 
                     } else {
-                        Snackbar.make(((GuessingFragment) guessingView).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -366,32 +345,31 @@ public class OnlineInGameManager {
                 .collection(FirebaseConstants.Firestore.COLLECTION_ROOMS)
                 .document(onlineGame.getRoomId());
 
-        docRef
-            .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
-            .document(mCurrentPlayer.getPlayerId())
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map finishedCurrentStepMap = document.getData();
-                            long finishedCurrentStep = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
-                            finishedCurrentStep = (int) finishedCurrentStep;
+        docRef.collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
+                .document(mCurrentPlayer.getPlayerId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Map finishedCurrentStepMap = document.getData();
+                                long finishedCurrentStep = (long) finishedCurrentStepMap.get(FirebaseConstants.Firestore.DOCUMENT_FINISHED_CURRENT_STEP);
+                                finishedCurrentStep = (int) finishedCurrentStep;
 
-                            if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
-                                guessingPresenter.startGuessing();
+                                if (finishedCurrentStep == (onlineGame.getCurrentStep() - 1)) {
+                                    guessingPresenter.startGuessing();
+                                }
+
+                            } else {
+                                Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
                             }
-
                         } else {
-                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Room does not exist", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
-                }
-            });
+                });
 
         ListenerRegistration listenerRegistration = docRef
                 .collection(FirebaseConstants.Firestore.COLLECTION_PROGRESS_EACH_STEP)
@@ -416,13 +394,12 @@ public class OnlineInGameManager {
                         // if totalProgressOfThisStep == maxProgressOfWholeGame, it means the game should end
                         // if the totalProgressOfThisStep == targetProgress, then it means every one finishes, so move the next step
                         if (totalProgressOfThisStep == maxProgressOfWholeGame) {
-                            guessingPresenter.finishGame(onlineGame);
-                            guessingPresenter.unregisterListener();
+                            // TODO need to provide onlineGame as parameter?
+                            guessingPresenter.completedGame(onlineGame);
 
                         } else if (totalProgressOfThisStep == targetProgress) {
-                            onlineGame.increamentCurrentStep();
-                            guessingPresenter.transToDrawingPage();
-                            guessingPresenter.unregisterListener();
+                            guessingPresenter.completedGuessing();
+
                         }
                     }
                 });
@@ -489,10 +466,10 @@ public class OnlineInGameManager {
                             gameResultPresenter.informToShowOnlineGameResults(resourceStringList);
 
                         } else {
-                            Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Player data does not exist", Snackbar.LENGTH_SHORT).show();
                         }
                     } else {
-                        Snackbar.make(((GameResultFragment) gameResultView).getActivity().findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(((MainActivity) mContext).findViewById(R.id.fragment_container_main), "Something went Wrong, please try again", Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
