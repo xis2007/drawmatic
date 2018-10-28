@@ -80,6 +80,7 @@ public class GameResultFragment extends Fragment implements GameResultContract.V
         mPagerAdapter = new GameResultPagerAdapter(getActivity(), resultStrings, authorStrings);
         mGameResultViewPager.removeAllViewsInLayout();
         mGameResultViewPager.setAdapter(mPagerAdapter);
+        mGameResultViewPager.setOffscreenPageLimit(5);
         ExtensiblePageIndicator extensiblePageIndicator = getActivity().findViewById(R.id.flexibleIndicator);
         extensiblePageIndicator.initViewPager(mGameResultViewPager);
     }

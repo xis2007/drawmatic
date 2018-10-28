@@ -7,6 +7,8 @@ import com.justinlee.drawmatic.objects.OnlineGame;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
+        void showUpdateRequirementDialog();
+
         // offline mode
         void showInstructionsPageUi();
 
@@ -47,6 +49,10 @@ public interface MainContract {
     }
 
     interface Presenter extends BasePresenter {
+        void checkIfAppUpdateIsRequired();
+
+        void promptUpdateRequirementMessage();
+
         // offline mode
         void transToInstructionsPage();
 

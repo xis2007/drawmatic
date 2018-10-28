@@ -3,6 +3,7 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import com.justinlee.drawmatic.firabase.RemoteSettingsManager;
 import com.justinlee.drawmatic.user.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.gaming.drawing.DrawingFragment;
@@ -61,6 +62,16 @@ public class MainPresenter implements MainContract.Presenter {
     public MainPresenter(MainContract.View mainView, FragmentManager fragmentManager) {
         mMainView = mainView;
         mFragmentManager = fragmentManager;
+    }
+
+    @Override
+    public void checkIfAppUpdateIsRequired() {
+        new RemoteSettingsManager((MainActivity) mMainView, this).checkForAppUpdateRequirement();
+    }
+
+    @Override
+    public void promptUpdateRequirementMessage() {
+        mMainView.showUpdateRequirementDialog();
     }
 
     @Override

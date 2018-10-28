@@ -18,6 +18,7 @@ import com.justinlee.drawmatic.constants.Constants;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.util.BackLeaveAppBottomSheetDialog;
 import com.justinlee.drawmatic.util.LeaveGameBottomSheetDialog;
+import com.justinlee.drawmatic.util.UpdateAppDialog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -31,16 +32,26 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
 
     private boolean mIsUserInGame = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            init();
-        } else {
-            promptForLogin();
-        }
+        init();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) promptForLogin();
+
+
+
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+//            init();
+//        } else {
+//            promptForLogin();
+//        }
+    }
+
+    @Override
+    public void showUpdateRequirementDialog() {
+        new UpdateAppDialog(this).show();
     }
 
     @Override
@@ -259,6 +270,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
         startActivityForResult(intent, Constants.Login.LOGIN_ACTIVITY);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMainPresenter.checkIfAppUpdateIsRequired();
+    }
 
     /**
      * ***********************************************************************************
