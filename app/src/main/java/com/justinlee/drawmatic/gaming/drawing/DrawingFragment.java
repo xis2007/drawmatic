@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.gaming.drawing;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -176,11 +175,11 @@ public class DrawingFragment extends Fragment implements DrawingContract.View {
     public void initiateNextStepButton(int currentStep, int numPlayers) {
         mCurrentStepButton.setText("Step " + currentStep + "/" + numPlayers + ", Tap to Next");
         mCurrentStepButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mDrawingPresenter.saveDrawingAndTransToGuessingPage(mDrawView);
-                                }
-                            });
+                @Override
+                public void onClick(View v) {
+                    mDrawingPresenter.saveDrawingAndTransToGuessingPage(mDrawView);
+                }
+            });
     }
 
 

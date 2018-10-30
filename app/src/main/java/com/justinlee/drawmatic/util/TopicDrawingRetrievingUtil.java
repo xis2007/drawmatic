@@ -1,7 +1,6 @@
 package com.justinlee.drawmatic.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
@@ -11,25 +10,23 @@ import java.util.ArrayList;
 public class TopicDrawingRetrievingUtil {
     private Context mContext;
     private OnlineGame mOnlineGame;
-    private Player mCuurentPlayer;
+    private Player mCurrentPlayer;
 
-    public TopicDrawingRetrievingUtil(Context context, OnlineGame onlineGame, Player cuurentPlayer) {
+    public TopicDrawingRetrievingUtil(Context context, OnlineGame onlineGame, Player currentPlayer) {
         mContext = context;
         mOnlineGame = onlineGame;
-        mCuurentPlayer = cuurentPlayer;
+        mCurrentPlayer = currentPlayer;
     }
 
     public String calcPlayerIdToRetrieveTopicOrDrawing() {
         if (mOnlineGame.isPlayersOddumbered()) {
             int positionOfPlayerInsortedList = getOddNumberedPlayerPosition();
             String playerId = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerId();
-            Log.d("sortedList", "calcPlayerIdToRetrieveTopicOrDrawing: " + mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(0).getPlayerName());
             return playerId;
 
         } else {
             int positionOfPlayerInsortedList = getEvenNumberedPlayerPosition();
             String playerId = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(positionOfPlayerInsortedList).getPlayerId();
-            Log.d("sortedList", "calcPlayerIdToRetrieveTopicOrDrawing: " + mOnlineGame.getOnlineSettings().generateSortedPlayersListById().get(0).getPlayerName());
             return playerId;
         }
     }
@@ -49,7 +46,7 @@ public class TopicDrawingRetrievingUtil {
 
     public ArrayList<String> calcOrderedPlayersForResults() {
         int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
-        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
+        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCurrentPlayer);
         ArrayList<Player> playersList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById();
 
         ArrayList<String> orderedPlayersForResult = new ArrayList<>();
@@ -74,7 +71,7 @@ public class TopicDrawingRetrievingUtil {
     private int getOddNumberedPlayerPosition() {
         int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentStep = mOnlineGame.getCurrentStep();
-        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
+        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCurrentPlayer);
 
         // logic 1
 //        int positionOfPlayerToGetData = (currentPlayerPositionInList - (currentStep - 1)) >= 0 ? (currentPlayerPositionInList - (currentStep - 1)) : totalSteps - ((currentStep - 1) - currentPlayerPositionInList);
@@ -89,7 +86,7 @@ public class TopicDrawingRetrievingUtil {
     private int getEvenNumberedPlayerPosition() {
         int totalPlayers = mOnlineGame.getOnlineSettings().getPlayers().size();
         int currentStep = mOnlineGame.getCurrentStep();
-        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCuurentPlayer);
+        int currentPlayerPositionInList = mOnlineGame.getOnlineSettings().generateSortedPlayersListById().indexOf(mCurrentPlayer);
 
         int positionOfPlayerToGetData;
         if (currentStep <= 2) {

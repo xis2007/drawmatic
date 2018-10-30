@@ -1,6 +1,5 @@
 package com.justinlee.drawmatic.gaming.result;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class GameResultFragment extends Fragment implements GameResultContract.View {
-    private static final String TAG = "justinxxxxx";
-
     private GameResultContract.Presenter mGameResultPresenter;
 
     private ViewPager mGameResultViewPager;

@@ -34,7 +34,7 @@ public class RemoteSettingsManager {
                             boolean requireAppUpdate = (Boolean) documentSnapshot.get(FirebaseConstants.Firestore.KEY_REQUIRED);
                             int requiredAppVersionCode = (int) ((long) documentSnapshot.get(FirebaseConstants.Firestore.KEY_REQUIRED_verSION_CODE));
 
-                            if ((requireAppUpdate == true) && (getCurrentAppVersionCode() < requiredAppVersionCode)) {
+                            if (isUpdateRequired(requireAppUpdate, requiredAppVersionCode)) {
                                 mMainPresenter.promptUpdateRequirementMessage();
                             }
                         }
@@ -42,7 +42,7 @@ public class RemoteSettingsManager {
                 });
     }
 
-    private int getCurrentAppVersionCode() {
+    int getCurrentAppVersionCode() {
         try {
             PackageInfo pInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
             int verCode = pInfo.versionCode;
@@ -50,6 +50,15 @@ public class RemoteSettingsManager {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
         return -1;
+    }
+
+    boolean isUpdateRequired(boolean requireAppUpdate, int requiredAppVersionCode) {
+        if ((requireAppUpdate) && (getCurrentAppVersionCode() < requiredAppVersionCode)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

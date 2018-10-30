@@ -148,8 +148,12 @@
     <!--Settings Fragment-->
     <string name="title_about">關於</string>
     <string name="title_privacy_policy">隱私權政策</string>
-    <string name="des_this_app">This app is......</string>
-    <string name="des_privacy_policy">Please go to the link for more information</string>
+    <string name="des_this_app">Version 1.1.2</string>
+    <string name="des_privacy_policy">關於更詳細的隱私權政策，請造訪
+        <a href="https://whichpay.wixsite.com/drawmatic">
+            這裡
+        </a>
+    </string>
 
     <!--Main Activity-->
     <string name="hint_tap_to_next_step">點開始擊下一步</string>

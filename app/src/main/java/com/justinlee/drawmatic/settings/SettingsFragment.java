@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,6 @@ import com.justinlee.drawmatic.R;
 import iammert.com.expandablelib.ExpandableLayout;
 import iammert.com.expandablelib.Section;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SettingsFragment extends Fragment implements SettingsContract.View {
     private SettingsContract.Presenter mSettingsPresenter;
 
@@ -101,6 +99,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
                         break;
                     case 1:
                         ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setText(R.string.des_privacy_policy);
+                        ((TextView) view.findViewById(R.id.text_title_child_about_settings)).setMovementMethod(LinkMovementMethod.getInstance());
                         break;
                     default:
                         break;

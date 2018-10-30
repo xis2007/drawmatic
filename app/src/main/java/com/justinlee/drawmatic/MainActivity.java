@@ -60,11 +60,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     }
 
     @Override
-    public void showOfflineGameSettingsPageUi() {
-
-    }
-
-    @Override
     public void showPlayPageUi() {
         mPrimaryNavigation.setVisibility(View.VISIBLE);
     }

@@ -112,11 +112,6 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void transToOfflineGameSettingsPage() {
-
-    }
-
-    @Override
     public void transToPlayPage() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 

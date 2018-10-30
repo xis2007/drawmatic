@@ -12,8 +12,6 @@ public interface MainContract {
         // offline mode
         void showInstructionsPageUi();
 
-        void showOfflineGameSettingsPageUi();
-
         // online mode
         void showPlayPageUi();
 
@@ -53,10 +51,8 @@ public interface MainContract {
 
         void promptUpdateRequirementMessage();
 
-        // offline mode
+        // instructions
         void transToInstructionsPage();
-
-        void transToOfflineGameSettingsPage();
 
         // online mode
         void transToPlayPage();
