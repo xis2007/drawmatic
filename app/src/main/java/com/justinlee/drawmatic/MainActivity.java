@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -136,6 +137,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bot
     @Override
     public void showLeaveGameDialog(OnlineGame onlineGame) {
         LeaveGameBottomSheetDialog.newInstance(this).setOnlineGame(onlineGame).show(getSupportFragmentManager(), Constants.FragmentFlag.FLAG_LEAVE_GAME_ALERT);
+    }
+
+    @Override
+    public void showNoNetworkAlert() {
+        Snackbar.make(findViewById(R.id.fragment_container_main), R.string.hint_no_network_connection, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

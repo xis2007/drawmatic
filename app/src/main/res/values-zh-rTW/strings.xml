@@ -133,6 +133,7 @@
 
     <!--Create Room Fragment-->
     <string name="hint_room_name_empty">遊戲房間名稱是空的</string>
+    <string name="hint_no_network_connection">請開啟網路</string>
     <string name="item_title_num_players">玩家人數</string>
     <string name="item_title_max_players">最多玩家人數</string>
 

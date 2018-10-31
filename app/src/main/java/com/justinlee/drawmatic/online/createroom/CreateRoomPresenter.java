@@ -1,5 +1,6 @@
 package com.justinlee.drawmatic.online.createroom;
 
+import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
@@ -33,7 +34,11 @@ public class CreateRoomPresenter implements CreateRoomContract.Presenter {
 
     @Override
     public void createRoom(String roomName, int numPlayers, float attemptTime) {
-        if (Constants.NO_STRING.equals(roomName) || roomName.isEmpty()) {
+
+        if(!Drawmatic.isNetworkConnected()) {
+            mMainPresenter.promptNoNetworkAlert();
+
+        } else if (Constants.NO_STRING.equals(roomName) || roomName.isEmpty()) {
             mCreateRoomView.promptNameInputAlert();
 
         } else {

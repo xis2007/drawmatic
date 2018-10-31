@@ -132,6 +132,7 @@
 
     <!--Create Room Fragment-->
     <string name="hint_room_name_empty">Room Name is Empty</string>
+    <string name="hint_no_network_connection">No Internet Connection</string>
     <string name="item_title_num_players">Number of Players</string>
     <string name="item_title_max_players">Maximum Players</string>
 
@@ -208,6 +209,7 @@
     <string name="des_item_4of3">Well the above is the recommended way to present the results
                 \n\nBut you can present the results however you like!
                 \n\nThe point is...... Have Fun!</string>
+
 
 
 </resources>

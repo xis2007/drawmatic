@@ -3,9 +3,8 @@ package com.justinlee.drawmatic;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
-import com.justinlee.drawmatic.firabase.RemoteSettingsManager;
-import com.justinlee.drawmatic.user.UserManager;
 import com.justinlee.drawmatic.constants.Constants;
+import com.justinlee.drawmatic.firabase.RemoteSettingsManager;
 import com.justinlee.drawmatic.gaming.drawing.DrawingFragment;
 import com.justinlee.drawmatic.gaming.drawing.DrawingPresenter;
 import com.justinlee.drawmatic.gaming.guessing.GuessingFragment;
@@ -19,14 +18,15 @@ import com.justinlee.drawmatic.instructions.InstructionsPresenter;
 import com.justinlee.drawmatic.objects.Game;
 import com.justinlee.drawmatic.objects.OnlineGame;
 import com.justinlee.drawmatic.objects.Player;
-import com.justinlee.drawmatic.play.PlayFragment;
-import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.online.createroom.CreateRoomFragment;
 import com.justinlee.drawmatic.online.createroom.CreateRoomPresenter;
 import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingFragment;
 import com.justinlee.drawmatic.online.roomwaiting.OnlineWaitingPresenter;
+import com.justinlee.drawmatic.play.PlayFragment;
+import com.justinlee.drawmatic.play.PlayPresenter;
 import com.justinlee.drawmatic.settings.SettingsFragment;
 import com.justinlee.drawmatic.settings.SettingsPresenter;
+import com.justinlee.drawmatic.user.UserManager;
 
 public class MainPresenter implements MainContract.Presenter {
     private Player mCurrentPlayer;
@@ -459,6 +459,11 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void resetCurrentPlayerToParticipant() {
         if (mCurrentPlayer != null) mCurrentPlayer.setPlayerType(Constants.PlayerType.PARTICIPANT);
+    }
+
+    @Override
+    public void promptNoNetworkAlert() {
+        mMainView.showNoNetworkAlert();
     }
 
     @Override

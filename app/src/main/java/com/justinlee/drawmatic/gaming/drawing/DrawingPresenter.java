@@ -31,6 +31,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+    private long mCountDownTime = -1;
     private CountDownTimer mTimeOutTimer;
 
     private ListenerRegistration mRoomListenerRegistration;
@@ -115,6 +116,7 @@ public class DrawingPresenter implements DrawingContract.Presenter {
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
                 mDrawingView.updateTimer(secUntilFinish);
+                mCountDownTime = millisUntilFinished;
             }
 
             @Override
@@ -194,7 +196,22 @@ public class DrawingPresenter implements DrawingContract.Presenter {
 
     @Override
     public void restartCountDownTimer() {
-//        if(mCountDownTimer != null) mCountDownTimer.start();
+        if (mCountDownTime > 0) {
+            mCountDownTimer = new CountDownTimer(mCountDownTime, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    long secUntilFinish = millisUntilFinished / 1000;
+                    mDrawingView.updateTimer(secUntilFinish);
+                    mCountDownTime = millisUntilFinished;
+                }
+
+                @Override
+                public void onFinish() {
+                    uploadImageAndGetImageUrl();
+                    setAndStartTimeOutTimer();
+                }
+            }.start();
+        }
     }
 
     @Override

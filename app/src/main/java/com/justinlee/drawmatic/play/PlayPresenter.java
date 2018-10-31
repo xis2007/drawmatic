@@ -2,6 +2,7 @@ package com.justinlee.drawmatic.play;
 
 import android.app.Fragment;
 
+import com.justinlee.drawmatic.Drawmatic;
 import com.justinlee.drawmatic.MainActivity;
 import com.justinlee.drawmatic.MainContract;
 import com.justinlee.drawmatic.MainPresenter;
@@ -33,14 +34,18 @@ public class PlayPresenter implements PlayContract.Presenter {
 
     @Override
     public void informToTransToSearchRoomsPage() {
-        mOnlineView.showSearchGamesPageUi();
+        if (Drawmatic.isNetworkConnected()) {
+            mOnlineView.showSearchGamesPageUi();
+        } else {
+            mMainPresenter.promptNoNetworkAlert();
+        }
     }
 
 
     @Override
     public void searchForRooms(PlayFragment playFragment, String inputString) {
         mMainPresenter.isLoading(((MainActivity) mMainView).getResources().getString(R.string.hint_loading_search_rooms));
-        new OnlineRoomManager(((Fragment) mOnlineView).getActivity()).searchForRoom(playFragment, this, inputString);
+        new OnlineRoomManager((MainActivity) mMainView).searchForRoom(playFragment, this, inputString);
     }
 
     @Override

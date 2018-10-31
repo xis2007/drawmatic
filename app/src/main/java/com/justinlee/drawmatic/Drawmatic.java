@@ -2,6 +2,7 @@ package com.justinlee.drawmatic;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -12,6 +13,7 @@ public class Drawmatic extends Application {
     private static Context mContext;
     private static FirebaseFirestore mFirebaseDb;
     private static StorageReference mStorageReference;
+    private static ConnectivityManager mConnectivityManager;
 
     @Override
     public void onCreate() {
@@ -20,9 +22,8 @@ public class Drawmatic extends Application {
 
         initializeFirebaseDb();
         initializeFirebaseStorage();
+        initializeConnectivityManager();
     }
-
-
 
     public static Context getAppContext() {
         return mContext;
@@ -42,5 +43,13 @@ public class Drawmatic extends Application {
 
     private void initializeFirebaseStorage() {
         mStorageReference = FirebaseStorage.getInstance().getReference(FirebaseConstants.Storage.REF_ROOMS);
+    }
+
+    private void initializeConnectivityManager() {
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    public static boolean isNetworkConnected() {
+        return mConnectivityManager.getActiveNetworkInfo() != null;
     }
 }

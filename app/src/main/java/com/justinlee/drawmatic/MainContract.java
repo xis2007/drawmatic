@@ -44,6 +44,9 @@ public interface MainContract {
         void showLeaveAppDialog();
 
         void showLeaveGameDialog(OnlineGame onlineGame);
+
+        // other messages
+        void showNoNetworkAlert();
     }
 
     interface Presenter extends BasePresenter {
@@ -89,6 +92,10 @@ public interface MainContract {
 
         // reseting player
         void resetCurrentPlayerToParticipant();
+
+        // other messages
+        void promptNoNetworkAlert();
+
     }
 
 

@@ -26,6 +26,7 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
     private OfflineGame mOfflineGame;
 
     private CountDownTimer mCountDownTimer;
+    private long mCountDownTime = -1;
     private CountDownTimer mTimeOutTimer;
 
     private ListenerRegistration mRoomListenerRegistration;
@@ -62,10 +63,12 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
             public void onTick(long millisUntilFinished) {
                 long secUntilFinish = millisUntilFinished / 1000;
                 mSetTopicView.updateTimer(secUntilFinish);
+                mCountDownTime = millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
+                mTimeOutTimer = null;
                 updateSetTopicStepProgressAndUploadTopic();
                 setAndStartTimeOutTimer();
             }
@@ -91,8 +94,6 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
         mTimeOutTimer = new TimeOutTimer((long) (15 * 1000), 1000, (MainActivity) mMainView, mOnlineGame).start();
     }
 
-
-
     @Override
     public void setCurrentStep() {
         mSetTopicView.showCurrentStep(mOnlineGame.getCurrentStep(), mOnlineGame.getTotalSteps());
@@ -110,7 +111,22 @@ public class SetTopicPresenter implements SetTopicContract.Presenter {
 
     @Override
     public void restartCountDownTimer() {
-//        if(mCountDownTimer != null) mCountDownTimer.start();
+        if (mCountDownTime > 0) {
+            mCountDownTimer = new CountDownTimer(mCountDownTime, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    long secUntilFinish = millisUntilFinished / 1000;
+                    mSetTopicView.updateTimer(secUntilFinish);
+                    mCountDownTime = millisUntilFinished;
+                }
+
+                @Override
+                public void onFinish() {
+                    updateSetTopicStepProgressAndUploadTopic();
+                    setAndStartTimeOutTimer();
+                }
+            }.start();
+        }
     }
 
     @Override
