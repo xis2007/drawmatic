@@ -49,7 +49,6 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
         mEdittextUserName = rootView.findViewById(R.id.editText_edit_name);
         mEdittextUserName.setText(((MainPresenter) ((SettingsPresenter) mSettingsPresenter).getMainPresenter()).getCurrentPlayer().getPlayerName());
 
-
         mButtonEditName = rootView.findViewById(R.id.button_edit_name_settings);
         mButtonEditName.setTag(R.drawable.ic_edit);
         mButtonEditName.setOnClickListener(new View.OnClickListener() {

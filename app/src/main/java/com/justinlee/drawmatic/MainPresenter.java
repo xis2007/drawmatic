@@ -472,8 +472,8 @@ public class MainPresenter implements MainContract.Presenter {
         initializeCurrentPlayer();
     }
 
-
-    private void initializeCurrentPlayer() {
+    @Override
+    public void initializeCurrentPlayer() {
         mCurrentPlayer = new Player(UserManager.getInstance().getUserName(), UserManager.getInstance().getUserId(), Constants.PlayerType.PARTICIPANT);
     }
 

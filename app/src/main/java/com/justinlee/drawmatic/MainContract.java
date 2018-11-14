@@ -91,6 +91,7 @@ public interface MainContract {
         void informToShowLeaveGameDialog(OnlineGame onlineGame);
 
         // reseting player
+        void initializeCurrentPlayer();
         void resetCurrentPlayerToParticipant();
 
         // other messages

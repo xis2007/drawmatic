@@ -11,15 +11,15 @@
     <string name="button_get_started">進入遊戲</string>
 
     <!--acticity_main-->
-    <string name="title_offline_mode">如何玩?</string>
-    <string name="title_online_mode">玩遊戲</string>
+    <string name="title_offline_mode">怎麼玩?</string>
+    <string name="title_online_mode">開始玩</string>
     <string name="title_settings">設定</string>
 
     <!--fragment_instructions-->
-    <string name="text_hint_instructions">如何玩drawmatic?</string>
+    <string name="text_hint_instructions">怎麼玩 drawmatic?</string>
 
     <!--fragment_play-->
-    <string name="text_hint_play">選擇開始遊戲的方式</string>
+    <string name="text_hint_play">設定我的遊戲房間</string>
     <string name="text_hint_input_play">搜尋遊戲房間名稱</string>
     <string name="text_new_game_play">New\n \t\t\t\t\t Game</string>
     <string name="text_search_games_play">Search\n \t\t\t\t\t\t\t Game</string>
@@ -29,14 +29,14 @@
     <string name="player_name_settings">玩家名稱</string>
 
     <!--fragment_create_room-->
-    <string name="text_hint_create_room">遊戲房間設定</string>
+    <string name="text_hint_create_room">設定我的遊戲房間</string>
     <string name="text_room_name">遊戲房間名稱</string>
-    <string name="text_maximum_players">玩家上限</string>
+    <string name="text_maximum_players">最多玩家人數</string>
     <string name="text_time_for_each_attempt">每回合時間 (min)</string>
     <string name="text_button_next_create_room">下一步</string>
     <string name="text_button_cancel_create_room">取消</string>
-    <string name="title_play_in_offline_mode">切換到離線模式?</string>
-    <string name="description_offline_mode">Note: 以離線模式遊玩需要玩家將實體手機傳給下一位玩家</string>
+    <string name="title_play_in_offline_mode">離線模式</string>
+    <string name="description_offline_mode">Note: 玩家需在離線模式將手機傳給下一位玩家</string>
     <string name="playerNum_4">4</string>
     <string name="playerNum_5">5</string>
     <string name="playerNum_6">6</string>
@@ -50,10 +50,10 @@
     <string name="maxTime_10">1.0</string>
     <string name="maxTime_15">1.5</string>
     <string name="maxTime_20">2.0</string>
-    <string name="description_maxTime">Note: 這裡定義的時間是畫圖的時間. 第一步出題時間固定為30秒; 猜測的時間為設定的時間的1/2.</string>
+    <string name="description_maxTime">Note: 指每一回合畫圖的時間；出題時間固定為30秒; 猜測時間為畫圖時間的一半</string>
 
     <!--fragment_online_waiting-->
-    <string name="text_hint_room_waiting">遊戲房間設定</string>
+    <string name="text_hint_room_waiting">遊戲房間名稱</string>
     <string name="text_button_start_waiting">開始</string>
     <string name="text_button_cancel_waiting">離開房間</string>
 
@@ -71,7 +71,7 @@
     <string name="hint_game_guessing">猜出看到的圖</string>
 
     <!--fragment_game_result-->
-    <string name="hint_result_ready">結果如下!!</string>
+    <string name="hint_result_ready">完成了，看一看結果</string>
     <string name="button_done_result">完成</string>
 
     <!--navigation_in_game-->
@@ -80,18 +80,18 @@
     <string name="title_redo">下一步</string>
 
     <!--loading hints-->
-    <string name="hint_loading_search_rooms">搜尋房間</string>
-    <string name="hint_loading_creating_room">建立房間</string>
-    <string name="hint_loading_cancel_room_creation">取消房間建立</string>
-    <string name="hint_loading_prepare_room">準備房間</string>
-    <string name="hint_loading_leaving_room">離開房間</string>
+    <string name="hint_loading_search_rooms">搜尋房間中</string>
+    <string name="hint_loading_creating_room">建立房間中</string>
+    <string name="hint_loading_cancel_room_creation">正在取消房間建立</string>
+    <string name="hint_loading_prepare_room">正在準備房間</string>
+    <string name="hint_loading_leaving_room">正在離開房間</string>
     <string name="hint_loading_starting_game">準備開始遊戲!</string>
     <string name="hint_loading_loading_data">Loading Data</string>
     <string name="hint_loading_joining_room">加入中...</string>
 
     <!--bottom_sheet_dialog_leave_app_back-->
-    <string name="title_leave_app">離開遊戲?</string>
-    <string name="description_leave_the_application">確定離開程式?</string>
+    <string name="title_leave_app">離開 App?</string>
+    <string name="description_leave_the_application">確定離開 App?</string>
     <string name="button_leave_app">離開</string>
     <string name="button_stay_in_app">留下來</string>
 
@@ -150,7 +150,7 @@
     <!--Settings Fragment-->
     <string name="title_about">關於</string>
     <string name="title_privacy_policy">隱私權政策</string>
-    <string name="des_this_app">Version 1.1.2</string>
+    <string name="des_this_app">Version 1.1.4</string>
     <string name="des_privacy_policy">關於更詳細的隱私權政策，請造訪
         <a href="https://whichpay.wixsite.com/drawmatic">
             這裡
@@ -160,14 +160,12 @@
     <!--Main Activity-->
     <string name="hint_tap_to_next_step">點開始擊下一步</string>
 
-
-
     <!--===================================================================================-->
     <!--Instructions Fragment-->
 
     <!--1st datalist-->
-    <string name="title_header_1of1">關於drawmatic</string>
-    <string name="title_item_1of1">What is this game?</string>
+    <string name="title_header_1of1">關於 drawmatic</string>
+    <string name="title_item_1of1">這是什麼遊戲?</string>
     <string name="title_item_2of1">遊戲要求?</string>
     <string name="des_item_1of1">這是個適合所有人的Party Game!\n\n在這個遊戲中，玩家需要輪流畫圖及猜測\n\n每位玩家都輪完後，看看誰的圖畫或猜測最破天荒!!\n\n學會玩這個遊戲只需要30秒\n\n這個遊戲的目的? 不是贏，是要享受歡樂!!!</string>
     <string name="des_item_2of1">最少玩家數: 4\n\n最多玩家數: 12\n\n所需道具: 你的手持裝置</string>
