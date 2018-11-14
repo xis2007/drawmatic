@@ -111,6 +111,7 @@
     <!--Login_activity-->
     <string name="snackbar_hint_name_input">Name Input Required</string>
     <string name="snackbar_hint_something_went_wrong">Something went Wrong. Please try again</string>
+    <string name="snackbar_hint_no_network">Please turn on internet</string>
 
     <!--RoomWaitingAdapter-->
     <string name="text_room_master">Room Master</string>

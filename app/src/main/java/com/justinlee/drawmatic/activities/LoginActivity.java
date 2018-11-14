@@ -47,7 +47,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String userNameInputString = nameInputEdittext.getText().toString();
-                if ("".equals(userNameInputString) || userNameInputString.isEmpty()) {
+                if (!Drawmatic.isNetworkConnected()) {
+                    Snackbar.make(findViewById(R.id.constraintLayout_login), R.string.snackbar_hint_no_network, Snackbar.LENGTH_LONG).show();
+                } else if ("".equals(userNameInputString) || userNameInputString.isEmpty()) {
                     Snackbar.make(findViewById(R.id.constraintLayout_login), R.string.snackbar_hint_name_input, Snackbar.LENGTH_LONG).show();
                 } else {
                     getStartedButton.setBackground(getResources().getDrawable(R.drawable.box_button_greyed_login));

@@ -112,6 +112,7 @@
     <!--Login_activity-->
     <string name="snackbar_hint_name_input">必須輸入名稱</string>
     <string name="snackbar_hint_something_went_wrong">失敗了...請再試一次</string>
+    <string name="snackbar_hint_no_network">請開啟網路</string>
 
     <!--RoomWaitingAdapter-->
     <string name="text_room_master">Room Master</string>
