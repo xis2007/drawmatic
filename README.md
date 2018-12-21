@@ -8,8 +8,6 @@ Players can easily play with their friends quickly on the phone, where player pr
 
   * Authentication
     * Firebase Authencaon that allows users to login anonymously to play games quickly 
-    * Developed based on MVP architectural paern for easier maintenance and future expandability
-    * Interfaces for callbacks to allow clear and flexible programming style
 
   * Main Menu
     * Gaming main page for players to either create a new room for others to join or join an existing room created be other players
@@ -20,7 +18,7 @@ Players can easily play with their friends quickly on the phone, where player pr
     * Creator of a game can set up rules for the game i.e. the time allowed for each step and maximum players allowed
     * Room and player information are updated to Firebase Firestore in realtime
     * Partial search is allowed when searching for rooms to join
-    * Searched rooms are shown in recyclerview withlinear layout
+    * Searched rooms are shown in recyclerview with linear layout
     * After joining rooms, players in the room is shown in recyclerview with grid layout 
     
   * In games
@@ -37,7 +35,7 @@ Players can easily play with their friends quickly on the phone, where player pr
   
 # Screenshot
 
-<img src="https://lh3.googleusercontent.com/RiEX3w4yDrY_LXWX6AQESRAsVYblIMyjbVMpaBoicdAAKQMTeXqYg11KGJBp8-uUfGo=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/wqTNySJuRX6SuIKmzc07lIjG6BFTJXDtu6VWFaZaD93ddLcx6HdLl6HreYd5XEW6qg=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/e_xNq9m-eh1qeNp64noluAykDMgWZV_tW7JPMWkNMxZy6c5W-SV2y6HrKsWBxFpfXw=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/DyDdyxPSy5qGAlazgyffzpx-v2gwNzd30q-uvZp1BhtjqdmxLApzAG3dXFvvovbVnWU=w1440-h620-rw" width="210"> 
+<img src="https://lh3.googleusercontent.com/RiEX3w4yDrY_LXWX6AQESRAsVYblIMyjbVMpaBoicdAAKQMTeXqYg11KGJBp8-uUfGo=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/wqTNySJuRX6SuIKmzc07lIjG6BFTJXDtu6VWFaZaD93ddLcx6HdLl6HreYd5XEW6qg=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/DyDdyxPSy5qGAlazgyffzpx-v2gwNzd30q-uvZp1BhtjqdmxLApzAG3dXFvvovbVnWU=w1440-h620-rw" width="210"> <img src="https://lh3.googleusercontent.com/e_xNq9m-eh1qeNp64noluAykDMgWZV_tW7JPMWkNMxZy6c5W-SV2y6HrKsWBxFpfXw=w1440-h620-rw" width="210"> 
 
 # Implemented
   
@@ -79,7 +77,7 @@ Players can easily play with their friends quickly on the phone, where player pr
 
 # Version
 * 1.1.7 - 2018/11/17
-    First release
+    Last Update
 
   
 
