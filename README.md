@@ -11,42 +11,29 @@ Players can easily play with their friends quickly on the phone, where player pr
     * Developed based on MVP architectural paern for easier maintenance and future expandability
     * Interfaces for callbacks to allow clear and flexible programming style
 
-
   * Main Menu
     * Gaming main page for players to either create a new room for others to join or join an existing room created be other players
     * Instructions Page with 2 layers of recyclerview that allows beginners to learn how to play the game
     * Settings Page for App information and player renaming
     
-  
   * Joining Games
+    * Creator of a game can set up rules for the game i.e. the time allowed for each step and maximum players allowed
     * Room and player information are updated to Firebase Firestore in realtime
     * Partial search is allowed when searching for rooms to join
     * Searched rooms are shown in recyclerview withlinear layout
     * After joining rooms, players in the room is shown in recyclerview with grid layout 
     
-
-  * In game
-    * 按字母排列所有已加入的群組
-    * 個別群組頁面會列出所有群組花費與個人在群組內的帳務
+  * In games
+    * Each step in the game will be timed with coundown timer to keep everyone on the same page
+    * After each step, data (guessing and drawing) will be uploaded to Firebase Firestore or Storage, and each player will tell the server that he/she finishes the step
+    * The next step will begin only when everyone finishes, and the correct data will be retrieved from Firebase asyncronouly
+    * If anyone leaves the game by pressing the "Leave" button, all players will leave the game
+    * If anyone leaves the game without proper procedures, all players will leave the game in 15 seconds after finishing a step
+    * Player drawings are captured and drawn onto a new Bitmap with Canvas (translated to ByteArrayOutputStream when necessary)
     
-  
-  * [新增拆帳清單]
-    * 選擇群組後會自動篩選群組內的成員作為可拆帳的人員
-    * 有四種拆帳模式「全部均分」「部份均分」「比例分攤」「自由分配」可以選擇，也可以輸入服務費
-   
-  
-  * [結清帳務] 
-    * 如果與好友之間不是帳務結清關係雙方都會出現結清帳務按紐
-    * 可以輸入當次還錢的金額
-    
-  
-  * [快速拆帳]  
-    * 可以輸入金額與人數快速算出拆帳結果，也可以在選擇拆帳模式後更換人員名稱好做區分
-    * 可以一鍵清空重新輸入
-    
-
-  * [Navigation Drawer]  
-    * 點擊左上方drawer icon 或側滑可以開啟 Drawer 切換不同頁面或是「登出」
+  * After Games
+    * Each player's topic and related guessing and drawings will be retrieved and shown with viewpager, in the order they are created
+    * All rooms, players, and gaming data will be deleted after game finishes
   
 # Screenshot
 
@@ -56,31 +43,34 @@ Players can easily play with their friends quickly on the phone, where player pr
   
   * Design Patterns 
     * Object-Oreinted Programming
-    * Model-View-Presenter (MVP) 
+    * Model-View-Presenter (MVP) Model
+    * Dependency Injection
     
   * Core Functions
     * Firebase Authentication
-    * Firebase Firestore to store game information online
-    * Firebase Storage to store images online
+    * Game syncronization
+    * Interfaces and Callbacks
+    * Capturing images of a view
     
   * User Interface
-    * Fragment 
+    * Activity
+    * Fragment
     * RecyclerView 
     * Bottom Navigation
     * ViewPager
     * Dialog
     
   * Database
-    * Firebase Cloud Firestore
+    * Firebase Firestore to store game information online
+    * Firebase Storage to store images online
     
   * Analysis
     * Crashlytics 	
     
   * Unit Test
-    * JUnit 
+    * JUnit
     * Mockito
-    * Espresso	
-
+    * Espresso
 
 # Requirement
 * Android Studio 3.0+
@@ -88,7 +78,7 @@ Players can easily play with their friends quickly on the phone, where player pr
 * Gradle 3.2.1+
 
 # Version
-* 1.0.0 - 2018/11/04
+* 1.1.7 - 2018/11/17
     First release
 
   
